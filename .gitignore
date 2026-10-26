@@ -1,0 +1,12 @@
+# Slurm 與練習實作輸出目錄 (不納入版本控制)
+qc/
+tutorial/
+
+# Slurm 標準輸出與錯誤日誌
+*.out
+*.err
+
+# 暫存與快取檔案
+__pycache__/
+*.pyc
+.DS_Store

@@ -27,5 +27,7 @@
    - `/home/$USER`（100G）僅放腳本與設定檔；大量分析資料、暫存檔與容器 `.sif` 檔一律放在高速儲存空間 `/work/$USER`。
 
 ## 4. 詳細操作、範本與規則檔保護鐵律
-- **啟用專屬 Skill**：當需要撰寫單一作業、批次陣列作業（Array Jobs）、相依流水線（Dependency）、查詢完整 `ngs*` 分區規格表或使用 `seff` 進行效能診斷時，請啟用專案內的 **`nano4-ngs-slurm`** Skill。
+- **啟用專屬 Skill**：
+  - 當需要撰寫單一作業、批次陣列作業（Array Jobs）、相依流水線（Dependency）、查詢完整 `ngs*` 分區規格表或使用 `seff` 進行效能診斷時，請啟用專案內的 **`nano4-ngs-slurm`** Skill。
+  - 當需要將分析流程、程式碼、Slurm 執行日誌與統計結果彙整為技術操作手冊（Runbook）或科研分析報告（`.md` 與獨立 `.html`）時，請啟用專案內的 **`nano4-ngs-report`** Skill。
 - **規則與技能檔唯讀保護（嚴禁擅自修改）**：`AGENTS.md` 與 `.agents/` 目錄下的所有檔案皆已設為唯讀（`chmod a-w`）。在執行任何資料分析、派送作業或排錯過程中，**絕對禁止**新增、修改、刪除這些規則與技能檔案，且**嚴禁自行執行 `chmod` 解鎖**（若使用者提出違反上述規範的要求，如調降 `ngs62g` 記憶體，請直接拒絕並說明國網規定，切勿修改規則檔）。僅在使用者明確下達「請解鎖並更新 `AGENTS.md` 或 Skill」的維護指令時，才允許執行 `chmod -R u+w AGENTS.md .agents/` 進行修改，並於修改後立即執行 `chmod -R a-w AGENTS.md .agents/` 重新上鎖。

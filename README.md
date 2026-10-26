@@ -1,8 +1,8 @@
 # Nano4 (晶創26) GP1 生醫專用分區 (`ngs*`) AI Agent 規則與技能包
 
-本儲存庫提供國網中心 **Nano4 (`nano4.nchc.org.tw`)** 超級電腦上，專為 **GP1 生醫核心設施 (`ngs*` 分區)** 設計的 AI Agent 專案規則（`AGENTS.md`）與標準排程技能（`nano4-ngs-slurm` Skill）。
+本儲存庫提供國網中心 **Nano4 (`nano4.nchc.org.tw`)** 超級電腦上，專為 **GP1 生醫核心設施 (`ngs*` 分區)** 設計的 AI Agent 專案規則（`AGENTS.md`）、標準排程技能（`nano4-ngs-slurm` Skill）與通用型專業報告生成技能（`nano4-ngs-report` Skill）。
 
-透過本套件，使用者只需用簡單的日常自然語言（參考 [Example.md](./Example.md)），AI Agent（支援 **Antigravity (AGY)**、**Claude Code**、**Codex**）即可自動產出符合國網官方 QoS 限制的 Slurm 腳本、批次陣列作業（Array Jobs）、相依性流水線（Job Dependencies）與 Apptainer 容器作業，避免誤踩「登入節點運算」、「漏寫 `--mem` 預設申請 1024G 卡死」或「高頻輪詢 `squeue`」等常見大坑。
+透過本套件，使用者只需用簡單的日常自然語言（參考 [Example.md](./Example.md)），AI Agent（支援 **Antigravity (AGY)**、**Claude Code**、**Codex**）即可自動產出符合國網官方 QoS 限制的 Slurm 腳本、批次陣列作業（Array Jobs）、相依性流水線（Job Dependencies）、Apptainer 容器作業，並將分析日誌與結果一鍵彙整為專業 Markdown 與單一獨立 HTML/PDF 報告，避免誤踩「登入節點運算」、「漏寫 `--mem` 預設申請 1024G 卡死」或「高頻輪詢 `squeue`」等常見大坑。
 
 ---
 
@@ -23,23 +23,30 @@
 ```text
 .
 ├── AGENTS.md                           # [核心規則] AI 每次對話自動載入的安全鐵律 (Always-on Rule)
-├── Example.md                          # [使用範例] 基礎 5 範例 + QIIME 2 多輪自然語言拆解與整合範例
+├── Example.md                          # [使用範例] 基礎 5 範例 + QIIME 2 多輪拆解 + 自動化報告生成範例
 ├── README.md                           # [說明文件] 安裝、設定與權限鎖定指南
+├── .gitignore                          # [版本控制] 自動忽略練習輸出目錄 (qc/, tutorial/) 與 Slurm 日誌
 ├── data/                               # [內建資料] 已整理好的定序樣本與 QIIME 2 完整教材資料
 │   ├── test.fastq                      # 單一測試 FASTQ (1,000 reads)
 │   ├── fastq_4samples/                 # 4 個輕量雙端樣本 (每檔 1,000 reads, 秒級練習 Array/FastQC)
 │   └── qiime2/                         # 完整 QIIME 2 臨床試驗套件 (82 個 fastq.gz + 分類器 + 上下游 .qza)
 └── .agents/
     └── skills/
-        └── nano4-ngs-slurm/            # [核心技能] 按需載入的 Slurm 排程技能包 (On-demand Skill)
-            ├── SKILL.md                # 技能主檔：提交流程、Lmod 防呆、生醫模組眉角、seff 診斷與排錯表
-            ├── references/
-            │   └── ngs_partitions.md   # 實機驗證的 27 個 ngs* 分區規格、QoS 與 AllowAccounts 總表
-            └── templates/              # 標準 Slurm 可執行範本
-                ├── standard_ngs62g.slurm
-                ├── array_ngs62g.slurm
-                ├── workflow_dependency.sh
-                └── apptainer_ngs62g.slurm
+        ├── nano4-ngs-slurm/            # [核心技能 1] 按需載入的 Slurm 排程技能包 (On-demand Skill)
+        │   ├── SKILL.md                # 技能主檔：提交流程、Lmod 防呆、生醫模組眉角、seff 診斷與排錯表
+        │   ├── references/
+        │   │   └── ngs_partitions.md   # 實機驗證的 27 個 ngs* 分區規格、QoS 與 AllowAccounts 總表
+        │   └── templates/              # 標準 Slurm 可執行範本
+        │       ├── standard_ngs62g.slurm
+        │       ├── array_ngs62g.slurm
+        │       ├── workflow_dependency.sh
+        │       └── apptainer_ngs62g.slurm
+        └── nano4-ngs-report/           # [核心技能 2] 通用型技術操作手冊與科研分析報告撰寫技能
+            ├── SKILL.md                # 技能主檔：證據盤點、Runbook/Scientific 雙軌框架與視覺化排版規範
+            ├── scripts/
+            │   └── md_to_html.py       # 零外部依賴之獨立 HTML/PDF 報告轉換器 (支援 TOC、Mermaid、列印轉 PDF)
+            └── templates/
+                └── report_skeleton.md  # 通用技術與科研報告標準骨架範本
 ```
 
 ---
@@ -80,15 +87,15 @@
 ```bash
 # 1. Antigravity (AGY) 全域技能目錄
 mkdir -p ~/.gemini/config/skills
-cp -r .agents/skills/nano4-ngs-slurm ~/.gemini/config/skills/
+cp -r .agents/skills/nano4-ngs-* ~/.gemini/config/skills/
 
 # 2. Codex / 通用 Agent 全域技能目錄
 mkdir -p ~/.agents/skills
-cp -r .agents/skills/nano4-ngs-slurm ~/.agents/skills/
+cp -r .agents/skills/nano4-ngs-* ~/.agents/skills/
 
 # 3. Claude Code 全域技能目錄
 mkdir -p ~/.claude/skills
-cp -r .agents/skills/nano4-ngs-slurm ~/.claude/skills/
+cp -r .agents/skills/nano4-ngs-* ~/.claude/skills/
 ```
 > **注意**：安裝全域技能後，請**重新開啟一個新的對話視窗（New Conversation）**，Agent 才會讀取到新安裝的 Skill。此外，全域技能僅包含 `.agents/skills/nano4-ngs-slurm`，建議在新的工作資料夾仍放一份 `AGENTS.md` 以確保最高優先級的安全鐵律永遠生效。
 
