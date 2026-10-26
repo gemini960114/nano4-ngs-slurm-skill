@@ -13,6 +13,11 @@ flowchart LR
     S2 --> S3["3. 擷取重點自動編寫 AGENTS.md 與 Skill"]
 ```
 
+> [!NOTE]
+> **💡 讀者疑問：為什麼剛剛 `git clone` 下來的資料夾裡已經有 `AGENTS.md` 與 `.agents/skills/`，這裡還要教怎麼從官方網頁產生？**
+> - 為了讓大家上課操作穩定，本教材資料夾已經**預先內建好一份完成版**的 `AGENTS.md` 與 `nano4-ngs-slurm` 技能。
+> - 但為了讓您學會**「未來面對新主機或新軟體時，如何自己做一個 Skill」**，本單元帶您完整體驗一次從「讀官方網頁 ➔ 實作練習 ➔ 自動濃縮成 Skill」的過程！
+
 ---
 
 ## 第一階段：請 AI 讀取國網 GP1 官方線上說明文件
@@ -36,7 +41,15 @@ https://man.twcc.ai/xOYzPATVS_aDlbuqMrwhyg
 
 ## 第二階段：請 AI 編寫並派送基礎 Slurm 作業 (`Case 01` ~ `Case 05`)
 
-讀完官方手冊後，我們用 `data/fastq_4samples/` 裡面的 **4 個輕量定序樣本**，依序請 AI 幫我們編寫並派送 5 種常見的批次作業（送出前先請 AI 說明設定，我們確認後再送出）：
+讀完官方手冊後，我們用 `data/fastq_4samples/` 裡面的 **4 個輕量定序樣本**，依序請 AI 幫我們編寫並派送 5 種常見的批次作業。
+
+> [!IMPORTANT]
+> **💬 人機協同操作方式（兩階段確認）**：
+> 當您把下方任一練習的指令貼給 AI 後：
+> 1. **第一階段（AI 擬定計畫）**：AI 會先寫好腳本，並在對話框向您報告預計使用的**計畫代號（`GOV115088`）、分區（`ngs62g`）與資源設定（8 核心 / 62G）**，然後停下來等您確認。
+> 2. **第二階段（您確認派送）**：請在對話框輸入 **`好，請送出`**（或 **`同意`**），AI 才會真正執行 `sbatch` 將工作送到計算節點！（若跳出終端機執行權限詢問，請點擊 **Allow / Approve**。）
+
+---
 
 ### 練習 1 (`tutorial/case01`)：單一 FASTQ 檔案統計（單一批次作業）
 
@@ -67,6 +80,9 @@ data/fastq_4samples/ 資料夾裡面有 4 個定序樣本（.fastq.gz），請�
 先告訴我你打算怎麼送，我同意後再送出。
 腳本放在目前目錄 tutorial/case03
 ```
+
+- **💡 如何查看產出的 MultiQC 網頁報告？**
+  跑完後，在左側檔案總管展開 `qc/multiqc_out/`，在 **`multiqc_report.html`** 上按**滑鼠右鍵 ➔ `Download...`** 下載回個人電腦，雙擊即可用瀏覽器打開互動式品管圖表！
 
 ---
 
@@ -119,9 +135,6 @@ data/fastq_4samples/ 資料夾裡面有 4 個定序樣本（.fastq.gz），請�
 
 3. 完成後，請將 AGENTS.md 與 .agents/ 重新上鎖為唯讀（chmod -R a-w AGENTS.md .agents/），防止日後排錯時誤改規則。
 ```
-
-> [!NOTE]
-> **貼心提醒**：為了節省大家上課時間，本教材倉庫（`nano4-ngs-slurm-skill`）已經預先放好一份經過實機驗證並鎖定唯讀的 [`AGENTS.md`](../AGENTS.md) 與 [`.agents/skills/nano4-ngs-slurm/`](../.agents/skills/nano4-ngs-slurm/SKILL.md)。若您想親手體驗讓 AI 修改或重新生成 Skill，只需先執行 `chmod -R u+w AGENTS.md .agents/` 解鎖即可！
 
 ---
 
