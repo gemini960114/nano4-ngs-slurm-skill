@@ -4,7 +4,7 @@ import { githubSlugify } from '../../scripts/slugify.mjs'
 
 export default withMermaid(defineConfig({
   title: "AI Agent 上國網 HPC：生醫運算與分析實作",
-  description: "示範用 AI Agent 連上國網 Nano4 生醫節點，協助完成 Slurm 排程、管線監控与結果報告整理",
+  description: "示範用 AI Agent 連上國網 Nano4 生醫節點，協助完成 Slurm 排程、管線監控與結果報告整理",
   head: [
     ['link', { rel: 'icon', type: 'image/x-icon', href: 'https://www.nchc.org.tw/img/favicon.ico' }],
     ['link', { rel: 'shortcut icon', type: 'image/x-icon', href: 'https://www.nchc.org.tw/img/favicon.ico' }],
@@ -60,7 +60,7 @@ export default withMermaid(defineConfig({
       {
         text: '範例 3：管線派送與監控',
         items: [
-          { text: '3. QIIME 2 腸道菌相分析与定時監控 (Case 06~07)', link: '/guide/04_qiime2_microbiome_pipeline' }
+          { text: '3. QIIME 2 腸道菌相分析與定時監控 (Case 06~07)', link: '/guide/04_qiime2_microbiome_pipeline' }
         ]
       },
       {

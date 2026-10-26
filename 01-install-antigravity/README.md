@@ -27,7 +27,7 @@
 - **macOS**：打開下載檔案，將 **Antigravity IDE** 拖曳至「應用程式 (Applications)」資料夾。
 
 > [!TIP]
-> **若您習慣使用 VS Code**：也可至 [VS Code 官網](https://code.visualstudio.com/) 下載安裝，並在擴充功能市場安裝 Microsoft 官方的 **`Remote - SSH`**。VS Code 可安裝下方的选项 B（Claude Code / Codex）與選項 C（OpenCode），但沒有 Antigravity 內建 Agent。
+> **若您習慣使用 VS Code**：也可至 [VS Code 官網](https://code.visualstudio.com/) 下載安裝，並在擴充功能市場安裝 Microsoft 官方的 **`Remote - SSH`**。VS Code 可安裝下方的選項 B（Claude Code / Codex）與選項 C（OpenCode），但沒有 Antigravity 內建 Agent。
 
 ---
 
