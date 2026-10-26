@@ -1,78 +1,165 @@
-# 範例 1-2：環境建置 —— 登入 Nano4 HPC (2FA) 與下載教材
+# 範例 1-2：環境建置 —— 連上 Nano4 (Antigravity / VS Code Remote-SSH) 與下載教材
 
-本單元說明如何使用剛安裝好的 **Antigravity IDE** 遠端連線至國網中心 **Nano4 (`nano4.nchc.org.tw`)** 超級電腦，並將本課程的範例資料下載至高速工作區 `/work/$USER/`。
+本單元說明如何透過 **Antigravity（或 VS Code）Remote-SSH** 連上國網中心 **晶創26 (`nano4.nchc.org.tw`)**（包含 **IDExpert 雙因子認證** 與免重複認證的 **`ssh-proxy`** 設定），並將教材下載至高速工作區 `/work/$USER/`。
 
-| 步驟 | 內容 | 說明 |
-| :--- | :--- | :--- |
-| **第 1 步** | [認識 Nano4 雙因子登入 (密碼 + 6 位數 OTP)](#第-1-步認識-nano4-雙因子登入-2fa) | 登入前必備資訊與儲存空間規則 |
-| **第 2 步** | [使用 Antigravity Remote-SSH 連上 Nano4](#第-2-步使用-antigravity-remote-ssh-連上-nano4) | 圖形化連線步驟 |
-| **第 3 步** | [下載課程範例資料至 `/work/$USER/`](#第-3-步下載課程範例資料至-workuser) | 一行指令完成 `git clone` |
-| **第 4 步** | [在 Antigravity 開啟工作資料夾](#第-4-步在-antigravity-開啟工作資料夾) | 準備開始與 AI Agent 協同分析 |
-
----
-
-## 第 1 步：認識 Nano4 雙因子登入 (2FA)
-
-連線至國網中心 Nano4（主機位址：`nano4.nchc.org.tw`）需要通過**兩道驗證**：
-1. **第一道（Password）**：輸入您的國網 iService 主機密碼（可於 iService「會員中心 → 會員資訊 → 主機帳號資訊」查詢或修改）。
-2. **第二道（Verification code / OTP）**：打開手機上的認證 App（如 Google Authenticator 或 Microsoft Authenticator），輸入當下顯示的 **6 位數動態驗證碼**。
-
-> [!IMPORTANT]
-> **Nano4 兩大儲存空間規則**：
-> - **`/home/$USER`（家目錄，容量上限僅 100 GB）**：僅供存放個人設定檔與小型腳本，請勿存放大型定序資料或容器映像檔。
-> - **`/work/$USER`（高速工作區，大容量）**：**上課教材、定序樣本、容器快取與所有分析結果，請一律放在 `/work/$USER` 下！**
+| 步驟 | 內容 |
+| :--- | :--- |
+| **步驟 A** | [在個人電腦安裝 Antigravity 與 Remote-SSH](#步驟-a在個人電腦安裝-antigravity) |
+| **步驟 B** | [確認本機 SSH Config 已配置 (`~/.ssh/config`)](#步驟-b確認本機-ssh-config-已配置) |
+| **步驟 C** | [一鍵連入 Nano4 (IDExpert 2FA 驗證)](#步驟-c一鍵連入-nano4) |
+| **步驟 D** | [下載教材並開啟遠端工作區 (`/work/your_account`)](#步驟-d下載教材並開啟遠端工作區) |
+| **步驟 E** | [（強烈建議）用 `ssh-proxy` 只做一次 2FA 認證](#步驟-e強烈建議用-ssh-proxy-只做一次-2fa-認證) |
 
 ---
 
-## 第 2 步：使用 Antigravity Remote-SSH 連上 Nano4
+## 步驟 A：在個人電腦安裝 Antigravity
 
-1. 在 Antigravity IDE 按下快捷鍵 **`F1`**（或 `Ctrl + Shift + P` / Mac 按 `Cmd + Shift + P`）。
-2. 輸入並點選：**`Remote-SSH: Connect to Host...`**
-3. 點選 **`+ Add New SSH Host...`**，輸入以下連線指令（請將 `<您的國網帳號>` 替換為實際帳號，例如 `u00cjz00`）：
-   ```bash
-   ssh <您的國網帳號>@nano4.nchc.org.tw
-   ```
-4. 按 Enter 儲存至預設的 SSH 設定檔後，在右下角跳出的通知點選 **`Connect`**。
-5. 依視窗上方提示框依序輸入：
-   - 若詢問遠端平台類型，選擇 **`Linux`**
-   - 輸入您的 **主機密碼 (Password)**
-   - 輸入手機 App 上的 **6 位數驗證碼 (OTP)**
-6. 當左下角狀態列顯示綠色的 **`SSH: nano4.nchc.org.tw`**，即代表您已成功連進 Nano4 登入節點！
+1. 前往 [Antigravity 官網](https://antigravity.google/) 下載安裝，並以 Google 帳號登入。
+2. 在擴充套件面板（`Ctrl + Shift + X`，macOS 為 `Cmd + Shift + X`）確認已有 **Remote - SSH** 套件（若已內建則略過安裝）。
+3. 首次連線時，Antigravity 會在 Nano4 的 `~/.antigravity-ide-server` 安裝伺服器端。
+
+> [!TIP]
+> **使用 VS Code**：到 [VS Code 官網](https://code.visualstudio.com/) 下載安裝，在擴充套件市場搜尋 **`Remote - SSH`**（Microsoft 官方發行）並安裝。首次連線會在 Nano4 的 `~/.vscode-server` 安裝伺服器端。VS Code 可以使用 Codex 與 Claude Code，但沒有 Antigravity 內建 Agent。
 
 ---
 
-## 第 3 步：下載課程範例資料至 `/work/$USER/`
+## 步驟 B：確認本機 SSH Config 已配置
 
-連上 Nano4 後，點選上方選單「**終端機 → 新增終端機**」（`Terminal → New Terminal`），將下方指令**整段複製貼入終端機**按 Enter 執行：
+請在您個人電腦本機的 `~/.ssh/config` 中加入 `nano4` 設定（請將 `your_account` 替換為您的國網主機帳號）：
 
-```bash
-mkdir -p /work/$USER && cd /work/$USER
-git clone https://github.com/gemini960114/nano4-ngs-slurm-skill.git
-cd /work/$USER/nano4-ngs-slurm-skill
-pwd
+```ssh-config
+Host nano4
+  #HostName nano4.nchc.org.tw
+  HostName 140.110.109.162
+  User your_account
+
+  # 直接進入 OTP / MFA 驗證流程
+  PubkeyAuthentication no
+  KbdInteractiveAuthentication yes
+  PreferredAuthentications keyboard-interactive,password
+
+  # 維持及偵測連線狀態
+  ServerAliveInterval 30
+  ServerAliveCountMax 3
+
+  # 如果目前網路確實需要，再保留
+  IPQoS none
 ```
+
+---
+
+## 步驟 C：一鍵連入 Nano4
+
+1. 點擊視窗左下角的遠端按鈕（圖示 `><`），在上方彈出的選單中選擇：  
+   👉 **`Connect to Host... (連線至主機...)`**
+2. 清單中會自動列出 **`nano4`**，點擊選取它。
+3. 系統會開啟新視窗並提示連線。在上方提示列選擇連線平台（選擇 **`Linux`**）。
+4. 終端機或上方輸入框會彈出 2FA 選項：
+   ```text
+   Login method (1: Mobile APP OTP, 2: Mobile APP PUSH, 3: Email OTP): 
+   ```
+   輸入 **`2`** 按 Enter，解鎖手機在 **IDExpert App** 點擊「同意」；隨後輸入您的主機密碼。
+5. 驗證通過後，左下角會顯示 **`SSH: nano4`**，表示您已成功連進晶創26！
+
+---
+
+## 步驟 D：下載教材並開啟遠端工作區
+
+1. 連上 Nano4 後，按下 **``Ctrl + ` ``**（或點選上方選單 `Terminal ➔ New Terminal`）開啟遠端終端機，將以下指令**整段複製貼入終端機**執行，把課程教材下載至 WekaFS 高速工作區 `/work/$USER/`：
+   ```bash
+   mkdir -p /work/$USER && cd /work/$USER
+   git clone https://github.com/gemini960114/nano4-ngs-slurm-skill.git
+   cd /work/$USER/nano4-ngs-slurm-skill
+   pwd
+   ```
+2. 點擊左側選單的「檔案總管 (Explorer)」➔ 點擊 **Open Folder (開啟資料夾)**（或點選 `File ➔ Open Folder...`）。
+3. 在上方輸入框填入剛剛下載的教材工作區路徑（請將 `your_account` 換成您的帳號）：
+   ```text
+   /work/your_account/nano4-ngs-slurm-skill
+   ```
+4. 按下確定，您就能在左側清單中看到教材檔案，且 AI Agent 會自動載入資料夾內的 `AGENTS.md` 與 `.agents/skills/`！
 
 ### 📦 下載下來的資料夾裡有哪些東西會用到？
 
-本專案結構非常單純，上課與分析只會用到以下 **4 個核心項目**（所有練習資料皆已內建，不需另外上網下載）：
+上課與分析只會用到以下 **4 個核心項目**（所有範例數據皆已內建，不需另外下載）：
 
 | 項目 | 路徑 | 用途說明 |
 | :--- | :--- | :--- |
-| **1. 內建範例資料** | `data/fastq_4samples/`<br>`data/qiime2/` | • **範例 2 使用**：`data/fastq_4samples/`（4 個輕量 FASTQ 定序樣本）<br>• **範例 3 使用**：`data/qiime2/`（82 個雙端 FASTQ、Metadata 與分類器） |
+| **1. 內建範例資料** | `data/fastq_4samples/`<br>`data/qiime2/` | • **範例 2 使用**：`data/fastq_4samples/`（4 個輕量 FASTQ 樣本）<br>• **範例 3 使用**：`data/qiime2/`（82 個雙端 FASTQ、Metadata 與分類器） |
 | **2. 對話指令總表** | `Example.md` | 整理好的各階段提示詞（Prompt），可直接複製貼給 AI Agent |
-| **3. AI 核心規則** | `AGENTS.md` | 定義 Nano4 GP1 排程安全規範（下個單元將示範如何讓 AI 自動整理並產生此規則） |
+| **3. AI 核心規則** | `AGENTS.md` | 定義 Nano4 GP1 排程安全規範 |
 | **4. 自訂 Skills** | `.agents/skills/` | 內含 `nano4-ngs-slurm`（Slurm 排程技能）與 `nano4-ngs-report`（圖文報告技能） |
 
 ---
 
-## 第 4 步：在 Antigravity 開啟工作資料夾
+## 步驟 E（強烈建議）：用 ssh-proxy 只做一次 2FA 認證
 
-請讓 Antigravity 直接開啟剛剛下載的資料夾：
+Nano4 的**每一條新 SSH 連線**都要輸入密碼與 OTP。Antigravity / VS Code 的 Remote-SSH 在「連線」、「Open Folder 選目錄」、「切換資料夾或重新載入視窗」時都會開新連線，所以同一堂課可能要認證好幾次。
 
-1. 點選上方選單「**檔案 → 開啟資料夾...**」（`File → Open Folder...`）。
-2. 輸入剛剛終端機最後印出的路徑：`/work/<您的帳號>/nano4-ngs-slurm-skill`，點擊 **OK / 確定**。
-3. 重新載入視窗後，若詢問是否信任此資料夾，請勾選並點擊 **Yes, I trust the authors**。
+[`ssh-proxy`](https://github.com/gemini960114/ssh-proxy) 是在**您個人電腦上**執行的小工具：它先用密碼 + OTP 連上 Nano4 並保持連線，再在本機 `127.0.0.1:2222` 開一個入口。之後 Antigravity 改連 `nano4-proxy`，所有連線都走這條已認證的通道，不必再輸入 OTP。
+
+```text
+Antigravity / VS Code / 終端機
+        │  連 nano4-proxy（不需 OTP）
+        ▼
+127.0.0.1:2222   ← ssh-proxy（在您的電腦上執行，視窗保持開著）
+        │  已完成密碼 + OTP 的連線
+        ▼
+nano4.nchc.org.tw:22
+```
+
+**1. 下載執行檔**（[Releases 頁面](https://github.com/gemini960114/ssh-proxy/releases/latest)，免安裝 Python）：
+
+| 您的電腦 | 下載檔案 |
+| :--- | :--- |
+| Windows 10 / 11 | `ssh-proxy-windows-x64.exe` |
+| macOS Apple Silicon (M1–M4) | `ssh-proxy-macos-arm64` |
+| Linux x64 | `ssh-proxy-linux-x64` |
+
+Intel Mac 沒有預先編譯的檔案，請依 ssh-proxy README 的「Run from Source with uv」方式執行。
+
+**2. 在本機 `~/.ssh/config` 加入 proxy 專用的主機**（保留上面的 `Host nano4`，ssh-proxy 會從它讀取主機名稱與帳號；完整範本見 [`01-nano4-ssh-and-2fa/config/ssh_config_example`](https://github.com/gemini960114/Nano4-Docs/blob/main/01-nano4-ssh-and-2fa/config/ssh_config_example)，已包含下面這段）：
+
+```ssh-config
+Host nano4-proxy
+    HostName 127.0.0.1
+    Port 2222
+    User your_account
+    # 本機 proxy 每次啟動都會產生新的暫時金鑰；這兩行只能用在這個 127.0.0.1 別名，
+    # 絕對不要加到 nano4 或其他遠端主機
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+    LogLevel ERROR
+    ServerAliveInterval 30
+    ServerAliveCountMax 3
+```
+
+**3. 啟動 proxy，完成一次認證**（在本機終端機 / PowerShell 執行，並讓這個視窗保持開著）：
+
+```bash
+# Windows (PowerShell)
+.\ssh-proxy-windows-x64.exe nano4
+
+# macOS Apple Silicon（第一次需加執行權限並解除下載隔離）
+chmod +x ssh-proxy-macos-arm64
+xattr -d com.apple.quarantine ssh-proxy-macos-arm64
+./ssh-proxy-macos-arm64 nano4
+```
+
+- 第一次連線會顯示 Nano4 的主機金鑰指紋，確認後輸入完整的 `yes`；之後依提示輸入密碼與 OTP。
+- 若之後出現 `REMOTE HOST IDENTIFICATION HAS CHANGED`，proxy 會在送出密碼前停止；請先向國網中心確認，不要直接刪除舊金鑰。
+
+**4. 改連 `nano4-proxy`**：
+
+- 終端機：`ssh nano4-proxy`，應直接進入 Nano4，不再要求 OTP。
+- Antigravity / VS Code：`Connect to Host...` 時選 **`nano4-proxy`**（不是 `nano4`），之後 Open Folder、切換資料夾都不必再認證。
+
+**5. 使用注意**
+
+- 預設**沒有任何連線 60 分鐘**或**總執行 8 小時**後，proxy 會自動停止；整天的課程可在啟動時加上 `--max-lifetime 10h`。proxy 停止後 Antigravity 會斷線，重新啟動 proxy（再認證一次）並重新連線即可。
+- 只在**自己的電腦**上使用：proxy 在執行期間，同一台電腦上的其他程式也能透過它連進您的帳號。使用共用電腦或離開座位前，請在 proxy 視窗按 `Ctrl+C` 停止。
+- 若出現 `Address already in use`，表示已有另一個 proxy 在使用 2222 埠，請先關閉它。
 
 ---
 
-👉 環境與資料準備完成！請進入 **[範例 2：自訂 Skill —— 讀取國網官方文件、練習 Slurm 排程並濃縮成專屬 Skill](../03-basic-slurm-and-qc/README.md)**。
+👉 連線與工作區準備完成後，請進入 **[範例 2：自訂 Skill —— 讀取官方文件、練習派送 Slurm，最後濃縮成專屬技能](../03-basic-slurm-and-qc/README.md)**。
