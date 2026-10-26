@@ -6,6 +6,12 @@ tutorial/
 *.out
 *.err
 
+# VitePress 網站建置與同步暫存目錄
+node_modules/
+docs/.vitepress/dist/
+docs/.vitepress/cache/
+docs/guide/*.md
+
 # 暫存與快取檔案
 __pycache__/
 *.pyc
