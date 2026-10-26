@@ -2,7 +2,7 @@
 
 在一般情況下，剛連上一台新的 HPC 超級電腦時，AI 並不曉得這台機器的佇列名稱（例如 `ngs62g`）、計畫代號規定或軟體模組載入方式。
 
-本單元示範**「給你釣竿」的完整三部曲**：
+本單元示範建立專屬 Skill 的完整三步驟：
 1. **第一步（讀文件）**：直接請 AI 讀取國網 GP1 官方線上說明網頁（[https://man.twcc.ai/xOYzPATVS_aDlbuqMrwhyg](https://man.twcc.ai/xOYzPATVS_aDlbuqMrwhyg)）。
 2. **第二步（做練習）**：下達日常指令，請 AI 協助編寫並派送 5 個常見的生醫 Slurm 作業（`Case 01` ~ `Case 05`）。
 3. **第三步（寫成 Skill）**：經過實際練習與調整後，請 AI 擷取官方文件重點與實作經驗，自動編寫成可重複使用的 `AGENTS.md` 規則與 `nano4-ngs-slurm` 技能！
@@ -96,7 +96,7 @@ data/fastq_4samples/ 資料夾裡面有 4 個定序樣本（.fastq.gz），請�
 
 ---
 
-## 第三階段：把經驗濃縮成釣竿 —— 請 AI 自動編寫 `AGENTS.md` 與自訂 Skill
+## 第三階段：請 AI 擷取文件重點與實作經驗，自動編寫 `AGENTS.md` 與自訂 Skill
 
 在完成上面一連串練習後，我們已經清楚哪些地方最容易踩坑（例如：不能在登入節點跑運算、漏寫 `--mem` 會預設申請 1024G 卡死、提交子目錄日誌前要先 `mkdir -p`、Apptainer 快取要指到 `/work/$USER`、不能用迴圈狂刷 `squeue`）。
 

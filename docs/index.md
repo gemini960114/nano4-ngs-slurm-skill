@@ -3,8 +3,7 @@ layout: home
 
 hero:
   name: "AI Agent 上國網 HPC：生醫運算與分析實作"
-  text: "把指令、排程、監控與報告交給 AI 協助，研究人員負責判斷和確認"
-  tagline: "給你釣竿，不是魚。QIIME 2 只是示範，學會整套做法後，換上自己的資料和研究問題，就能用你的專業在 Nano4 上自己做分析。"
+  tagline: "把指令、排程、監控與報告交給 AI 協助，研究人員負責判斷和確認"
   actions:
     - theme: brand
       text: 開始課程（環境建置）
