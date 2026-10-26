@@ -9,8 +9,8 @@
 
 ```mermaid
 flowchart LR
-    S1["步驟一：讀官方文件<br>請 AI 讀取國網 GP1 網頁<br>(man.twcc.ai)"] --> S2["步驟二：實作練習 (Case 01~05)<br>單一統計 / Array Job /<br>FastQC+MultiQC / Apptainer"]
-    S2 --> S3["步驟三：沉澱為 Skill<br>請 AI 擷取文件與實作重點<br>自動寫成 AGENTS.md 與 Skill"]
+    S1["1. 讀取國網 GP1 官方網頁"] --> S2["2. 實作練習 Slurm 作業 (Case 01~05)"]
+    S2 --> S3["3. 擷取重點自動編寫 AGENTS.md 與 Skill"]
 ```
 
 ---

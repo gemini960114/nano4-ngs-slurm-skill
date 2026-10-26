@@ -8,9 +8,9 @@
 
 ```mermaid
 flowchart TD
-    A["階段 A (Upstream)<br>匯入 82 個雙端 FASTQ<br>與讀序品質摘要 (.qzv)"] --> B["階段 B (Downstream)<br>臨床條件篩選 + 8 核心 SILVA 分類<br>+ 物種組成堆疊圖"]
-    B --> C["階段 C (Diversity & Longitudinal)<br>8 核心演化樹 + 抽樣 10,000 多樣性<br>+ UMAP + LME 與菌屬波動圖"]
-    C --> D["管線整合與定時監控 (Case 07)<br>afterok 自動串接三階段<br>+ 每 5 分鐘定時檢查作業狀態"]
+    A["階段 A (Upstream)：匯入 82 個雙端 FASTQ 與讀序品質摘要"] --> B["階段 B (Downstream)：臨床條件篩選 + 8 核心 SILVA 分類 + 物種堆疊圖"]
+    B --> C["階段 C (Diversity & Longitudinal)：8 核心演化樹 + 多樣性 + UMAP + LME 波動圖"]
+    C --> D["管線整合與定時監控 (Case 07)：afterok 串接三階段 + 每 5 分鐘檢查狀態"]
 ```
 
 > [!TIP]

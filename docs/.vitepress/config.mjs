@@ -12,6 +12,9 @@ export default withMermaid(defineConfig({
   ],
   base: '/nano4-ngs-slurm-skill/',
   ignoreDeadLinks: true,
+  mermaid: {
+    suppressErrorRendering: true
+  },
   markdown: {
     anchor: { slugify: githubSlugify }
   },
