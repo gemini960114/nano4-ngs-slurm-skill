@@ -1,31 +1,33 @@
-# 範例 1-2：環境建置 —— 連上 Nano4 (Antigravity / VS Code Remote-SSH) 與下載教材
+# 範例 1-2：環境建置 —— 連上 Nano4 (Remote-SSH) 與下載教材
 
-本單元說明如何透過 **Antigravity（或 VS Code）Remote-SSH** 連上國網中心 **晶創26 (`nano4.nchc.org.tw`)**（包含 **IDExpert 雙因子認證** 與免重複認證的 **`ssh-proxy`** 設定），並將教材下載至高速工作區 `/work/$USER/`。
+完成前一單元的 Antigravity IDE 安裝後，本單元說明如何透過 **Remote-SSH** 連上國網中心 **晶創26 (`nano4.nchc.org.tw`)**（包含 **IDExpert 雙因子認證** 與免重複認證的 **`ssh-proxy`** 設定），並將教材下載至高速工作區 `/work/$USER/`。
 
 | 步驟 | 內容 |
 | :--- | :--- |
-| **步驟 A** | [在個人電腦安裝 Antigravity 與 Remote-SSH](#步驟-a在個人電腦安裝-antigravity) |
-| **步驟 B** | [確認本機 SSH Config 已配置 (`~/.ssh/config`)](#步驟-b確認本機-ssh-config-已配置) |
+| **步驟 A** | [前置確認：iService 主機帳號與手機 IDExpert 2FA App](#步驟-a前置確認iservice-主機帳號與手機-idexpert-2fa-app) |
+| **步驟 B** | [設定本機 SSH Config (`~/.ssh/config`)](#步驟-b設定本機-ssh-config) |
 | **步驟 C** | [一鍵連入 Nano4 (IDExpert 2FA 驗證)](#步驟-c一鍵連入-nano4) |
 | **步驟 D** | [下載教材並開啟遠端工作區 (`/work/your_account`)](#步驟-d下載教材並開啟遠端工作區) |
 | **步驟 E** | [（強烈建議）用 `ssh-proxy` 只做一次 2FA 認證](#步驟-e強烈建議用-ssh-proxy-只做一次-2fa-認證) |
 
 ---
 
-## 步驟 A：在個人電腦安裝 Antigravity
+## 步驟 A：前置確認：iService 主機帳號與手機 IDExpert 2FA App
 
-1. 前往 [Antigravity 官網](https://antigravity.google/) 下載安裝，並以 Google 帳號登入。
-2. 在擴充套件面板（`Ctrl + Shift + X`，macOS 為 `Cmd + Shift + X`）確認已有 **Remote - SSH** 套件（若已內建則略過安裝）。
-3. 首次連線時，Antigravity 會在 Nano4 的 `~/.antigravity-ide-server` 安裝伺服器端。
-
-> [!TIP]
-> **使用 VS Code**：到 [VS Code 官網](https://code.visualstudio.com/) 下載安裝，在擴充套件市場搜尋 **`Remote - SSH`**（Microsoft 官方發行）並安裝。首次連線會在 Nano4 的 `~/.vscode-server` 安裝伺服器端。VS Code 可以使用 Codex 與 Claude Code，但沒有 Antigravity 內建 Agent。
+在連線前，請確認您已完成以下準備：
+1. **國網主機帳號與密碼**：已於 [iService 會員系統](https://iservice.nchc.org.tw/nchc_service/index.php)（會員中心 ➔ 會員資訊 ➔ 主機帳號資訊）確認您的主機帳號與密碼，並加入課程或生醫計畫（本課程使用 **`GOV115088`**）。
+2. **手機綁定 IDExpert App（雙因子認證 2FA）**：晶創26強制要求雙因子認證，請確認手機已安裝 **IDExpert** App 並完成帳號綁定。
+3. **首次啟用提醒**：若是全新申請的國網帳號，第一次透過 SSH 成功登入 `nano4.nchc.org.tw` 時，系統會自動為您初始化建立 `$HOME` 家目錄；登入成功後，後續的 `~/.antigravity-ide-server` 安裝與 Slurm 排程才能正常運作。
 
 ---
 
-## 步驟 B：確認本機 SSH Config 已配置
+## 步驟 B：設定本機 SSH Config
 
-請在您個人電腦本機的 `~/.ssh/config` 中加入 `nano4` 設定（請將 `your_account` 替換為您的國網主機帳號）：
+我們先在您個人電腦本機的 `~/.ssh/config` 加入 `nano4` 連線設定：
+
+1. 在 Antigravity IDE 按下快捷鍵 **`F1`**（或 `Ctrl + Shift + P` / Mac 按 `Cmd + Shift + P`）。
+2. 輸入並點選：**`Remote-SSH: Open SSH Configuration File...`**，接著點選清單中的第一個路徑（即您個人電腦的 `C:\Users\<使用者>\.ssh\config` 或 `~/.ssh/config`）。
+3. 在開啟的設定檔中貼上以下內容並存檔（`Ctrl + S` / `Cmd + S`，**請將 `your_account` 替換為您的國網主機帳號**）：
 
 ```ssh-config
 Host nano4
@@ -58,14 +60,21 @@ Host nano4
    ```text
    Login method (1: Mobile APP OTP, 2: Mobile APP PUSH, 3: Email OTP): 
    ```
-   輸入 **`2`** 按 Enter，解鎖手機在 **IDExpert App** 點擊「同意」；隨後輸入您的主機密碼。
+   輸入 **`2`** 按 Enter，解鎖手機在 **IDExpert App** 點擊「同意」（或輸入 `1` 並填入 App 上的 6 位數 OTP 驗證碼）；隨後輸入您的主機密碼。
 5. 驗證通過後，左下角會顯示 **`SSH: nano4`**，表示您已成功連進晶創26！
+
+> [!IMPORTANT]
+> **若您使用外掛型 Agent（Claude Code / Codex / OpenCode）**：
+> 連上 **`SSH: nano4`** 後，請打開左側「擴充功能 (Extensions)」，在對應套件旁點擊 **`Install in SSH: nano4`**（或在遠端終端機安裝 OpenCode），將 Agent 安裝至 Nano4 遠端環境！
 
 ---
 
 ## 步驟 D：下載教材並開啟遠端工作區
 
-1. 連上 Nano4 後，按下 **``Ctrl + ` ``**（或點選上方選單 `Terminal ➔ New Terminal`）開啟遠端終端機，將以下指令**整段複製貼入終端機**執行，把課程教材下載至 WekaFS 高速工作區 `/work/$USER/`：
+> [!NOTE]
+> **儲存空間規則**：Nano4 的家目錄 `/home/$USER` 上限僅 100 GB；**所有課程教材、定序資料與分析結果請一律放在高速工作區 `/work/$USER/` 下！**
+
+1. 連上 Nano4 後，按下 **``Ctrl + ` ``**（或點選上方選單 `Terminal ➔ New Terminal`）開啟遠端終端機，將以下指令**整段複製貼入終端機**執行，把課程教材下載至 `/work/$USER/`：
    ```bash
    mkdir -p /work/$USER && cd /work/$USER
    git clone https://github.com/gemini960114/nano4-ngs-slurm-skill.git
@@ -77,7 +86,7 @@ Host nano4
    ```text
    /work/your_account/nano4-ngs-slurm-skill
    ```
-4. 按下確定，您就能在左側清單中看到教材檔案，且 AI Agent 會自動載入資料夾內的 `AGENTS.md` 與 `.agents/skills/`！
+4. 按下確定，您就能在左側清單中看到教材檔案，且 AI Agent 會自動讀到資料夾內的 `AGENTS.md` 與 `.agents/skills/`！
 
 ### 📦 下載下來的資料夾裡有哪些東西會用到？
 
@@ -87,7 +96,7 @@ Host nano4
 | :--- | :--- | :--- |
 | **1. 內建範例資料** | `data/fastq_4samples/`<br>`data/qiime2/` | • **範例 2 使用**：`data/fastq_4samples/`（4 個輕量 FASTQ 樣本）<br>• **範例 3 使用**：`data/qiime2/`（82 個雙端 FASTQ、Metadata 與分類器） |
 | **2. 對話指令總表** | `Example.md` | 整理好的各階段提示詞（Prompt），可直接複製貼給 AI Agent |
-| **3. AI 核心規則** | `AGENTS.md` | 定義 Nano4 GP1 排程安全規範 |
+| **3. AI 核心規則** | `AGENTS.md` | 定義 Nano4 GP1 排程安全規範（下個單元將示範如何讓 AI 自動更新此規則） |
 | **4. 自訂 Skills** | `.agents/skills/` | 內含 `nano4-ngs-slurm`（Slurm 排程技能）與 `nano4-ngs-report`（圖文報告技能） |
 
 ---

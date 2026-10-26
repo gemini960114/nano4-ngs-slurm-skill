@@ -28,7 +28,7 @@ flowchart TD
 1. 載入 biology/qiime2/2026.7 模組（不用再跑 wget 下載，資料已經在 data/qiime2/ 裡面了）。
 2. 把 data/qiime2/Input_Data/data_to_import/ 裡面的 82 個雙端 FASTQ 檔案匯入成 demultiplexed-sequences.qza，並產生品質摘要圖 demultiplexed-sequences-summ.qzv。
 3. 直接讀取現成的 data/qiime2/Upstream/feature-table-0.qza，產出特徵表摘要統計 feature-table-0-summ.qzv。
-4. 送出前請先跟我說明腳本內容與資源設定，等我確認後才送出；送出後請每 5 分鐘自動檢查一次作業狀態，跑完後通知我。
+4. 送出前請先跟我說明腳本內容與資源設定，等我確認後才送出；送出後請使用定時排程工具每 5 分鐘低頻檢查一次作業狀態（勿用 watch 高頻輪詢），跑完後通知我。
 ```
 
 *(註：中間 DADA2 去噪步驟對 41 個檢體運算通常需 30~60 分鐘以上，因此教材直接提供已算好的 `data/qiime2/Upstream/feature-table-0.qza`，讓本步驟約 2 分鐘即可完成。)*
@@ -45,7 +45,7 @@ flowchart TD
 1. 直接讀取 data/qiime2/Input_Data/ 裡面現成的 sample-metadata.tsv、feature-table.qza、rep-seqs.qza 與 silva-138.2-ssu-nr99-515f-806r-classifier.qza 分類器（不需重新下載）。
 2. 照腳本的條件篩選檢體（保留 autoFmtGroup 有值、移植前後 -10 到 70 天、至少出現在 2 個檢體、排除葉綠體與粒線體、總讀序數 >= 10,000）。
 3. 完成菌種分類註解（請加上 --p-n-jobs 8 開啟 8 核心加速），並產生第一張物種組成堆疊圖 taxa-bar-plots-1.qzv。
-4. 同樣請先向我說明腳本內容，確認後才送出，並設定每 5 分鐘自動檢查一次作業狀態（跑約 4 分鐘）。
+4. 同樣請先向我說明腳本內容，確認後才送出，並設定每 5 分鐘低頻定時檢查一次作業狀態（跑約 4 分鐘）。
 ```
 
 ---
@@ -60,7 +60,7 @@ flowchart TD
 1. 對上一步篩選後的序列建立演化樹（MAFFT / FastTree，請加上 --p-n-threads 8 用滿 8 核心）。
 2. 以抽樣深度 10,000 計算 Alpha 與 Beta 核心多樣性指標、稀釋曲線與組間顯著性檢定。
 3. 跑完 UMAP 降維、Emperor 排序圖，以及最後的線性混合效應模型（LME）與菌屬隨時間變化的波動圖（Volatility）。
-4. 請先說明腳本內容，我確認後再送出，之後每 5 分鐘自動檢查一次作業狀態直到完成（跑約 8~9 分鐘）。
+4. 請先說明腳本內容，我確認後再送出，之後每 5 分鐘低頻定時檢查一次作業狀態直到完成（跑約 8~9 分鐘）。
 ```
 
 ---
@@ -75,7 +75,7 @@ flowchart TD
 太棒了！現在請幫我把上面三個階段（步驟 A 上游匯入、步驟 B 篩選與分類、步驟 C 多樣性與縱向分析）整合成一套完整的自動化 Slurm 流水線：
 - 請幫我寫一個啟動腳本 run_full_qiime2_pipeline.sh，用 Slurm 的相依性功能（--dependency=afterok）把這三支腳本串起來，讓前一階段成功後自動啟動下一階段。
 - 同時也幫我把 data/qiime2/Qiime2_Pipeline.sh 改寫成一份拿掉 wget、改讀本地 data/qiime2/ 資料，且符合 ngs62g（8 核心、62G 記憶體、module purge）規範的單一完整版 Qiime2_Pipeline_ngs62g.slurm 備用。
-- 送出流水線前先跟我說明設定，我確認後再送出；送出後請每 5 分鐘自動檢查一次作業狀態，全部跑完後檢查所有 .qzv 結果檔是否都成功產生，並用白話文總結這次腸道菌相分析產出了哪些圖表！
+- 送出流水線前先跟我說明設定，我確認後再送出；送出後請每 5 分鐘低頻定時檢查一次作業狀態，全部跑完後檢查所有 .qzv 結果檔是否都成功產生，並用白話文總結這次腸道菌相分析產出了哪些圖表！
 - 腳本報告放在目前目錄 tutorial/case07
 ```
 

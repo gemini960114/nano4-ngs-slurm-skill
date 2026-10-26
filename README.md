@@ -14,7 +14,7 @@
 
 | 單元 | 主題 | 對應章節連結 | 核心內容 |
 | :--- | :--- | :--- | :--- |
-| **範例 1** | **環境建置** | • [1-1. 安裝 Antigravity 與模型設定](./01-install-antigravity/README.md)<br>• [1-2. 連線 Nano4 與下載教材](./02-nano4-login-and-setup/README.md) | 用 Antigravity 連線 Nano4。模型可直接使用國網地端模型，也可自備 Gemini、Claude、GPT 等模型 |
+| **範例 1** | **環境建置** | • [1-1. 安裝 Antigravity 與模型設定](./01-install-antigravity/README.md)<br>• [1-2. 連線 Nano4 與下載教材](./02-nano4-login-and-setup/README.md) | 用 Antigravity 連線 Nano4。預設使用內建模型，也可自備 Claude/GPT，或用 OpenCode 串接國網地端模型（遠端 HPC 需再安裝一次） |
 | **範例 2** | **自訂 Skill** | • [2. 把 Slurm 規則寫成 Skill 與基礎排程](./03-basic-slurm-and-qc/README.md) | 把 Nano4 的 Slurm 使用規則寫成 Skill，讓 AI 產生單一作業、Array Job、FastQC/MultiQC 與容器批次腳本 |
 | **範例 3** | **管線派送與監控** | • [3. QIIME 2 腸道菌相分析與定時監控](./04-qiime2-microbiome-pipeline/README.md) | 以 QIIME 2 腸道菌相分析為例，AI 先說明腳本內容，確認後才送出，之後每 5 分鐘自動檢查作業狀態 |
 | **範例 4** | **結果解讀與報告** | • [4. 結果解讀、圖文報告與換上自有資料](./05-automated-report-skill/README.md) | 讓 AI 讀取分析結果與日誌，整理成 Markdown 與 HTML/PDF 圖文報告，並說明如何替換為自己的研究資料 |
