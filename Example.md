@@ -93,21 +93,23 @@ data/fastq_4samples/ 資料夾裡面有 4 個定序樣本（.fastq.gz），請�
 
 ---
 
-### 步驟 2-6：把官方文件重點與實作經驗濃縮成自訂 Skill
+### 步驟 2-6：把官方文件重點與實作經驗濃縮成自己的 `my-nano4-slurm` Skill 並實測
 ```text
-請解鎖並更新 AGENTS.md 與 Skill：
-經過剛剛的練習，請幫我擷取國網 GP1 官方說明文件（https://man.twcc.ai/xOYzPATVS_aDlbuqMrwhyg）的重點，以及我們剛剛實作 Slurm 單一作業、Array Job、相依流水線與 Apptainer 容器的經驗，整理並編寫成可重複使用的 AI 規則與技能：
+經過剛剛的練習，請幫我擷取國網 GP1 官方說明文件（https://man.twcc.ai/xOYzPATVS_aDlbuqMrwhyg）的重點，以及我們剛剛實作 Slurm 單一作業、Array Job、相依流水線與 Apptainer 容器的經驗，在 .agents/skills/my-nano4-slurm/SKILL.md 建立一份我自己的 Slurm 排程技能（名稱設為 my-nano4-slurm），內容須包含：
 
-1. 在專案根目錄整理一份簡潔的 AGENTS.md（核心安全鐵律）：
+1. 執行環境與安全規範：
    - 嚴禁在登入節點運算，必須透過 sbatch / salloc 派送至計算節點。
    - 嚴禁使用 watch 或無窮迴圈每秒高頻輪詢 squeue（長時作業若需自動監控，應使用定時排程工具每 5 分鐘低頻檢查一次單次 squeue / sacct）。
    - 提交 sbatch 前必須先向使用者說明預計使用的計畫代號、分區與資源配置，獲確認後才送出。
+2. 腳本必填參數與環境設定：
    - 明確指定 --cpus-per-task 與 --mem（例如課程計畫 GOV115088 固定使用 ngs62g：-c 8 --mem=62G），防範預設申請整台節點記憶體卡死。
    - 腳本內先執行 module purge 再載入模組；大量資料與 Apptainer 快取一律放在 /work/$USER。
+3. 單一作業、Array Job、afterok 相依流水線與 Apptainer 容器的標準腳本範本。
+```
 
-2. 在 .agents/skills/nano4-ngs-slurm/ 目錄下編寫完整的 Slurm 排程技能（包含 SKILL.md、ngs* 分區規格參考表與標準範本腳本），讓我以後開新對話時不用再重貼官方網頁。
-
-3. 完成後，請將 AGENTS.md 與 .agents/ 重新上鎖為唯讀（chmod -R a-w AGENTS.md .agents/），防止日後排錯時誤改規則。
+**實測自己建立的 `my-nano4-slurm` 技能並與內建版比對：**
+```text
+請載入我剛建立的 my-nano4-slurm 技能，幫我檢查並產生一個測試作業（在計算節點印出 hostname、CPU 核心數與記憶體大小，輸出至 tutorial/test_my_skill/），同時幫我比較看看我寫的 my-nano4-slurm 跟專案內建的 nano4-ngs-slurm 技能有哪些異同或還可以補充的地方？
 ```
 
 ---

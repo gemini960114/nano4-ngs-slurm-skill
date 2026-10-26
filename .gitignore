@@ -1,6 +1,7 @@
 # Slurm 與練習實作輸出目錄 (不納入版本控制)
 qc/
 tutorial/
+.agents/skills/my-nano4-slurm/
 
 # Slurm 標準輸出與錯誤日誌
 *.out

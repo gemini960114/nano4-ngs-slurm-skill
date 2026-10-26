@@ -42,7 +42,7 @@
 mkdir -p /work/$USER && cd /work/$USER
 git clone https://github.com/gemini960114/nano4-ngs-slurm-skill.git
 cd /work/$USER/nano4-ngs-slurm-skill
-chmod -R a-w AGENTS.md .agents/
+chmod -R a-w AGENTS.md .agents/skills/nano4-ngs-*
 ```
 
 接著在 Antigravity 點選 **「File → Open Folder...」** 開啟 `/work/<您的帳號>/nano4-ngs-slurm-skill`，即可開始操作。
