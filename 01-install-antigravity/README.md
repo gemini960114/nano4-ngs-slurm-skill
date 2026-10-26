@@ -1,12 +1,12 @@
-# 第 01 章：安裝 Antigravity 與環境設定
+# 範例 1-1：環境建置 —— 安裝 Antigravity 與模型設定
 
-本教學使用 **Antigravity IDE** 作為開發環境並與 AI Agent 協同分析。請依下方 **3 個步驟** 完成安裝與基本設定。
+本單元先在個人電腦安裝 **Antigravity IDE**、調整三欄操作介面，並說明如何選擇 AI 模型（**可直接使用國網提供的地端模型，也可自備 Gemini、Claude、GPT 等雲端模型**）。
 
 | 步驟 | 內容 | 預估時間 |
 | :--- | :--- | :---: |
 | **第 1 步** | [下載並安裝 Antigravity IDE](#第-1-步下載並安裝-antigravity-ide) | 3 分鐘 |
-| **第 2 步** | [登入帳號與測試 AI 對話面板](#第-2-步登入帳號與測試-ai-對話面板) | 2 分鐘 |
-| **第 3 步** | [調整操作版面與確認 Remote-SSH 擴充功能](#第-3-步調整操作版面與確認-remote-ssh-擴充功能) | 2 分鐘 |
+| **第 2 步** | [調整操作版面與確認 Remote-SSH 擴充功能](#第-2-步調整操作版面與確認-remote-ssh-擴充功能) | 2 分鐘 |
+| **第 3 步** | [選擇 AI 模型：國網地端模型 vs. 自備雲端模型](#第-3-步選擇-ai-模型國網地端模型-vs-自備雲端模型) | 2 分鐘 |
 
 ---
 
@@ -28,26 +28,30 @@
 
 ---
 
-## 第 2 步：登入帳號與測試 AI 對話面板
+## 第 2 步：調整操作版面與確認 Remote-SSH 擴充功能
 
-1. 啟動 **Antigravity IDE**，使用您的 **Google 帳號** 登入。
-2. 在側邊的 **AI 對話面板** 輸入 `你好`，確認 AI Agent 可正常回應。
+為了方便待會連上 Nano4 超級電腦，建議將版面調整為「**左邊看檔案、中間看腳本與結果、右邊跟 AI Agent 對話**」：
 
----
-
-## 第 3 步：調整操作版面與確認 Remote-SSH 擴充功能
-
-建議將介面調整為「**左側檔案總管、中間編輯檢視、右側 AI 對話面板**」：
-
-### 1. 將 AI 面板與終端機固定在右側（建議）
+### 1. 將 AI 對話面板放在右側
 1. 點選上方選單「**檢視 → 外觀**」（`View → Appearance`），勾選 **Secondary Side Bar**。
-2. 如需移動「**終端機 (Terminal)**」分頁，可在分頁標題按右鍵 → **Move → Secondary Side Bar**。
+2. 如需將「**終端機 (Terminal)**」也移到右側，可在終端機分頁標題按右鍵 → **Move → Secondary Side Bar**。
 
-### 2. 確認安裝 Remote - SSH 擴充功能
+### 2. 確認安裝 Remote - SSH 擴充功能（連超算必備）
 1. 點擊左側活動列的「**擴充功能 (Extensions)**」圖示（快捷鍵 `Ctrl + Shift + X` / `Cmd + Shift + X`）。
 2. 搜尋 **`Remote - SSH`**，確認已安裝（若未安裝請點擊 **Install**）。
-3. *(選用)* 若您同時使用 **Claude Code** 或 **Codex**，也可在此搜尋安裝並移至右側邊欄。
 
 ---
 
-👉 完成後，請進入 **[第 02 章：登入 Nano4 與下載教材](../02-nano4-login-and-setup/README.md)**。
+## 第 3 步：選擇 AI 模型：國網地端模型 vs. 自備雲端模型
+
+本教材設計的 `AGENTS.md` 與 `.agents/skills/` 採用開放標準格式，您可以依需求自由選擇以下任一種模型來源：
+
+| 模型來源 | 適用情境 | 設定方式 |
+| :--- | :--- | :--- |
+| **選項 A：國網地端模型**<br>*(NCHC Local LLM / API)* | 機敏生醫數據不希望離開國網內部環境、或課程統一提供地端端點時 | 於擴充套件或 Agent 設定中，填入國網提供的 **OpenAI-Compatible API Base URL 與 API Key**，即可直接呼叫國網地端大模型 |
+| **選項 B：Antigravity 內建模型**<br>*(Gemini 等)* | 免額外設定 API Key，開箱即用 | 啟動 Antigravity IDE 後，直接使用 **Google 帳號** 登入即可在右側對話框使用 |
+| **選項 C：自備 Claude / GPT 模型**<br>*(Claude Code / Codex)* | 已有個人 Claude Pro / ChatGPT Plus 或 API 帳號 | 在左側「擴充功能 (Extensions)」搜尋安裝 **Claude Code** 或 **Codex**，將圖示拖至右側邊欄登入即可（同樣會自動讀取專案內的規則與技能） |
+
+---
+
+👉 完成後，請進入 **[範例 1-2：連線 Nano4 與下載教材](../02-nano4-login-and-setup/README.md)**。

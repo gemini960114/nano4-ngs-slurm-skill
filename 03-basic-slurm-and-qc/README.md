@@ -1,85 +1,92 @@
-# 第 03 章：基礎 Slurm 作業與品質檢查 (Case 01 ~ Case 05)
+# 範例 2：自訂 Skill —— 讀取官方文件、練習派送 Slurm，最後濃縮成專屬技能
 
-在 Antigravity 開啟 `/work/$USER/nano4-ngs-slurm-skill` 資料夾後，AI Agent 會自動讀取 `AGENTS.md` 規範與 `nano4-ngs-slurm` 技能。
+在一般情況下，剛連上一台新的 HPC 超級電腦時，AI 並不曉得這台機器的佇列名稱（例如 `ngs62g`）、計畫代號規定或軟體模組載入方式。
 
-本章使用 `data/fastq_4samples/` 內的 **4 個輕量 FASTQ 樣本**，依序示範 5 個基礎排程與品管工作。您只需複製下方提示詞貼給 AI Agent，待 AI 說明預計使用的計畫與資源配置後，回覆 **`同意派送`** 即可協同執行。
+本單元示範**「給你釣竿」的完整三部曲**：
+1. **第一步（讀文件）**：直接請 AI 讀取國網 GP1 官方線上說明網頁（[https://man.twcc.ai/xOYzPATVS_aDlbuqMrwhyg](https://man.twcc.ai/xOYzPATVS_aDlbuqMrwhyg)）。
+2. **第二步（做練習）**：下達日常指令，請 AI 協助編寫並派送 5 個常見的生醫 Slurm 作業（`Case 01` ~ `Case 05`）。
+3. **第三步（寫成 Skill）**：經過實際練習與調整後，請 AI 擷取官方文件重點與實作經驗，自動編寫成可重複使用的 `AGENTS.md` 規則與 `nano4-ngs-slurm` 技能！
 
 ```mermaid
 flowchart LR
-    C1["Case 01<br>單一 FASTQ 統計<br>(Python + sbatch)"] --> C2["Case 02<br>4 樣本平行計算<br>(Slurm Array Job)"]
-    C2 --> C3["Case 03<br>FastQC ➔ MultiQC<br>(afterok 相依流程)"]
-    C3 --> C4["Case 04<br>作業狀態與資源檢查<br>(sacct / seff)"]
-    C4 --> C5["Case 05<br>Apptainer 容器執行<br>(/work 快取設定)"]
+    S1["步驟一：讀官方文件<br>請 AI 讀取國網 GP1 網頁<br>(man.twcc.ai)"] --> S2["步驟二：實作練習 (Case 01~05)<br>單一統計 / Array Job /<br>FastQC+MultiQC / Apptainer"]
+    S2 --> S3["步驟三：沉澱為 Skill<br>請 AI 擷取文件與實作重點<br>自動寫成 AGENTS.md 與 Skill"]
 ```
 
 ---
 
-## 練習 1 (`tutorial/case01`)：單一 FASTQ 檔案統計（單一作業）
+## 第一階段：請 AI 讀取國網 GP1 官方線上說明文件
 
-### 📋 複製貼給 AI Agent 的指令：
+不用自己從頭背手冊！請直接複製下方指令貼給右側的 AI Agent，讓它先讀懂國網 Nano4 生醫節點的使用規範：
+
+### 📋 請複製以下指令貼給 AI Agent：
 
 ```text
-請幫我建立並送出一個簡單的 FASTQ 統計工作：
-1. 寫一支 Python 程式，讀取 data/fastq_4samples/FMT.0093C_5_L001_R1_001.fastq.gz，算出裡面有幾條 reads、平均讀長和 GC 含量 %。
-2. 幫我寫 Slurm 腳本送到計算節點去跑（用課程計畫 GOV115088）。
-3. 腳本放在目前目錄 tutorial/case01
-4. 送出前先跟我說你的設定，跑完後把結果整理給我。
-```
+請幫我讀取國網中心 GP1 生醫專用節點的官方說明網頁：
+https://man.twcc.ai/xOYzPATVS_aDlbuqMrwhyg
+（若需要讀取原始 Markdown 內容，可抓取 https://man.twcc.ai/xOYzPATVS_aDlbuqMrwhyg/download ）
 
-- **協同執行內容**：AI Agent 會在 `tutorial/case01/` 建立 `fastq_stat.py` 與符合 `ngs62g`（8 核心、62G 記憶體）的 Slurm 腳本，確認後派送至計算節點，並回報統計結果（總 Reads 數 `1,000` 條、平均讀長 `222.05 bp`、GC 含量 `53.01%`）。
+讀完後，請幫我重點整理：
+1. 登入節點有哪些限制？
+2. Slurm 批次作業腳本有哪些必填參數與分區（ngs*）規定？
+3. 生物資訊軟體模組（module）與 Singularity/Apptainer 容器該怎麼使用？
+```
 
 ---
 
-## 練習 2 (`tutorial/case02`)：多樣本平行計算（批次陣列作業 Array Job）
+## 第二階段：請 AI 編寫並派送基礎 Slurm 作業 (`Case 01` ~ `Case 05`)
 
-### 📋 複製貼給 AI Agent 的指令：
+讀完官方手冊後，我們用 `data/fastq_4samples/` 裡面的 **4 個輕量定序樣本**，依序請 AI 幫我們編寫並派送 5 種常見的批次作業（送出前先請 AI 說明設定，我們確認後再送出）：
+
+### 練習 1 (`tutorial/case01`)：單一 FASTQ 檔案統計（單一批次作業）
+
+```text
+寫一支 Python 程式，讀取 data/fastq_4samples/FMT.0093C_5_L001_R1_001.fastq.gz，算出裡面有幾條 reads、平均讀長和 GC 含量 %。
+幫我寫 Slurm 腳本送到計算節點去跑（用課程計畫 GOV115088，分區 ngs62g 固定 8 核心與 62G 記憶體）。
+腳本放在目前目錄 tutorial/case01
+送出前先跟我說你的設定，跑完後把結果整理給我。
+```
+
+---
+
+### 練習 2 (`tutorial/case02`)：多樣本平行計算（Slurm 陣列作業 Array Job）
 
 ```text
 data/fastq_4samples/ 資料夾裡面有 4 個定序樣本（.fastq.gz），請幫我用 Slurm 陣列作業（Array Job）同時算出每個樣本各有幾條 reads，送出前先給我看計畫。
 腳本放在目前目錄 tutorial/case02
 ```
 
-- **協同執行內容**：AI Agent 會建立 `--array=1-4%4` 的 Slurm 陣列腳本，同時平行處理 4 個樣本，完成後彙整各樣本的 Reads 數量表。
-
 ---
 
-## 練習 3 (`tutorial/case03`)：FastQC 與 MultiQC 品質檢查流程（相依作業 Dependency）
-
-### 📋 複製貼給 AI Agent 的指令：
+### 練習 3 (`tutorial/case03`)：FastQC 與 MultiQC 品質檢查流水線（前後相依作業 Dependency）
 
 ```text
 請幫我對 data/fastq_4samples/ 裡面的 4 個樣本做品質檢查流水線：
 - 第一步：用 FastQC 檢查這 4 個樣本的品質，結果放在 qc/fastqc_out/。
 - 第二步：等第一步確定成功跑完後，自動啟動 MultiQC 把結果彙整成一份 HTML 報告，放在 qc/multiqc_out/。
-- 先告訴我你打算怎麼送，我同意後再送出。
-- 腳本放在目前目錄 tutorial/case03
+先告訴我你打算怎麼送，我同意後再送出。
+腳本放在目前目錄 tutorial/case03
 ```
-
-- **協同執行內容**：透過 `sbatch --parsable` 與 `--dependency=afterok:<JOB_ID>` 串接兩階段作業。當第一階段 4 個 FastQC 陣列任務全部成功後，Slurm 自動啟動 MultiQC 產出 `qc/multiqc_out/multiqc_report.html`。
 
 ---
 
-## 練習 4 (`tutorial/case04`)：檢查作業狀態與資源使用率（`sacct` / `seff`）
-
-### 📋 複製貼給 AI Agent 的指令：
+### 練習 4 (`tutorial/case04`)：檢查作業狀態與資源使用率（`sacct` / `seff`）
 
 ```text
-剛剛送出去的工作跑完了嗎？如果跑完了，請幫我檢查資源使用率與執行時間，並用白話文跟我說跑得順不順、這 4 個樣本的品質結果如何。
+剛剛送出去的工作跑完了嗎？如果跑完了，請幫我用 seff（或 sacct）檢查資源使用率，並用白話文跟我說跑得順不順、這 4 個樣本的品質結果如何。
 結果報告放置於 tutorial/case04
 ```
 
 > [!TIP]
-> **常見問題：為什麼執行 `squeue -u $USER` 沒看到作業？**
-> `squeue` 僅顯示「排隊中 (`PD`)」或「執行中 (`R`)」的作業。因為範例 FASTQ 檔案較小（每檔 1,000 reads），計算節點約 **8 秒** 即完成所有分析並離開佇列。若要查詢已完成的作業紀錄，可使用 `sacct -u $USER -S today`。
+> **常見問題：為什麼在終端機打 `squeue -u $USER` 沒看到剛剛送出的工作？**
+> 因為 `squeue` 只會顯示「正在排隊 (`PD`)」或「執行中 (`R`)」的作業。練習用的 4 個 FASTQ 檔案很小（每檔 1,000 reads），計算節點約 **8 秒鐘** 就跑完 FastQC 與 MultiQC 並離開佇列了！若要查詢已完成的作業，請使用 `sacct -u $USER -S today`。
 
 ---
 
-## 練習 5 (`tutorial/case05`)：使用 Apptainer 容器執行並設定 `/work` 快取
-
-### 📋 複製貼給 AI Agent 的指令：
+### 練習 5 (`tutorial/case05`)：改用 Apptainer 容器執行，並將快取設在 `/work/$USER/`
 
 ```text
-以下的內容會用到 apptainer 下載 image，但 home 目錄空間有限，是否補充 cache 在 /work/$USER/？
+以下的內容會用到 apptainer 下載 image，但 home 目錄空間有限，請補充將 cache 設在 /work/$USER/。
 
 這次不要用 module load，請改寫一個用 Apptainer 容器執行的 Slurm 工作：
 1. 在計算節點直接從 Docker Hub 下載 multiqc/multiqc:v1.35 映像檔，.sif 檔請存在我的 /work/$USER/containers/。
@@ -87,10 +94,34 @@ data/fastq_4samples/ 資料夾裡面有 4 個定序樣本（.fastq.gz），請�
 3. 腳本報告放在目前目錄 tutorial/case05
 ```
 
-- **協同執行內容**：
-  1. 在腳本中設定 `APPTAINER_CACHEDIR="/work/${USER}/.apptainer/cache"` 與 `APPTAINER_TMPDIR`，避免容器解包暫存檔佔用 `/home` 配額。
-  2. 在計算節點拉取 `multiqc_1.35.sif` 並執行 MultiQC 報告彙整。
+---
+
+## 第三階段：把經驗濃縮成釣竿 —— 請 AI 自動編寫 `AGENTS.md` 與自訂 Skill
+
+在完成上面一連串練習後，我們已經清楚哪些地方最容易踩坑（例如：不能在登入節點跑運算、漏寫 `--mem` 會預設申請 1024G 卡死、提交子目錄日誌前要先 `mkdir -p`、Apptainer 快取要指到 `/work/$USER`、不能用迴圈狂刷 `squeue`）。
+
+現在，您可以直接下達以下指令，**請 AI 把剛剛讀過的國網官方文件與實作經驗，自動整理成專案的規則與 Skill**：
+
+### 📋 請複製以下指令貼給 AI Agent（自動產生/更新 Skill）：
+
+```text
+經過剛剛的練習，請幫我擷取國網 GP1 官方說明文件（https://man.twcc.ai/xOYzPATVS_aDlbuqMrwhyg）的重點，以及我們剛剛實作 Slurm 單一作業、Array Job、相依流水線與 Apptainer 容器的經驗，整理並編寫成可重複使用的 AI 規則與技能：
+
+1. 在專案根目錄整理一份簡潔的 AGENTS.md（核心安全鐵律）：
+   - 嚴禁在登入節點運算，必須透過 sbatch / salloc 派送至計算節點。
+   - 嚴禁使用 watch 或迴圈高頻輪詢 squeue。
+   - 提交 sbatch 前必須先向使用者說明預計使用的計畫代號、分區與資源配置，獲確認後才送出。
+   - 明確指定 --cpus-per-task 與 --mem（例如課程計畫 GOV115088 固定使用 ngs62g：-c 8 --mem=62G），防範預設申請整台節點記憶體卡死。
+   - 腳本內先執行 module purge 再載入模組；大量資料與 Apptainer 快取一律放在 /work/$USER。
+
+2. 在 .agents/skills/nano4-ngs-slurm/ 目錄下編寫完整的 Slurm 排程技能（包含 SKILL.md、ngs* 分區規格參考表與標準範本腳本），讓我以後開新對話時不用再重貼官方網頁。
+
+3. 完成後，請將 AGENTS.md 與 .agents/ 設為唯讀（chmod -R a-w AGENTS.md .agents/），防止日後排錯時誤改規則。
+```
+
+> [!NOTE]
+> **貼心提醒**：為了節省大家上課時間，本教材倉庫（`nano4-ngs-slurm-skill`）已經預先放好一份經過實機驗證並鎖定唯讀的 [`AGENTS.md`](../AGENTS.md) 與 [`.agents/skills/nano4-ngs-slurm/`](../.agents/skills/nano4-ngs-slurm/SKILL.md)。若您想親手體驗讓 AI 修改或重新生成 Skill，只需先執行 `chmod -R u+w AGENTS.md .agents/` 解鎖即可！
 
 ---
 
-👉 完成後，請進入 **[第 04 章：QIIME 2 腸道菌相分析](../04-qiime2-microbiome-pipeline/README.md)**。
+👉 有了專屬的 Nano4 Slurm Skill 後，接下來請進入 **[範例 3：管線派送與監控 —— 以 QIIME 2 腸道菌相分析為例](../04-qiime2-microbiome-pipeline/README.md)**！
