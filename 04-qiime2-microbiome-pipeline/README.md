@@ -1,21 +1,21 @@
-# 第 04 章：進階實戰 —— 四輪對話完成 QIIME 2 腸道菌相完整分析 (Case 06 ~ Case 07)
+# 第 04 章：QIIME 2 腸道菌相分析 (Case 06 ~ Case 07)
 
-在本章中，我們將挑戰真實臨床試驗（**NCT02269150：異體造血幹細胞移植病患接受自體糞菌移植 auto-FMT 之腸道菌相追蹤研究**）的完整 16S rRNA 分析流程。
+本章使用 `data/qiime2/` 內建的臨床試驗資料集（**NCT02269150：異體造血幹細胞移植病患接受自體糞菌移植 auto-FMT 之腸道菌相追蹤**），與 AI Agent 協同執行 16S rRNA 腸道菌相分析流程。
 
-所有需要的 **82 個雙端 `.fastq.gz` 原始定序檔、臨床 Metadata、預訓練 SILVA 138.2 分類器與特徵表** 都已經內建在專案的 `data/qiime2/` 目錄中！您不需要手動修改 500 行的腳本，也不用跑 `wget` 下載，只要照順序複製貼上以下 **4 輪對話 Prompt** 即可完成整套研究級分析：
+所需之 **82 個雙端 `.fastq.gz` 檔案、臨床 Metadata、預訓練 SILVA 138.2 分類器與特徵表** 均已包含於 `data/qiime2/` 中，不需額外執行 `wget` 下載。我們將流程分為 3 個分析階段（A、B、C），最後再整合成單一自動化流程（Case 07）。
 
 ```mermaid
 flowchart TD
-    A["步驟 A (第一輪對話)<br>上游 82 個雙端 FASTQ 匯入<br>與讀序品質摘要 (.qzv)"] --> B["步驟 B (第二輪對話)<br>臨床條件篩選 + 8 核心 SILVA 分類<br>+ 第一張物種組成堆疊圖"]
-    B --> C["步驟 C (第三輪對話)<br>8 核心演化樹 + 抽樣 10,000 多樣性<br>+ UMAP + LME 與菌屬波動圖"]
-    C --> D["最終整合 (第四輪對話, Case 07)<br>一鍵串接三階段相依流水線<br>(run_full_qiime2_pipeline.sh)"]
+    A["階段 A (Upstream)<br>上游 82 個雙端 FASTQ 匯入<br>與讀序品質摘要 (.qzv)"] --> B["階段 B (Downstream)<br>臨床條件篩選 + 8 核心 SILVA 分類<br>+ 物種組成堆疊圖"]
+    B --> C["階段 C (Diversity & Longitudinal)<br>8 核心演化樹 + 抽樣 10,000 多樣性<br>+ UMAP + LME 與菌屬波動圖"]
+    C --> D["流程整合 (Case 07)<br>串接三階段相依作業<br>(run_full_qiime2_pipeline.sh)"]
 ```
 
 ---
 
-## 🔹 步驟 A（第一輪對話）：上游 82 個雙端 FASTQ 匯入與品質評估 (`Upstream`)
+## 🔹 階段 A：上游 FASTQ 匯入與品質摘要 (`Upstream`)
 
-### 📋 請複製以下 Prompt 貼給 AI：
+### 📋 複製貼給 AI Agent 的指令：
 
 ```text
 請參考 data/qiime2/Qiime2_Pipeline.sh 的第一段（上游前處理），幫我寫一支 Slurm 作業（計畫 GOV115088）送到計算節點執行，輸出結果請放在 tutorial/case06/qiime2_run/Upstream/：
@@ -26,16 +26,14 @@ flowchart TD
 ```
 
 > [!NOTE]
-> **為什麼這裡直接讀取現成的 `feature-table-0.qza`？**
-> 在標準流程中，從 `demultiplexed-sequences.qza` 到 `feature-table-0.qza` 中間需執行 **DADA2 去噪（`qiime dada2 denoise-paired`）** 以去除嵌合體並產生 100% 精準的 ASV 特徵表與代表序列。因為對 41 個檢體做去噪通常需耗時 30~60 分鐘以上，為了讓上課練習在 **2 分鐘內** 跑完，教材已預先算好 `data/qiime2/Upstream/feature-table-0.qza` 供您直接產生統計摘要圖！
+> **關於 DADA2 去噪步驟說明**：
+> 標準流程中，從 `demultiplexed-sequences.qza` 產生 `feature-table-0.qza` 需執行 `qiime dada2 denoise-paired`（對 41 個檢體約需 30~60 分鐘）。為節省上課等待時間，教材已預先提供計算好的 `data/qiime2/Upstream/feature-table-0.qza`，讓本階段可在 **約 2 分鐘** 內完成。
 
 ---
 
-## 🔹 步驟 B（第二輪對話）：篩選下游臨床檢體與 8 核心菌種分類 (`Downstream`)
+## 🔹 階段 B：臨床樣本篩選與物種分類註解 (`Downstream`)
 
-等步驟 A 跑完後，接著把這段貼給 AI：
-
-### 📋 請複製以下 Prompt 貼給 AI：
+### 📋 複製貼給 AI Agent 的指令：
 
 ```text
 上一步成功了！接著請參考 data/qiime2/Qiime2_Pipeline.sh 的第三段前半部，幫我寫第二支 Slurm 腳本送到計算節點執行，結果放在 tutorial/case06/qiime2_run/Downstream/：
@@ -45,15 +43,13 @@ flowchart TD
 3. 完成菌種分類註解（請加上 --p-n-jobs 8 開啟 8 核心加速），並產生第一張物種組成堆疊圖 taxa-bar-plots-1.qzv。
 ```
 
-- **執行時間**：開啟 `--p-n-jobs 8` 用滿 `ngs62g` 的 8 顆 CPU 後，整套篩選與 Naive Bayes 物種分類只需約 **4 分鐘** 即可完成！
+- **協同執行內容**：開啟 `--p-n-jobs 8` 平行加速，約 **4 分鐘** 完成樣本篩選、SILVA 138.2 分類註解與物種堆疊圖。
 
 ---
 
-## 🔹 步驟 C（第三輪對話）：系統發生樹、核心多樣性、UMAP 與縱向統計 (`Diversity_Longitudinal`)
+## 🔹 階段 C：演化樹、核心多樣性與縱向統計 (`Diversity_Longitudinal`)
 
-等步驟 B 跑完後，接著把這段貼給 AI：
-
-### 📋 請複製以下 Prompt 貼給 AI：
+### 📋 複製貼給 AI Agent 的指令：
 
 ```text
 篩選跟分類都跑完了！現在請參考 data/qiime2/Qiime2_Pipeline.sh 後半段的多樣性與縱向分析，幫我送出第三支 Slurm 作業，結果放在 tutorial/case06/qiime2_run/Diversity_Longitudinal/：
@@ -63,15 +59,13 @@ flowchart TD
 3. 跑完 UMAP 降維、Emperor 排序圖，以及最後的線性混合效應模型（LME）與菌屬隨時間變化的波動圖（Volatility）。
 ```
 
-- **執行時間**：約 **8 分半鐘** 即可產出所有演化樹、Alpha/Beta 多樣性檢定、3D Emperor 時間軸排序圖、LME 模型與隨機森林重要菌屬波動圖！
+- **協同執行內容**：約 **8 分半鐘** 完成 MAFFT/FastTree 演化樹、Alpha/Beta 多樣性檢定、Emperor 排序圖、LME 模型與菌屬波動圖。
 
 ---
 
-## 🚀 最終整合（第四輪對話，`tutorial/case07`）：把三個階段串成「一鍵自動化相依流水線」！
+## 🔹 流程整合 (`tutorial/case07`)：串接三階段自動化 Slurm 流程
 
-當您透過上面三步弄懂每個階段在做什麼之後，可以用下面這段話請 AI 幫您整合成一鍵執行的自動化 Pipeline：
-
-### 📋 請複製以下 Prompt 貼給 AI：
+### 📋 複製貼給 AI Agent 的指令：
 
 ```text
 太棒了！現在請幫我把上面三個階段（步驟 A 上游匯入、步驟 B 篩選與分類、步驟 C 多樣性與縱向分析）整合成一套完整的自動化 Slurm 流水線：
@@ -83,12 +77,12 @@ flowchart TD
 
 ---
 
-## 💡 如何開啟並互動檢視產出的 `.qzv` 圖表？
+## 💡 如何檢視 `.qzv` 視覺化圖表？
 
-1. 在 Antigravity 左側檔案總管，展開 `tutorial/case06/qiime2_run/` 下的子資料夾。
-2. 在任何 `.qzv` 檔案（例如 `taxa-bar-plots-1.qzv`、`uu-umap-emperor-w-time.qzv`、`volatility-plot-1.qzv`）上按**滑鼠右鍵 → Download...** 下載到您的電腦。
-3. 打開瀏覽器前往 **[https://view.qiime2.org](https://view.qiime2.org)**，把 `.qzv` 檔案直接拖曳進去，就能在網頁上旋轉 3D 排序圖、切換菌門/菌屬層級，並匯出發表級 SVG 向量圖！
+1. 在 Antigravity 左側檔案總管展開 `tutorial/case06/qiime2_run/`。
+2. 對任一 `.qzv` 檔案按**右鍵 → Download...** 下載至個人電腦。
+3. 開啟 **[https://view.qiime2.org](https://view.qiime2.org)**，將 `.qzv` 拖曳至網頁即可互動檢視圖表。
 
 ---
 
-👉 跑完所有實驗後，請進入 **[第 05 章：成果收斂 —— 一鍵自動生成專業分析報告](../05-automated-report-skill/README.md)**，把今天所有過程與數據變成一份精美報告！
+👉 完成後，請進入 **[第 05 章：產出分析報告](../05-automated-report-skill/README.md)**。

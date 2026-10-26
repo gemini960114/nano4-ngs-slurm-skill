@@ -2,49 +2,49 @@
 layout: home
 
 hero:
-  name: "國網晶創26 (Nano4) 生醫 NGS 自然語言排程實戰"
-  text: "複製貼上 Prompt，讓 AI 幫你跑超算與寫報告"
-  tagline: "從安裝 Antigravity、2FA 登入超算，到 FastQC/MultiQC、QIIME 2 菌相分析與一鍵產出 PDF 報告"
+  name: "Nano4 生醫分析 AI Agent 協同教學"
+  text: "使用 Antigravity 與 AI Agent 協同進行生醫排程與分析"
+  tagline: "涵蓋 Antigravity 安裝、Nano4 登入、Slurm 排程、FastQC/MultiQC、QIIME 2 菌相分析與報告整理"
   actions:
     - theme: brand
-      text: 🚀 從第 01 章開始上課
+      text: 開始第 01 章教學
       link: /guide/01_install_antigravity
     - theme: alt
-      text: 📋 全部 Prompt 速查表
+      text: 指令範例總表
       link: /guide/examples_all
     - theme: alt
-      text: 📌 課程與專案總覽
+      text: 教材與資料說明
       link: /guide/00_overview
 
 features:
   - icon: 💻
-    title: 第 01 章｜安裝 Antigravity IDE 與調整版面
-    details: 3 步驟裝好 Antigravity IDE，把 AI 對話面板移到右側並準備好 Remote-SSH。
+    title: 01｜安裝 Antigravity 與環境設定
+    details: 安裝 Antigravity IDE、調整三欄式操作版面，並確認安裝 Remote-SSH 擴充功能。
     link: /guide/01_install_antigravity
-    linkText: 第 01 章
+    linkText: 前往第 01 章
   - icon: 🔑
-    title: 第 02 章｜連上 Nano4 超算 (2FA) 與取得教材
-    details: 雙因子 OTP 登入、Remote-SSH 連線，複製貼上一行指令把教材與數據下載到 /work。
+    title: 02｜登入 Nano4 與下載教材
+    details: 透過雙因子認證 (密碼 + OTP) 連上 Nano4，並執行 git clone 下載教材與範例資料至 /work。
     link: /guide/02_nano4_login_and_setup
-    linkText: 第 02 章
+    linkText: 前往第 02 章
   - icon: ⚡
-    title: 第 03 章｜基礎實戰：用自然語言跑 Slurm 與質控
-    details: 5 個直接複製貼上的 Prompt：單一統計、Array 平行作業、FastQC ➔ MultiQC 流水線與 Apptainer 容器。
+    title: 03｜基礎 Slurm 作業與品質檢查
+    details: 與 AI Agent 協同完成單一 FASTQ 統計、Array 平行作業、FastQC/MultiQC 流程與 Apptainer 容器作業。
     link: /guide/03_basic_slurm_and_qc
-    linkText: 第 03 章
+    linkText: 前往第 03 章
   - icon: 🦠
-    title: 第 04 章｜進階實戰：四輪對話完成 QIIME 2 菌相分析
-    details: 免改 500 行腳本！用 4 輪自然語言對話完成 82 個雙端 FASTQ 匯入、8 核心分類、演化樹與縱向波動圖。
+    title: 04｜QIIME 2 腸道菌相分析
+    details: 分階段與 AI Agent 協同執行上游匯入、臨床樣本篩選、物種分類、演化樹與多樣性分析。
     link: /guide/04_qiime2_microbiome_pipeline
-    linkText: 第 04 章
+    linkText: 前往第 04 章
   - icon: 📊
-    title: 第 05 章｜成果收斂：一鍵自動生成專業分析報告
-    details: 呼叫 nano4-ngs-report 技能自動盤點日誌與數據，一鍵輸出 Markdown 與可印製 PDF 的精美 HTML 報告。
+    title: 05｜產出分析報告
+    details: 使用 nano4-ngs-report 技能自動彙整執行日誌與分析結果，輸出 Markdown 與 HTML/PDF 報告。
     link: /guide/05_automated_report_skill
-    linkText: 第 05 章
+    linkText: 前往第 05 章
   - icon: 🛡️
-    title: 附錄｜Nano4 GP1 專屬 AGENTS.md 安全守則
-    details: 保護學員不誤踩登入節點運算、1024G 記憶體卡死與高頻輪詢 squeue 的 AI 核心鐵律。
+    title: 附錄｜Nano4 GP1 規範 (AGENTS.md)
+    details: AI Agent 自動載入的排程規則，防止在登入節點運算、漏寫記憶體參數或高頻輪詢 squeue。
     link: /guide/agents_governance
-    linkText: 看安全鐵律
+    linkText: 查看規則
 ---

@@ -1,34 +1,29 @@
-# Nano4 生醫 Slurm 排程與報告生成：入門學生自然語言指令範例 (Examples)
+# Nano4 生醫分析 AI Agent 協同教學：指令範例總表 (Example.md)
 
-本文件示範如何用**最簡單的日常自然語言（或簡單條列）**向 AI Agent 下達指令。因為本專案已配置 `AGENTS.md`、`nano4-ngs-slurm` 與 `nano4-ngs-report` Skill，學生不需要死背 `#SBATCH` 或軟體參數，AI 會自動套用正確的 `ngs*` 佇列規格（如 `GOV115088` + `ngs62g` 固定 8 核心 / 62G）、安全鐵律與雙格式報告編譯流程。
+本文件整理上課使用的各階段對話指令。因為本專案已配置 `AGENTS.md`、`nano4-ngs-slurm` 與 `nano4-ngs-report` 技能，AI Agent 會自動套用正確的 `ngs*` 佇列規格（如 `GOV115088` + `ngs62g` 固定 8 核心 / 62G）與報告整理流程。
 
 ---
 
-## 📦 專案內建資料目錄規劃 (`./data/`)
+## 📦 練習使用到的內建資料 (`./data/`)
 
-所有練習與實戰所需的定序樣本、臨床表格、SILVA 分類器與參考腳本，皆已完整複製並整理於本專案的 [`data/`](./data/) 目錄下，**不需另外上網下載即可直接操作**：
+所有教學使用到的定序樣本、Metadata、SILVA 分類器與參考腳本皆已放在 [`data/`](./data/) 目錄下，**不需另外下載**：
 
 ```text
 data/
-├── test.fastq                          # 單一測試用 FASTQ (1,000 reads, 供範例 1 快速練習)
-├── fastq_4samples/                     # 4 個輕量真實雙端樣本 (每檔 1,000 reads, 供範例 1~5 快速練習)
+├── fastq_4samples/                     # [第 03 章使用] 4 個輕量 FASTQ 樣本 (每檔 1,000 reads, 供 Case 01~05 練習)
 │   ├── FMT.0093C_5_L001_R1_001.fastq.gz
 │   ├── FMT.0093C_46_L001_R2_001.fastq.gz
 │   ├── FMT.0093D_2_L001_R1_001.fastq.gz
 │   └── FMT.0093D_43_L001_R2_001.fastq.gz
-└── qiime2/                             # 完整 QIIME 2 臨床試驗套件 (NCT02269150 自體糞菌移植研究)
+└── qiime2/                             # [第 04 章使用] QIIME 2 腸道菌相分析資料 (供 Case 06~07 練習)
     ├── Qiime2_Pipeline.sh              # 原始教學參考腳本
-    ├── Upstream/                       # 已預先跑完耗時 DADA2 去噪的中介結果檔
-    │   ├── asv-sequences-0.qza
-    │   ├── base-transition-stats.qza
-    │   ├── dada2-stats.qza
-    │   └── feature-table-0.qza
-    └── Input_Data/                     # 上下游完整輸入資料
-        ├── data_to_import/             # 完整 82 個 .fastq.gz 雙端原始定序檔 (41 位病患檢體 × R1/R2)
-        ├── sample-metadata.tsv         # 臨床分組與時間軸 Metadata 表格 (12,548 行)
-        ├── feature-table.qza           # 下游完整特徵計數矩陣 (12,546 個檢體)
-        ├── rep-seqs.qza                # 下游 17,865 條 ASV 代表序列
-        └── silva-138.2-ssu-nr99-515f-806r-classifier.qza  # 訓練好的 SILVA 138.2 分類器
+    ├── Upstream/                       # 已預先跑完 DADA2 去噪的特徵表 (feature-table-0.qza)
+    └── Input_Data/                     # 上下游輸入資料
+        ├── data_to_import/             # 82 個雙端 .fastq.gz 原始定序檔
+        ├── sample-metadata.tsv         # 臨床分組與時間軸 Metadata 表格
+        ├── feature-table.qza           # 下游特徵計數矩陣
+        ├── rep-seqs.qza                # 下游 ASV 代表序列
+        └── silva-138.2-ssu-nr99-515f-806r-classifier.qza  # SILVA 138.2 分類器
 ```
 
 ---
@@ -81,11 +76,11 @@ data/
 
 ---
 
-## 第二部分：進階實戰 (`tutorial/case06` ~ `case07`) —— 將 `data/qiime2/Qiime2_Pipeline.sh` 拆解為多輪自然語言對話，最後一鍵自動化串接
+## 第二部分：QIIME 2 腸道菌相分析（`tutorial/case06` ~ `case07`）
 
-完整的 82 個 `.fastq.gz` 檔案、分類器與下游 `.qza` 檔案都已經在 `data/qiime2/` 裡了！學生不需要手動改那份 500 行的腳本，也**不需要再執行 `wget` 下載**，可以直接用以下 4 輪自然語言對話完成整套分析：
+完整的 82 個 `.fastq.gz` 檔案、分類器與下游 `.qza` 檔案皆已內建於 `data/qiime2/` 中，**不需執行 `wget` 下載**，可依序透過以下步驟與 AI Agent 協同完成分析：
 
-### 🔹 步驟 A（第一輪對話，`tutorial/case06`）：請 AI 進行上游 82 個樣本匯入與品質評估（Upstream）
+### 🔹 步驟 A（`tutorial/case06`）：上游 82 個樣本匯入與品質評估（Upstream）
 **💬 學生對 AI 說：**
 > 請參考 `data/qiime2/Qiime2_Pipeline.sh` 的第一段（上游前處理），幫我寫一支 Slurm 作業（計畫 `GOV115088`）送到計算節點執行，輸出結果請放在 `tutorial/case06/qiime2_run/Upstream/`：
 > 1. 載入 `biology/qiime2/2026.7` 模組（不用再跑 `wget` 下載，資料已經在 `data/qiime2/` 裡面了）。
