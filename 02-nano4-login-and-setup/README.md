@@ -2,17 +2,17 @@
 
 完成前一單元的 Antigravity IDE 安裝後，本單元說明如何設定本機 SSH Config、透過 **IDExpert 雙因子認證**（或搭配 **`ssh-proxy` 免重複認證**）連上國網中心 **晶創26 (`nano4.nchc.org.tw`)**，最後將課程教材下載至高速工作區 `/work/$USER/` 並開啟。
 
-| 步驟 | 內容 |
-| :--- | :--- |
-| **步驟 A** | [前置確認：iService 主機帳號與手機 IDExpert 2FA App](#步驟-a前置確認iservice-主機帳號與手機-idexpert-2fa-app) |
-| **步驟 B** | [設定本機 SSH Config（一次加入 `nano4` 與 `nano4-proxy`）](#步驟-b設定本機-ssh-config) |
-| **步驟 C** | [（強烈建議）啟動 `ssh-proxy`：整堂課只做一次 2FA 認證](#步驟-c強烈建議啟動-ssh-proxy整堂課只做一次-2fa-認證) |
-| **步驟 D** | [在 Antigravity 連入 Nano4](#步驟-d在-antigravity-連入-nano4) |
-| **步驟 E** | [下載教材並開啟遠端工作區 (`/work/your_account/nano4-ngs-slurm-skill`)](#步驟-e下載教材並開啟遠端工作區) |
+| 步驟 | 內容 | 預估時間 |
+| :--- | :--- | :---: |
+| **第 1 步** | [前置確認：iService 主機帳號與手機 IDExpert 2FA App](#第-1-步前置確認-iservice-主機帳號與手機-idexpert-2fa-app) | 1 分鐘 |
+| **第 2 步** | [設定本機 SSH Config（一次加入 `nano4` 與 `nano4-proxy`）](#第-2-步設定本機-ssh-config) | 2 分鐘 |
+| **第 3 步** | [啟動 `ssh-proxy` 完成單次 2FA 認證（強烈建議）](#第-3-步啟動-ssh-proxy-完成單次-2fa-認證) | 2 分鐘 |
+| **第 4 步** | [在 Antigravity 連入 Nano4](#第-4-步在-antigravity-連入-nano4) | 1 分鐘 |
+| **第 5 步** | [下載教材並開啟遠端工作區 (`/work/your_account/nano4-ngs-slurm-skill`)](#第-5-步下載教材並開啟遠端工作區) | 2 分鐘 |
 
 ---
 
-## 步驟 A：前置確認：iService 主機帳號與手機 IDExpert 2FA App
+## 第 1 步：前置確認 iService 主機帳號與手機 IDExpert 2FA App
 
 在連線前，請確認您已完成以下準備：
 1. **國網主機帳號與密碼**：已於 [iService 會員系統](https://iservice.nchc.org.tw/nchc_service/index.php)（會員中心 ➔ 會員資訊 ➔ 主機帳號資訊）確認您的主機帳號與密碼，並加入課程或生醫計畫（本課程使用 **`GOV115088`**）。
@@ -21,7 +21,7 @@
 
 ---
 
-## 步驟 B：設定本機 SSH Config
+## 第 2 步：設定本機 SSH Config
 
 我們先在您個人電腦本機的 `~/.ssh/config` 一次加入 `nano4`（直連用）與 `nano4-proxy`（免重複輸入 2FA 代理用）兩組設定，之後就不必再回頭改設定檔：
 
@@ -62,7 +62,7 @@ Host nano4-proxy
 
 ---
 
-## 步驟 C（強烈建議）：啟動 `ssh-proxy`：整堂課只做一次 2FA 認證
+## 第 3 步：啟動 ssh-proxy 完成單次 2FA 認證
 
 Nano4 的**每一條新 SSH 連線**都要輸入密碼與 OTP。Antigravity / VS Code 的 Remote-SSH 在「第一次連線」、「點選 Open Folder 開啟教材資料夾」、「切換資料夾或重新載入視窗」時都會開新連線，若直接連 `nano4`，同一堂課要重複認證好幾次。
 
@@ -105,12 +105,12 @@ nano4.nchc.org.tw:22
 
 ---
 
-## 步驟 D：在 Antigravity 連入 Nano4
+## 第 4 步：在 Antigravity 連入 Nano4
 
 1. 點擊 Antigravity 視窗左下角的遠端按鈕（圖示 `><`），在上方彈出的選單中選擇：  
    👉 **`Connect to Host... (連線至主機...)`**
 2. 選擇連線目標：
-   - **有啟動步驟 C 的 `ssh-proxy`（推薦）**：點擊選取 **`nano4-proxy`**（直接進入，**不需再輸入密碼與 2FA**！）。
+   - **有啟動第 3 步的 `ssh-proxy`（推薦）**：點擊選取 **`nano4-proxy`**（直接進入，**不需再輸入密碼與 2FA**！）。
    - **未啟動 `ssh-proxy`（直連）**：點擊選取 **`nano4`**，依上方提示框選擇 `Linux` ➔ 輸入 `2` 在手機 **IDExpert App** 點擊「同意」➔ 輸入主機密碼。
 3. 連線成功後，視窗左下角會顯示綠色的 **`SSH: nano4-proxy`**（或 **`SSH: nano4`**）！
 
@@ -120,7 +120,7 @@ nano4.nchc.org.tw:22
 
 ---
 
-## 步驟 E：下載教材並開啟遠端工作區
+## 第 5 步：下載教材並開啟遠端工作區
 
 > [!NOTE]
 > **儲存空間規則**：Nano4 的家目錄 `/home/$USER` 上限僅 100 GB；**所有課程教材、定序資料與分析結果請一律放在高速工作區 `/work/$USER/` 下！**
