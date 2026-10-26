@@ -122,8 +122,11 @@ data/fastq_4samples/ 資料夾裡面有 4 個定序樣本（.fastq.gz），請�
 ### 📋 1. 請複製以下指令貼給 AI Agent（建立您自己的 `my-nano4-slurm` Skill）：
 
 ```text
-經過剛剛的練習，請幫我擷取國網 GP1 官方說明文件（https://man.twcc.ai/xOYzPATVS_aDlbuqMrwhyg）的重點，以及我們剛剛實作 Slurm 單一作業、Array Job、相依流水線與 Apptainer 容器的經驗，在 .agents/skills/my-nano4-slurm/SKILL.md 建立一份我自己的 Slurm 排程技能（名稱設為 my-nano4-slurm），內容須包含：
+經過剛剛的練習，請幫我擷取國網 GP1 官方說明文件（https://man.twcc.ai/xOYzPATVS_aDlbuqMrwhyg）的重點，以及我們剛剛實作 Slurm 單一作業、Array Job、相依流水線與 Apptainer 容器的經驗，在 .agents/skills/my-nano4-slurm/SKILL.md 建立一份我自己的 Slurm 排程技能：
 
+0. YAML Frontmatter 設定（防衝突）：
+   - name 設為 my-nano4-slurm
+   - description 設為「學員自訂之 Nano4 Slurm 排程練習技能；僅在使用者於對話中明確點名使用 my-nano4-slurm 時載入」（避免與專案預設的 nano4-ngs-slurm 自動觸發衝突）。
 1. 執行環境與安全規範：
    - 嚴禁在登入節點運算，必須透過 sbatch / salloc 派送至計算節點。
    - 嚴禁使用 watch 或無窮迴圈每秒高頻輪詢 squeue（長時作業若需自動監控，應使用定時排程工具每 5 分鐘低頻檢查一次單次 squeue / sacct）。
