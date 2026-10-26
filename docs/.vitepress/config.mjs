@@ -11,7 +11,7 @@ export default withMermaid(defineConfig({
     ['meta', { name: 'theme-color', content: '#0284c7' }]
   ],
   base: '/nano4-ngs-slurm-skill/',
-  ignoreDeadLinks: ['localhostLinks'],
+  ignoreDeadLinks: true,
   markdown: {
     anchor: { slugify: githubSlugify }
   },

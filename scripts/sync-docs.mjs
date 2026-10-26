@@ -35,6 +35,11 @@ function fromChapter(dir, target) {
   if (target === '../AGENTS.md') return './agents_governance'
   if (target === '../Example.md') return './examples_all'
   if (target === '../README.md') return './00_overview'
+  if (target.startsWith('../.agents/') || target.startsWith('../data/')) {
+    const clean = target.slice(3)
+    const kind = clean.endsWith('/') ? 'tree' : 'blob'
+    return `${REPO}/${kind}/main/${clean.replace(/\/$/, '')}`
+  }
   const page = chapterPage(target, '\\.\\./')
   if (page) return page
   if (target.startsWith('./')) {
