@@ -129,8 +129,8 @@ Nano4（140.110.109.162:22）
 3. 連線成功後，視窗左下角會顯示綠色的 **`SSH: nano4-proxy`**（或 **`SSH: nano4`**）！
 
 > [!IMPORTANT]
-> **若您使用外掛型 Agent（選項 B 的 Claude Code / Codex，或選項 C 的 OpenCode）**：
-> 連上 Nano4 後，請打開左側「擴充功能 (Extensions)」，在該套件旁點擊 **`Install in SSH: nano4-proxy`**（或在遠端終端機安裝 OpenCode），將 Agent 安裝至 Nano4 遠端環境！若您使用預設的 **Antigravity 內建 Agent（選項 A）** 則不需額外安裝。
+> **若您使用外掛型 Agent（選項 B 的 Claude Code / Codex，或選項 C 的 Zoo Code）**：
+> 連上 Nano4 後，請打開左側「擴充功能 (Extensions)」，在該套件旁點擊 **`Install in SSH: nano4-proxy`**，將 Agent 安裝至 Nano4 遠端環境！若您使用預設的 **Antigravity 內建 Agent（選項 A）** 則不需額外安裝。
 
 ---
 

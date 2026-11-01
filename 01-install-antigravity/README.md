@@ -1,12 +1,12 @@
 # 範例 1-1：環境建置 —— 安裝 Antigravity 與模型設定
 
-本單元先在個人電腦安裝 **Antigravity IDE**、調整三欄操作介面，並說明如何選擇 AI 模型（**預設使用 Antigravity 內建模型，也可自備 Claude / GPT，或使用 OpenCode Agent 串接國網地端模型**）。
+本單元先在個人電腦安裝 **Antigravity IDE**、調整三欄操作介面，並安裝 Markdown 預覽與 AI Agent 擴充功能（**預設使用 Antigravity 內建模型，也可自備 Claude / GPT，或使用 Zoo Code 串接國網地端模型**）。
 
 | 步驟 | 內容 | 預估時間 |
 | :--- | :--- | :---: |
 | **第 1 步** | [下載並安裝 Antigravity IDE](#第-1-步下載並安裝-antigravity-ide) | 3 分鐘 |
 | **第 2 步** | [調整操作版面](#第-2-步調整操作版面) | 2 分鐘 |
-| **第 3 步** | [選擇 AI Agent 與模型](#第-3-步選擇-ai-agent-與模型) | 2 分鐘 |
+| **第 3 步** | [安裝擴充功能：Markdown Inline Preview 與 AI Agent](#第-3-步安裝擴充功能extensions) | 3 分鐘 |
 | **第 4 步** | [本機暖身：用自然語言安裝工具並跑一個小分析](#第-4-步本機暖身用自然語言安裝工具並跑一個小分析) | 20 分鐘 |
 
 ---
@@ -28,7 +28,7 @@
 - **macOS**：打開下載檔案，將 **Antigravity IDE** 拖曳至「應用程式 (Applications)」資料夾。
 
 > [!TIP]
-> **若您習慣使用 VS Code**：也可至 [VS Code 官網](https://code.visualstudio.com/) 下載安裝，並在擴充功能市場安裝 Microsoft 官方的 **`Remote - SSH`**。VS Code 可安裝下方的選項 B（Claude Code / Codex）與選項 C（OpenCode），但沒有 Antigravity 內建 Agent。
+> **若您習慣使用 VS Code**：也可至 [VS Code 官網](https://code.visualstudio.com/) 下載安裝，並在擴充功能市場安裝 Microsoft 官方的 **`Remote - SSH`**。VS Code 可安裝下方的選項 B（Claude Code / Codex）與選項 C（Zoo Code），但沒有 Antigravity 內建 Agent。
 
 ---
 
@@ -42,15 +42,25 @@
 
 ---
 
-## 第 3 步：選擇 AI Agent 與模型
+## 第 3 步：安裝擴充功能（Extensions）
 
-本教材的 `AGENTS.md` 與 `.agents/skills/` 採用通用格式，以下三種 Agent 都能讀取。請依自己的需求擇一使用：
+點擊左側活動列的「**擴充功能 (Extensions)**」圖示（快捷鍵 `Ctrl + Shift + X` / `Cmd + Shift + X`），搜尋名稱後點擊 **Install**。
+
+### 1. Markdown Inline Preview：直接閱讀排版後的 Markdown
+
+教材、`AGENTS.md`、Skill 與 AI 產出的報告大多是 Markdown（`.md`）。安裝後，標題、粗體、表格與連結會直接在編輯器裡顯示排版後的樣子，不必另開預覽視窗。
+
+- 搜尋 **`Markdown Inline Preview`**（`markdown-inline-preview.markdown-inline-preview`）並安裝。
+
+### 2. AI Agent：選擇 Agent 與模型
+
+本教材的 `AGENTS.md` 與 `.agents/skills/` 採用通用格式，以下 Agent 都能讀取。請依需求擇一使用，也可以多裝幾個：
 
 | 選項 | Agent 與模型 | 適合對象 | 設定方式 |
 | :--- | :--- | :--- | :--- |
-| **A（預設）** | **Antigravity 內建 Agent**<br>*(Gemini 等內建模型)* | 第一次使用、想直接上手；**不需 API Key** | 開啟 Antigravity 後以 **Google 帳號**登入，即可在右側對話面板使用 |
-| **B** | **Claude Code / Codex**<br>*(自備 Claude / GPT 模型)* | 已有 Claude Pro/Max、ChatGPT Plus 或 API 帳號 | 在左側「擴充功能 (Extensions)」搜尋並安裝 **Claude Code**（`anthropic.claude-code`）或 **Codex**（`openai.chatgpt`），登入個人帳號 |
-| **C** | **OpenCode**<br>*(國網地端模型)* | 機敏生醫資料不希望離開國網環境 | 安裝 **OpenCode**，在設定中填入國網提供的模型端點（Base URL）與 API Key |
+| **A（預設）** | **Antigravity 內建 Agent**<br>*(Gemini 等內建模型)* | 第一次使用、想直接上手；**不需 API Key** | 不需安裝；開啟 Antigravity 後以 **Google 帳號**登入，即可在右側對話面板使用 |
+| **B** | **Claude Code / Codex**<br>*(自備 Claude / GPT 模型)* | 已有 Claude Pro/Max、ChatGPT Plus 或 API 帳號 | 搜尋並安裝 **Claude Code**（`anthropic.claude-code`）或 **Codex**（`openai.chatgpt`），登入個人帳號 |
+| **C** | **Zoo Code**<br>*(國網地端模型)* | 機敏生醫資料不希望離開國網環境 | 搜尋並安裝 **Zoo Code**（`zoocodeorganization.zoo-code`），在設定中選擇「**OpenAI 相容**」（OpenAI Compatible），填入國網提供的 Base URL 與 API Key |
 
 > [!TIP]
 > 不確定要選哪一個？建議先用**選項 A**，免額外設定，最快上手。

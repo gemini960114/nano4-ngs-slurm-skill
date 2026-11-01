@@ -18,7 +18,7 @@ hero:
 features:
   - icon: 💻
     title: 1. 環境建置：本機暖身與連線 Nano4
-    details: 先在本機用自然語言安裝 Git、uv 並完成 4 個 FASTQ 檔的小分析，再用 Antigravity 連線 Nano4。預設使用內建模型，也可自備 Claude/GPT，或用 OpenCode 串接國網地端模型。
+    details: 先在本機用自然語言安裝 Git、uv 並完成 4 個 FASTQ 檔的小分析，再用 Antigravity 連線 Nano4。預設使用內建模型，也可自備 Claude/GPT，或用 Zoo Code 串接國網地端模型。
     link: /guide/01_install_antigravity
     linkText: 進入環境建置
   - icon: 🛠️
