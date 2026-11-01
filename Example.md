@@ -117,46 +117,40 @@ data/fastq_4samples/ 資料夾裡面有 4 個定序樣本（.fastq.gz），請�
 
 ## 範例 3：管線派送與監控 —— QIIME 2 腸道菌相分析 (`tutorial/case06` ~ `case07`)
 
-### 🔹 階段 A (`tutorial/case06`)：上游 82 個樣本匯入與品質評估（Upstream）
+### 🔹 步驟 3-1：請 AI 讀懂分析腳本（研究背景與三段流程）
 ```text
-請參考 data/qiime2/Qiime2_Pipeline.sh 的第一段（上游前處理），幫我寫一支 Slurm 作業（計畫 GOV115088）送到計算節點執行，輸出結果請放在 tutorial/case06/qiime2_run/Upstream/：
-1. 載入 biology/qiime2/2026.7 模組（不用再跑 wget 下載，資料已經在 data/qiime2/ 裡面了）。
-2. 把 data/qiime2/Input_Data/data_to_import/ 裡面的 82 個雙端 FASTQ 檔案匯入成 demultiplexed-sequences.qza，並產生品質摘要圖 demultiplexed-sequences-summ.qzv。
-3. 直接讀取現成的 data/qiime2/Upstream/feature-table-0.qza，產出特徵表摘要統計 feature-table-0-summ.qzv。
-4. 送出前請先跟我說明腳本內容與資源設定，等我確認後才送出；送出後請每 5 分鐘自動檢查一次作業狀態，跑完後通知我。
+請閱讀 data/qiime2/Qiime2_Pipeline.sh（先不要送出任何作業），用白話文告訴我：
+1. 這份資料的研究背景，以及想回答什麼問題。
+2. 流程分成哪幾段、各段的輸入與產出，以及哪些段落彼此相依。
+3. 預計會產生哪些 .qzv 圖表，各自可以看出什麼。
 ```
 
----
-
-### 🔹 階段 B (`tutorial/case06`)：篩選臨床檢體與 8 核心菌種分類（Downstream）
+### 🔹 步驟 3-2 (`tutorial/case06`)：上游 82 個雙端 FASTQ 匯入與品質評估（Upstream）
 ```text
-上一步成功了！接著請參考 data/qiime2/Qiime2_Pipeline.sh 的第三段前半部，幫我寫第二支 Slurm 腳本送到計算節點執行，結果放在 tutorial/case06/qiime2_run/Downstream/：
-1. 直接讀取 data/qiime2/Input_Data/ 裡面現成的 sample-metadata.tsv、feature-table.qza、rep-seqs.qza 與 silva-138.2-ssu-nr99-515f-806r-classifier.qza 分類器（不需重新下載）。
-2. 照腳本的條件篩選檢體（保留 autoFmtGroup 有值、移植前後 -10 到 70 天、至少出現在 2 個檢體、排除葉綠體與粒線體、總讀序數 >= 10,000）。
-3. 完成菌種分類註解（請加上 --p-n-jobs 8 開啟 8 核心加速），並產生第一張物種組成堆疊圖 taxa-bar-plots-1.qzv。
-4. 同樣請先向我說明腳本內容，確認後才送出，並設定每 5 分鐘自動檢查一次作業狀態。
+請參考 data/qiime2/Qiime2_Pipeline.sh 的上游段落，寫一支 Slurm 作業送到計算節點，結果放在 tutorial/case06/qiime2_run/Upstream/：
+1. 載入 biology/qiime2/2026.7 模組（資料已在 data/qiime2/，不需 wget）。
+2. 把 data/qiime2/Input_Data/data_to_import/ 的 82 個雙端 FASTQ 匯入成 demultiplexed-sequences.qza，並產生品質摘要圖 demultiplexed-sequences-summ.qzv。
+3. 讀取現成的 data/qiime2/Upstream/feature-table-0.qza，產出 feature-table-0-summ.qzv。
+送出後每 5 分鐘檢查一次狀態，跑完通知我。
 ```
 
----
-
-### 🔹 階段 C (`tutorial/case06`)：演化樹、核心多樣性、UMAP 與縱向統計（Diversity & Longitudinal）
+### 🔹 步驟 3-3 (`tutorial/case06`)：下游篩選分類 ➔ 多樣性分析，afterok 串接一次送出
 ```text
-篩選跟分類都跑完了！現在請參考 data/qiime2/Qiime2_Pipeline.sh 後半段的多樣性與縱向分析，幫我送出第三支 Slurm 作業，結果放在 tutorial/case06/qiime2_run/Diversity_Longitudinal/：
-1. 對上一步篩選後的序列建立演化樹（MAFFT / FastTree，請加上 --p-n-threads 8 用滿 8 核心）。
-2. 以抽樣深度 10,000 計算 Alpha 與 Beta 核心多樣性指標、稀釋曲線與組間顯著性檢定。
-3. 跑完 UMAP 降維、Emperor 排序圖，以及最後的線性混合效應模型（LME）與菌屬隨時間變化的波動圖（Volatility）。
-4. 請先說明腳本內容，我確認後再送出，之後每 5 分鐘自動檢查一次作業狀態直到完成。
+請參考 data/qiime2/Qiime2_Pipeline.sh 的下游段落，寫兩支 Slurm 腳本，用 --dependency=afterok 串接後一次送出（同樣載入 biology/qiime2/2026.7）：
+1. 篩選與分類，結果放在 tutorial/case06/qiime2_run/Downstream/：
+   - 讀取 data/qiime2/Input_Data/ 的 sample-metadata.tsv、feature-table.qza、rep-seqs.qza 與 silva-138.2-ssu-nr99-515f-806r-classifier.qza。
+   - 照腳本條件篩選檢體（autoFmtGroup 有值、移植前後 -10 到 70 天、至少出現在 2 個檢體、排除葉綠體與粒線體、總讀序數 >= 10,000）。
+   - 菌種分類加上 --p-n-jobs 8，並產生物種組成堆疊圖 taxa-bar-plots-1.qzv。
+2. 多樣性與縱向分析，結果放在 tutorial/case06/qiime2_run/Diversity_Longitudinal/：
+   - 用第 1 支篩選後的序列建立演化樹（MAFFT / FastTree，加上 --p-n-threads 8）。
+   - 以抽樣深度 10,000 計算 Alpha 與 Beta 多樣性、稀釋曲線與組間顯著性檢定。
+   - 跑 UMAP、Emperor 排序圖、線性混合效應模型（LME）與菌屬波動圖（Volatility）。
+送出後每 5 分鐘檢查一次狀態（全部約 13 分鐘），跑完後確認所有 .qzv 都有產生，並用白話文說明產出了哪些圖表。
 ```
 
----
-
-### 🔹 管線整合與定時監控 (`tutorial/case07`)：一鍵串接三階段自動化流水線
+### 🔹 選做 (`tutorial/case07`)：整合成單一完整版 Slurm 腳本
 ```text
-太棒了！現在請幫我把上面三個階段（步驟 A 上游匯入、步驟 B 篩選與分類、步驟 C 多樣性與縱向分析）整合成一套完整的自動化 Slurm 流水線：
-- 請幫我寫一個啟動腳本 run_full_qiime2_pipeline.sh，用 Slurm 的相依性功能（--dependency=afterok）把這三支腳本串起來，讓前一階段成功後自動啟動下一階段。
-- 同時也幫我把 data/qiime2/Qiime2_Pipeline.sh 改寫成一份拿掉 wget、改讀本地 data/qiime2/ 資料，且符合 ngs62g（8 核心、62G 記憶體、module purge）規範的單一完整版 Qiime2_Pipeline_ngs62g.slurm 備用。
-- 送出流水線前先跟我說明設定，我確認後再送出；送出後請每 5 分鐘自動檢查一次作業狀態，全部跑完後檢查所有 .qzv 結果檔是否都成功產生，並用白話文總結這次腸道菌相分析產出了哪些圖表！
-- 腳本報告放在目前目錄 tutorial/case07
+請把 data/qiime2/Qiime2_Pipeline.sh 改寫成一份拿掉 wget、改讀本地 data/qiime2/ 資料，且符合 ngs62g 規範的單一完整版 Qiime2_Pipeline_ngs62g.slurm，放在 tutorial/case07。先不要送出。
 ```
 
 ---
