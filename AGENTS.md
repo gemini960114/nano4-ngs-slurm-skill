@@ -15,8 +15,8 @@
 ## 腳本必填
 - 一定要寫 `--cpus-per-task` 與 `--mem`（`ngs248c`、`ngs496c` 除外）；漏寫 `--mem` 會預設申請 1024G，作業永遠排不上。
 - 先 `module purge` 再 `module load biology/<軟體>/<版本>`；容器用 apptainer，不用 docker。
-- 資料、暫存、`.sif` 與各種快取放 `/work/$USER`；`/home`（100G）只放腳本與設定。
-- Python 一律用 `uv`。
+- 資料、暫存、`.sif`、各種快取與 uv 下載的 Python 放 `/work/$USER`；`/home`（100G）只放腳本與設定。
+- Python 一律用 uv 與專案根目錄的 `.venv`（不存在時以 `uv venv --python 3.12` 建立）：用 `uv pip install` 安裝套件、`uv run python` 執行（Slurm 腳本內亦同），不可用全域 `pip install`。
 
 需要 Slurm 範本、分區規格表、日誌命名或 `seff` 診斷時，讀取 `.agents/skills/nano4-ngs-slurm/SKILL.md`；整理報告時讀取 `.agents/skills/nano4-ngs-report/SKILL.md`。
 
