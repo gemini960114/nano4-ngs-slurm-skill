@@ -32,20 +32,25 @@ data/
 
 ### 步驟 1-1-4（本機）：用自然語言安裝 Git 與 uv
 ```text
-請判斷我的作業系統，檢查 Git 與 uv 是否已安裝；缺少的請用 WinGet（Windows）或 Homebrew（macOS）安裝，完成後回報版本。
+請判斷我的作業系統，檢查 Git 與 uv 是否已安裝，缺少的請安裝：
+- Windows：用 WinGet 安裝。
+- macOS：Git 用系統內建的命令列開發者工具，uv 用官方安裝指令（不需 Homebrew）。
+安裝後若找不到指令，請開新的終端機再確認，最後回報版本。
 ```
 
 ### 步驟 1-1-4（本機）：4 個樣本的小型分析
 ```text
 請從 https://github.com/gemini960114/nano4-ngs-slurm-skill/tree/main/data/fastq_4samples 下載 4 個 FASTQ 檔到 data/，
-用 uv 建立 Python 環境並安裝需要的套件，對每個樣本計算 read 數、平均長度與 GC 含量，
+用 uv 在這個資料夾建立 .venv 並安裝需要的套件，對每個樣本計算 read 數、平均長度與 GC 含量，
 整理成一張 CSV 表格，再畫一張 4 個樣本的比較圖存成 PNG。
 ```
 
-### 步驟 1-2-6（Nano4）：安裝 uv、確認計畫代號並檢查 AGENTS.md
+### 步驟 1-2-6（Nano4）：安裝 uv、建立 .venv、確認計畫代號並檢查 AGENTS.md
 ```text
-請檢查 Nano4 上是否有 uv；沒有的話請安裝到我的家目錄（不需 sudo），並把 uv 快取設在 /work/$USER，完成後回報版本。
-接著用 wallet 確認我有哪些計畫代號，是否包含課程計畫 GOV115088。
+請在 Nano4 上準備 Python 環境（不需 sudo）：
+1. 檢查是否有 uv，沒有的話安裝到我的家目錄；uv 快取與 uv 下載的 Python 都放在 /work/$USER。
+2. 在教材目錄用 uv 建立 Python 3.12 的 .venv。
+3. 用 wallet 確認我有哪些計畫代號，是否包含課程計畫 GOV115088。
 最後用三句話告訴我，你從 AGENTS.md 讀到在 Nano4 上最重要的規則。
 ```
 

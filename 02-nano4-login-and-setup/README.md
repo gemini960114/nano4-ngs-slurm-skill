@@ -1,6 +1,6 @@
 # 範例 1-2：環境建置 —— 連上 Nano4 (Remote-SSH) 與下載教材
 
-完成前一單元的 Antigravity IDE 安裝後，本單元說明如何設定本機 SSH Config、透過 **IDExpert 雙因子認證**（或搭配 **`ssh-proxy` 免重複認證**）連上國網中心 **晶創26 (`nano4.nchc.org.tw`)**，將課程教材下載至高速工作區 `/work/$USER/` 並開啟，最後用自然語言在 Nano4 補裝 uv。
+完成前一單元的 Antigravity IDE 安裝後，本單元說明如何設定本機 SSH Config、透過 **IDExpert 雙因子認證**（或搭配 **`ssh-proxy` 免重複認證**）連上國網中心 **晶創26 (`nano4.nchc.org.tw`)**，將課程教材下載至高速工作區 `/work/$USER/` 並開啟，最後用自然語言在 Nano4 安裝 uv 並建立 Python 環境。
 
 | 步驟 | 內容 | 預估時間 |
 | :--- | :--- | :---: |
@@ -9,7 +9,7 @@
 | **第 3 步** | [啟動 `ssh-proxy` 完成單次 2FA 認證（強烈建議）](#第-3-步啟動-ssh-proxy-完成單次-2fa-認證) | 2 分鐘 |
 | **第 4 步** | [在 Antigravity 連入 Nano4](#第-4-步在-antigravity-連入-nano4) | 1 分鐘 |
 | **第 5 步** | [下載教材並開啟遠端工作區 (`/work/your_account/nano4-ngs-slurm-skill`)](#第-5-步下載教材並開啟遠端工作區) | 2 分鐘 |
-| **第 6 步** | [用自然語言在 Nano4 安裝 uv](#第-6-步用自然語言在-nano4-安裝-uv) | 2 分鐘 |
+| **第 6 步** | [用自然語言在 Nano4 安裝 uv 並建立 .venv](#第-6-步用自然語言在-nano4-安裝-uv-並建立-venv) | 3 分鐘 |
 
 ---
 
@@ -167,13 +167,15 @@ Nano4（140.110.109.162:22）
 
 ---
 
-## 第 6 步：用自然語言在 Nano4 安裝 uv
+## 第 6 步：用自然語言在 Nano4 安裝 uv 並建立 .venv
 
-範例 1-1 在本機裝的工具不會出現在 Nano4 上。Nano4 已內建 Git，只需要補裝 uv。請在右側對話面板貼上：
+範例 1-1 在本機裝的工具不會出現在 Nano4 上。Nano4 是 Linux 系統，已內建 Git，但內建的 Python 3.9 較舊，因此用 uv 另外建立 Python 3.12 的 `.venv`，之後所有練習共用。請在右側對話面板貼上：
 
 ```text
-請檢查 Nano4 上是否有 uv；沒有的話請安裝到我的家目錄（不需 sudo），並把 uv 快取設在 /work/$USER，完成後回報版本。
-接著用 wallet 確認我有哪些計畫代號，是否包含課程計畫 GOV115088。
+請在 Nano4 上準備 Python 環境（不需 sudo）：
+1. 檢查是否有 uv，沒有的話安裝到我的家目錄；uv 快取與 uv 下載的 Python 都放在 /work/$USER。
+2. 在教材目錄用 uv 建立 Python 3.12 的 .venv。
+3. 用 wallet 確認我有哪些計畫代號，是否包含課程計畫 GOV115088。
 最後用三句話告訴我，你從 AGENTS.md 讀到在 Nano4 上最重要的規則。
 ```
 
