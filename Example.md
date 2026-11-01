@@ -93,8 +93,8 @@ data/fastq_4samples/ 資料夾裡面有 4 個 FASTQ 檔（.fastq.gz），請幫�
 ### 練習 3 (`tutorial/case03`)：FastQC 與 MultiQC 品質檢查流水線（相依作業 Dependency）
 ```text
 請幫我對 data/fastq_4samples/ 裡面的 4 個 FASTQ 檔做品質檢查流水線：
-- 第一步：用 FastQC 檢查這 4 個檔案的品質，結果放在 qc/fastqc_out/。
-- 第二步：等第一步確定成功跑完後，自動啟動 MultiQC 把結果彙整成一份 HTML 報告，放在 qc/multiqc_out/。
+- 第一步：用 FastQC 檢查這 4 個檔案的品質，結果放在 tutorial/case03/qc/fastqc_out/。
+- 第二步：等第一步確定成功跑完後，自動啟動 MultiQC 把結果彙整成一份 HTML 報告，放在 tutorial/case03/qc/multiqc_out/。
 先告訴我你打算怎麼送，我同意後再送出。
 腳本放在目前目錄 tutorial/case03
 ```
@@ -113,7 +113,7 @@ data/fastq_4samples/ 資料夾裡面有 4 個 FASTQ 檔（.fastq.gz），請幫�
 ```text
 這次不要用 module load，請改寫一個用 Apptainer 容器執行的 Slurm 工作：
 1. 在計算節點直接從 Docker Hub 下載 multiqc/multiqc:v1.35 映像檔，.sif 檔存在 /work/$USER/containers/，Apptainer 快取也設在 /work/$USER/（home 空間有限）。
-2. 用這個容器去掃描剛剛 qc/fastqc_out/ 的結果，產生 MultiQC 報告到 tutorial/case05/multiqc_out/。
+2. 用這個容器去掃描剛剛 tutorial/case03/qc/fastqc_out/ 的結果，產生 MultiQC 報告到 tutorial/case05/multiqc_out/。
 3. 腳本報告放在目前目錄 tutorial/case05
 ```
 
@@ -187,7 +187,7 @@ data/fastq_4samples/ 資料夾裡面有 4 個 FASTQ 檔（.fastq.gz），請幫�
 
 ### 讀取分析結果，自動整理成圖文報告（`.md` + 單一獨立 `.html`）
 ```text
-請啟用 nano4-ngs-report 技能，掃描 tutorial/ 與 qc/ 下的所有 Slurm 腳本、執行日誌（*.out / *.err）與分析產出檔案，為我撰寫一份結合「Runbook 操作手冊」與「生醫 Methods & Results 數據解讀」的完整分析報告，並使用技能內建的轉換腳本同步輸出 .md 與單一獨立 .html 報告至 tutorial/report01/。
+請啟用 nano4-ngs-report 技能，掃描 tutorial/ 下的所有 Slurm 腳本、執行日誌（*.out / *.err）與分析產出檔案，為我撰寫一份結合「Runbook 操作手冊」與「生醫 Methods & Results 數據解讀」的完整分析報告，並使用技能內建的轉換腳本同步輸出 .md 與單一獨立 .html 報告至 tutorial/report01/。
 ```
 
 ---

@@ -15,7 +15,7 @@
 ### 📋 請複製以下指令貼給 AI Agent：
 
 ```text
-請啟用 nano4-ngs-report 技能，掃描 tutorial/ 與 qc/ 下的所有 Slurm 腳本、執行日誌（*.out / *.err）與分析產出檔案，為我撰寫一份結合「Runbook 操作手冊」與「生醫 Methods & Results 數據解讀」的完整分析報告，並使用技能內建的轉換腳本同步輸出 .md 與單一獨立 .html 報告至 tutorial/report01/。
+請啟用 nano4-ngs-report 技能，掃描 tutorial/ 下的所有 Slurm 腳本、執行日誌（*.out / *.err）與分析產出檔案，為我撰寫一份結合「Runbook 操作手冊」與「生醫 Methods & Results 數據解讀」的完整分析報告，並使用技能內建的轉換腳本同步輸出 .md 與單一獨立 .html 報告至 tutorial/report01/。
 ```
 
 - **AI 會自動幫您完成**：

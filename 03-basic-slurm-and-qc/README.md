@@ -50,7 +50,7 @@ https://man.twcc.ai/xOYzPATVS_aDlbuqMrwhyg
 > 1. **第一階段（AI 擬定計畫）**：AI 會先寫好腳本，並在對話框向您報告預計使用的**計畫代號（`GOV115088`）、分區（`ngs62g`）與資源設定（8 核心 / 62G）**，然後停下來等您確認。
 > 2. **第二階段（您確認派送）**：請在對話框輸入 **`好，請送出`**（或 **`同意`**），AI 才會真正執行 `sbatch` 將工作送到計算節點！（若跳出終端機執行權限詢問，請點擊 **Allow / Approve**。）
 >
-> 所有作業都在教材根目錄送出，腳本、日誌（`*.out` / `*.err`）與結果會放在各練習的 `tutorial/caseXX/`（練習 3 的品管報告在 `qc/`）。
+> 所有作業都在教材根目錄送出，腳本、日誌（`*.out` / `*.err`）與結果會放在各練習的 `tutorial/caseXX/`。
 
 ---
 
@@ -78,14 +78,14 @@ data/fastq_4samples/ 資料夾裡面有 4 個 FASTQ 檔（.fastq.gz），請幫�
 
 ```text
 請幫我對 data/fastq_4samples/ 裡面的 4 個 FASTQ 檔做品質檢查流水線：
-- 第一步：用 FastQC 檢查這 4 個檔案的品質，結果放在 qc/fastqc_out/。
-- 第二步：等第一步確定成功跑完後，自動啟動 MultiQC 把結果彙整成一份 HTML 報告，放在 qc/multiqc_out/。
+- 第一步：用 FastQC 檢查這 4 個檔案的品質，結果放在 tutorial/case03/qc/fastqc_out/。
+- 第二步：等第一步確定成功跑完後，自動啟動 MultiQC 把結果彙整成一份 HTML 報告，放在 tutorial/case03/qc/multiqc_out/。
 先告訴我你打算怎麼送，我同意後再送出。
 腳本放在目前目錄 tutorial/case03
 ```
 
 - **💡 如何查看產出的 MultiQC 網頁報告？**
-  跑完後，在左側檔案總管展開 `qc/multiqc_out/`，在 **`multiqc_report.html`** 上按**滑鼠右鍵 ➔ `Download...`** 下載回個人電腦，雙擊即可用瀏覽器打開互動式品管圖表！
+  跑完後，在左側檔案總管展開 `tutorial/case03/qc/multiqc_out/`，在 **`multiqc_report.html`** 上按**滑鼠右鍵 ➔ `Download...`** 下載回個人電腦，雙擊即可用瀏覽器打開互動式品管圖表！
 
 ---
 
@@ -107,7 +107,7 @@ data/fastq_4samples/ 資料夾裡面有 4 個 FASTQ 檔（.fastq.gz），請幫�
 ```text
 這次不要用 module load，請改寫一個用 Apptainer 容器執行的 Slurm 工作：
 1. 在計算節點直接從 Docker Hub 下載 multiqc/multiqc:v1.35 映像檔，.sif 檔存在 /work/$USER/containers/，Apptainer 快取也設在 /work/$USER/（home 空間有限）。
-2. 用這個容器去掃描剛剛 qc/fastqc_out/ 的結果，產生 MultiQC 報告到 tutorial/case05/multiqc_out/。
+2. 用這個容器去掃描剛剛 tutorial/case03/qc/fastqc_out/ 的結果，產生 MultiQC 報告到 tutorial/case05/multiqc_out/。
 3. 腳本報告放在目前目錄 tutorial/case05
 ```
 
