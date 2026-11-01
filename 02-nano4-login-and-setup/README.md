@@ -1,6 +1,6 @@
 # 範例 1-2：環境建置 —— 連上 Nano4 (Remote-SSH) 與下載教材
 
-完成前一單元的 Antigravity IDE 安裝後，本單元說明如何設定本機 SSH Config、透過 **IDExpert 雙因子認證**（或搭配 **`ssh-proxy` 免重複認證**）連上國網中心 **晶創26 (`nano4.nchc.org.tw`)**，最後將課程教材下載至高速工作區 `/work/$USER/` 並開啟。
+完成前一單元的 Antigravity IDE 安裝後，本單元說明如何設定本機 SSH Config、透過 **IDExpert 雙因子認證**（或搭配 **`ssh-proxy` 免重複認證**）連上國網中心 **晶創26 (`nano4.nchc.org.tw`)**，將課程教材下載至高速工作區 `/work/$USER/` 並開啟，最後用自然語言在 Nano4 補裝 uv。
 
 | 步驟 | 內容 | 預估時間 |
 | :--- | :--- | :---: |
@@ -32,6 +32,7 @@
 
 ```ssh-config
 Host nano4
+  # nano4.nchc.org.tw 每次可能分到不同登入節點；固定 IP 一律連到 25a-lgn02
   #HostName nano4.nchc.org.tw
   HostName 140.110.109.162
   User your_account
@@ -76,7 +77,7 @@ Antigravity / VS Code / 終端機
 127.0.0.1:2222   ← ssh-proxy（在您的電腦上執行，視窗保持開著）
         │  已完成密碼 + OTP 的連線
         ▼
-nano4.nchc.org.tw:22
+Nano4（140.110.109.162:22）
 ```
 
 1. **下載執行檔**（前往 [Releases 頁面](https://github.com/gemini960114/ssh-proxy/releases/latest) 下載，免安裝 Python）：
@@ -103,6 +104,18 @@ nano4.nchc.org.tw:22
    - 第一次連線會顯示 Nano4 的主機金鑰指紋，確認後輸入完整的 `yes`。
    - 當出現 `Login method (1: Mobile APP OTP, 2: Mobile APP PUSH, 3: Email OTP):` 時，輸入 **`2`** 按 Enter，解鎖手機在 **IDExpert App** 點擊「同意」（或輸入 `1` 並填入 6 位數 OTP），再輸入您的主機密碼。
    - 看到 `Proxy listening on 127.0.0.1:2222` 即代表通道已建立！（離開座位或下課時，在此視窗按 `Ctrl + C` 即可關閉。）
+   - 若電腦還沒有 SSH 金鑰，proxy 會先自動建立 `~/.ssh/id_ed25519`（已有則沿用）；之後只有用這把金鑰的連線才能透過 proxy 登入。
+
+> [!WARNING]
+> **安全須知**：proxy 開著時，您電腦上的程式都能以您的身分登入 Nano4。請**只在自己的電腦**執行，不要分享 2222 埠或透過 ngrok 等工具對外開放，用完請按 `Ctrl + C` 關閉。
+
+**常見狀況：**
+
+| 訊息 | 原因與處理 |
+| :--- | :--- |
+| `Local port 2222 is already in use` | 另一個 proxy 視窗還開著。切到該視窗按 `Ctrl + C`，或直接沿用它（此時尚未送出密碼與 OTP） |
+| `Idle timeout reached` / `Maximum lifetime reached` | 預設閒置 60 分鐘或累計 8 小時會自動關閉，重新執行第 2 點即可；全天課程可加 `--max-lifetime 12h` |
+| `Permission denied (publickey)` | `nano4-proxy` 設定中不可加 `PubkeyAuthentication no` 或指定其他 `IdentityFile` |
 
 ---
 
@@ -110,9 +123,9 @@ nano4.nchc.org.tw:22
 
 1. 點擊 Antigravity 視窗左下角的遠端按鈕（圖示 `><`），在上方彈出的選單中選擇：  
    👉 **`Connect to Host... (連線至主機...)`**
-2. 選擇連線目標：
+2. 選擇連線目標（第一次連線時，上方會詢問遠端平台，請選 `Linux`）：
    - **有啟動第 3 步的 `ssh-proxy`（推薦）**：點擊選取 **`nano4-proxy`**（直接進入，**不需再輸入密碼與 2FA**！）。
-   - **未啟動 `ssh-proxy`（直連）**：點擊選取 **`nano4`**，依上方提示框選擇 `Linux` ➔ 輸入 `2` 在手機 **IDExpert App** 點擊「同意」➔ 輸入主機密碼。
+   - **未啟動 `ssh-proxy`（直連）**：點擊選取 **`nano4`** ➔ 輸入 `2` 在手機 **IDExpert App** 點擊「同意」➔ 輸入主機密碼。
 3. 連線成功後，視窗左下角會顯示綠色的 **`SSH: nano4-proxy`**（或 **`SSH: nano4`**）！
 
 > [!IMPORTANT]
@@ -134,7 +147,7 @@ nano4.nchc.org.tw:22
    pwd
    ```
 2. 點擊左側選單的「檔案總管 (Explorer)」➔ 點擊 **Open Folder (開啟資料夾)**（或點選上方選單 `File ➔ Open Folder...`）。
-3. 在上方輸入框填入剛剛終端機最後印出的路徑（請將 `your_account` 換成您的國網帳號）：
+3. 在上方輸入框貼上剛剛 `pwd` 印出的路徑（格式如下，`your_account` 為您的國網帳號）：
    ```text
    /work/your_account/nano4-ngs-slurm-skill
    ```
