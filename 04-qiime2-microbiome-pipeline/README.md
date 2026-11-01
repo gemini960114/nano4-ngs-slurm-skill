@@ -20,6 +20,9 @@ flowchart TD
 > [!TIP]
 > **內建資料說明**：所需的 **82 個雙端 `.fastq.gz` 檔案、臨床 Metadata、預訓練 SILVA 138.2 分類器與上游特徵表** 均已放在 `data/qiime2/` 目錄中，不需執行 `wget` 下載。
 
+> [!TIP]
+> **想試試您在範例 2 建立的 Skill？** 在 Prompt 開頭加上「請使用 my-nano4-slurm」即可；不加則使用教材內建的 `nano4-ngs-slurm`。
+
 ---
 
 ## 第 1 步：上游 82 個雙端 FASTQ 匯入與品質評估
