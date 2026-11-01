@@ -72,6 +72,10 @@ description: >-
    - 節點標籤若含括號或特殊字元，務必使用雙引號包覆（例如 `A["Step 1: FastQC (4 Samples)"]`）。
 3. **結構化對照表**：
    - 避免大段純文字堆砌，凡有 3 個以上同類項目（如樣本統計、階段任務、產出檔案清單），一律整理為 Markdown 表格。
+4. **數據圖表**：
+   - 凡有 3 筆以上的數值比較（如各樣本 reads 數、作業耗時、篩選前後保留比例），除了表格，再用 `uv run --with matplotlib python plot.py` 畫成 PNG，存放在報告同一目錄，並以 `![說明](圖檔.png)` 插入報告。
+   - 只從已整理好的小型摘要表（CSV / TSV / 日誌數值）繪圖；需要讀取原始 FASTQ 等大型資料時，先用 `sbatch` 產生摘要表。
+   - 轉換器會把報告中的本機圖片以 base64 內嵌進 `.html`，報告仍為單一檔案。
 
 ---
 
@@ -80,7 +84,7 @@ description: >-
 在無 `node`、`pandoc` 或 `libreoffice` 的受限環境（如 HPC 叢集登入節點）中，撰寫完 `.md` 報告後，**必須**執行本技能內建的純 Python 轉換器，同步產出單一自包含（Self-contained）的 `.html` 報告檔：
 
 ```bash
-python3 /work/u00cjz00/nano4-ngs-slurm-skill/.agents/skills/nano4-ngs-report/scripts/md_to_html.py \
+python3 .agents/skills/nano4-ngs-report/scripts/md_to_html.py \
   <輸入報告.md> \
   <輸出報告.html> \
   --title "報告標題"

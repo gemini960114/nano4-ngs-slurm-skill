@@ -9,12 +9,15 @@ Supports:
 - GitHub Alerts ([!NOTE], [!TIP], [!IMPORTANT], [!WARNING], [!CAUTION])
 - Mermaid.js diagrams (```mermaid)
 - Code blocks & inline formatting
+- Local images (![alt](plot.png)) embedded as base64, keeping the HTML self-contained
 - Print-to-PDF (@media print) optimization
 """
 
 import argparse
+import base64
 import datetime
 import html
+import mimetypes
 import os
 import re
 import sys
@@ -28,6 +31,9 @@ ALERT_META = {
     "WARNING": ("⚠️ Warning / 注意事項", "alert-warning"),
     "CAUTION": ("🚨 Caution / 警戒鐵律", "alert-caution"),
 }
+
+# Directory that relative image paths are resolved against (set in main)
+IMAGE_BASE_DIR = Path(".")
 
 
 def slugify(text: str) -> str:
@@ -66,6 +72,25 @@ def format_inline(text: str) -> str:
     for k, v in latex_replacements.items():
         text = text.replace(k, v)
     text = re.sub(r"\$([^$]+)\$", r"<span class='math'>\1</span>", text)
+
+    # Images: ![alt](path) -> embed local files as base64 (must run before links)
+    def replace_image(m):
+        alt = m.group(1)
+        src = html.unescape(m.group(2))
+        img_path = Path(src) if os.path.isabs(src) else IMAGE_BASE_DIR / src
+        if not re.match(r"^[a-z]+://", src) and img_path.is_file():
+            mime = mimetypes.guess_type(img_path.name)[0] or "image/png"
+            data = base64.b64encode(img_path.read_bytes()).decode("ascii")
+            src_attr = f"data:{mime};base64,{data}"
+        else:
+            if not re.match(r"^[a-z]+://", src):
+                print(f"[WARN] Image not found: {img_path}", file=sys.stderr)
+            src_attr = m.group(2)
+        idx = len(code_spans)
+        code_spans.append(f'<img src="{src_attr}" alt="{alt}">')
+        return f"\x00CODE{idx}\x00"
+
+    text = re.sub(r"!\[([^\]]*)\]\(([^)]+)\)", replace_image, text)
 
     # Links: [label](url)
     def replace_link(m):
@@ -512,6 +537,7 @@ HTML_TEMPLATE = """<!DOCTYPE html>
     display: flex;
     justify-content: space-between;
   }}
+  img {{ max-width: 100%; height: auto; display: block; margin: 1rem auto; }}
   @media (max-width: 960px) {{
     .layout {{ grid-template-columns: 1fr; }}
     .toc-sidebar {{ position: static; max-height: none; }}
@@ -570,6 +596,8 @@ def main():
         print(f"[ERROR] Input file not found: {in_path}", file=sys.stderr)
         sys.exit(1)
 
+    global IMAGE_BASE_DIR
+    IMAGE_BASE_DIR = in_path.parent
     md_text = in_path.read_text(encoding="utf-8")
     body_html, toc = parse_markdown(md_text)
 
