@@ -5,9 +5,9 @@
 | 步驟 | 內容 | 預估時間 |
 | :--- | :--- | :---: |
 | **第 1 步** | [下載並安裝 Antigravity IDE](#第-1-步下載並安裝-antigravity-ide) | 3 分鐘 |
-| **第 2 步** | [調整操作版面與確認 Remote-SSH 擴充功能](#第-2-步調整操作版面與確認-remote-ssh-擴充功能) | 2 分鐘 |
-| **第 3 步** | [選擇 AI 模型與 Agent（注意：連上 HPC 後遠端需再安裝一次）](#第-3-步選擇-ai-模型與-agent) | 2 分鐘 |
-| **第 4 步** | [本機暖身：用自然語言安裝工具並跑一個小分析](#第-4-步本機暖身用自然語言安裝工具並跑一個小分析) | 15 分鐘 |
+| **第 2 步** | [調整操作版面](#第-2-步調整操作版面) | 2 分鐘 |
+| **第 3 步** | [選擇 AI Agent 與模型](#第-3-步選擇-ai-agent-與模型) | 2 分鐘 |
+| **第 4 步** | [本機暖身：用自然語言安裝工具並跑一個小分析](#第-4-步本機暖身用自然語言安裝工具並跑一個小分析) | 20 分鐘 |
 
 ---
 
@@ -32,36 +32,28 @@
 
 ---
 
-## 第 2 步：調整操作版面與確認 Remote-SSH 擴充功能
+## 第 2 步：調整操作版面
 
 為了方便待會連上 Nano4 超級電腦，建議將版面調整為「**左邊看檔案、中間看腳本與結果、右邊跟 AI Agent 對話**」：
 
-### 1. 將 AI 對話面板放在右側
+### 將 AI 對話面板放在右側
 1. 點選上方選單「**檢視 → 外觀**」（`View → Appearance`），勾選 **Secondary Side Bar**。
 2. 如需將「**終端機 (Terminal)**」也移到右側，可在終端機分頁標題按右鍵 → **Move → Secondary Side Bar**。
 
-### 2. 確認安裝 Remote - SSH 擴充功能（連超算必備）
-1. 點擊左側活動列的「**擴充功能 (Extensions)**」圖示（快捷鍵 `Ctrl + Shift + X` / `Cmd + Shift + X`）。
-2. 搜尋 **`Remote - SSH`**，確認已安裝（若未安裝請點擊 **Install**）。
-
 ---
 
-## 第 3 步：選擇 AI 模型與 Agent
+## 第 3 步：選擇 AI Agent 與模型
 
-本教材設計的 `AGENTS.md` 與 `.agents/skills/` 採用通用標準格式，您可以依需求選擇以下任一種 Agent 與模型：
+本教材的 `AGENTS.md` 與 `.agents/skills/` 採用通用格式，以下三種 Agent 都能讀取。請依自己的需求擇一使用：
 
-| 選項 | 模型與 Agent 來源 | 適用情境 | 設定方式 |
+| 選項 | Agent 與模型 | 適合對象 | 設定方式 |
 | :--- | :--- | :--- | :--- |
-| **選項 A（預設）** | **Antigravity 內建模型**<br>*(Gemini 等內建模型)* | **最簡單，免額外設定 API Key**，開箱即用 | 啟動 Antigravity IDE 後，直接使用 **Google 帳號** 登入，即可在右側對話面板直接使用 |
-| **選項 B** | **自備 Claude / GPT 模型**<br>*(Claude Code / Codex)* | 已有個人 Claude Pro/Max、ChatGPT Plus 或 API 帳號 | 在左側「擴充功能 (Extensions)」搜尋安裝 **Claude Code**（`anthropic.claude-code`）或 **Codex**（`openai.chatgpt`），登入個人帳號即可使用 |
-| **選項 C** | **國網地端模型**<br>*(使用 **OpenCode** Agent)* | 機敏生醫數據不希望離開國網內部環境、或使用國網提供之地端模型 | 安裝並使用 **OpenCode** Agent，於設定中填入國網提供的地端模型端點（Base URL）與 API Key，即可直接呼叫國網地端模型 |
+| **A（預設）** | **Antigravity 內建 Agent**<br>*(Gemini 等內建模型)* | 第一次使用、想直接上手；**不需 API Key** | 開啟 Antigravity 後以 **Google 帳號**登入，即可在右側對話面板使用 |
+| **B** | **Claude Code / Codex**<br>*(自備 Claude / GPT 模型)* | 已有 Claude Pro/Max、ChatGPT Plus 或 API 帳號 | 在左側「擴充功能 (Extensions)」搜尋並安裝 **Claude Code**（`anthropic.claude-code`）或 **Codex**（`openai.chatgpt`），登入個人帳號 |
+| **C** | **OpenCode**<br>*(國網地端模型)* | 機敏生醫資料不希望離開國網環境 | 安裝 **OpenCode**，在設定中填入國網提供的模型端點（Base URL）與 API Key |
 
-> [!IMPORTANT]
-> **⚠️ 關鍵觀念：本地電腦裝過的外掛 Agent，連上 Remote-SSH (HPC) 後還要再安裝一次！**
-> - **Antigravity 內建 Agent（選項 A）**：連上 Nano4 後可直接運作，不需重裝。
-> - **外掛型 Agent（選項 B 的 Claude Code / Codex，或選項 C 的 OpenCode）**：
->   因為連上超算後，Agent 必須在 **Nano4 遠端主機 (`~/.antigravity-ide-server` 或遠端環境)** 執行，才能直接讀取 `/work/$USER` 的生醫檔案並派送 `sbatch`。
->   因此，即使您在自己的筆電（本地端 Local）已經裝過這些擴充功能，**待會範例 1-2 透過 `Remote - SSH` 連進 Nano4 後，請務必打開左側 Extensions 面板，點選 `Install in SSH: nano4-proxy`（直連則為 `nano4`，或在遠端終端機）再安裝一次！** 未來若換另一台電腦或連另一台 HPC 主機，也同樣需要在該遠端環境安裝一次。
+> [!TIP]
+> 不確定要選哪一個？建議先用**選項 A**，免額外設定，最快上手。
 
 ---
 
@@ -70,7 +62,7 @@
 連上超算前，先在自己的電腦確認 Agent 能正常執行指令。之後範例 1-2 若出問題，就能確定是連線問題，而不是 Agent 的問題。
 
 1. 選單「**檔案 → 開啟資料夾**」（`File → Open Folder`），開啟一個空資料夾（例如「文件」裡新建的 `ngs-local-demo`）。
-2. 在右側對話面板依序貼上以下兩段 Prompt。AI 要執行指令時會先詢問權限，請點擊 **Accept / Run**（這是正常的安全確認，不是卡住）：
+2. 在右側對話面板依序貼上 Prompt 1、2（Prompt 3 改由另一個 Agent 執行，見下方說明）。AI 要執行指令時會先詢問權限，請點擊 **Accept / Run**（這是正常的安全確認，不是卡住）：
 
 **Prompt 1：安裝工具**
 
@@ -93,18 +85,25 @@
 整理成一張 CSV 表格，再畫一張 4 個檔案的比較圖存成 PNG。
 ```
 
-這個練習讓您體驗三件事：
+**Prompt 3：請另一個 Agent 審查結果**
+
+AI 也會出錯，所以重要的結果最好請**另一個 Agent 審查**，不要讓同一個 Agent 自己檢查自己：
+
+- **有裝第二個 Agent**（選項 B 或 C）：在該 Agent 的對話面板貼上 Prompt 3。
+- **只有內建 Agent**：在 Antigravity 開一個**新對話**再貼上（可順便切換成另一個模型），讓它在不知道前面過程的情況下重新審查。
+
+```text
+另一個 AI 已在這個資料夾對 data/ 的 4 個 FASTQ 檔計算 read 數、平均長度與 GC 含量，並產生 CSV 表格與比較圖。
+請審查它的程式、表格與圖是否正確：要實際驗證，不要只看程式碼下結論；先不要修改任何檔案。
+最後用表格列出每項檢查結果（正確／有問題），有問題的請說明原因與修正建議。
+```
+
+這個練習讓您體驗四件事：
 
 1. **用自然語言安裝 Python 套件**：不必自己打 `pip install`，uv 會自動建立環境。
 2. **請 AI 寫並執行分析程式**：觀察 Agent 如何撰寫、執行與修正程式碼。
 3. **拿到表格和圖**：在左側檔案總管點開 CSV 與 PNG 檢查結果。
-
-> [!TIP]
-> 範例 2 會在 Nano4 上使用**同樣這 4 個檔案**：練習 1、2 把類似的統計改用 Slurm 作業派送到計算節點，練習 3 再執行 FastQC + MultiQC，屆時可以對照本機的簡易統計與超算的正式品管報告。
-
-> [!NOTE]
-> **本機與遠端是兩個獨立環境**：這裡裝的工具只存在您的電腦上。Nano4 是 Linux 系統，安裝方式和您的 Windows / macOS 不同；連上後再用自然語言請 AI 安裝一次即可（見範例 1-2）。
-> 本機適合跑這種幾秒鐘的小分析；正式資料請送到 Nano4 計算節點執行。
+4. **交叉審查**：請另一個 Agent 評估結果是否正確，養成「AI 的結果要驗證」的習慣。
 
 ---
 
