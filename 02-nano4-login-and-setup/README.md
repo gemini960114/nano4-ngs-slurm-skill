@@ -9,6 +9,7 @@
 | **第 3 步** | [啟動 `ssh-proxy` 完成單次 2FA 認證（強烈建議）](#第-3-步啟動-ssh-proxy-完成單次-2fa-認證) | 2 分鐘 |
 | **第 4 步** | [在 Antigravity 連入 Nano4](#第-4-步在-antigravity-連入-nano4) | 1 分鐘 |
 | **第 5 步** | [下載教材並開啟遠端工作區 (`/work/your_account/nano4-ngs-slurm-skill`)](#第-5-步下載教材並開啟遠端工作區) | 2 分鐘 |
+| **第 6 步** | [用自然語言在 Nano4 安裝 uv](#第-6-步用自然語言在-nano4-安裝-uv) | 2 分鐘 |
 
 ---
 
@@ -149,6 +150,16 @@ nano4.nchc.org.tw:22
 | **2. 對話指令總表** | `Example.md` | 整理好的各階段提示詞（Prompt），可直接複製貼給 AI Agent |
 | **3. AI 核心規則** | `AGENTS.md` | 定義 Nano4 GP1 排程安全規範（下個單元將示範這份規則是如何讓 AI 自動產生的） |
 | **4. 自訂 Skills** | `.agents/skills/` | 內含 `nano4-ngs-slurm`（Slurm 排程技能）與 `nano4-ngs-report`（圖文報告技能） |
+
+---
+
+## 第 6 步：用自然語言在 Nano4 安裝 uv
+
+第 01 章在本機裝的工具不會出現在 Nano4 上。Nano4 已內建 Git，只需要補裝 uv。請在右側對話面板貼上：
+
+```text
+請檢查 Nano4 上是否有 uv；沒有的話請安裝到我的家目錄（不需 sudo），並把 uv 快取設在 /work/$USER，完成後回報版本。
+```
 
 ---
 
