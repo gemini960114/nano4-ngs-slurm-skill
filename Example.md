@@ -28,6 +28,29 @@ data/
 
 ---
 
+## 範例 1：環境建置 —— 本機暖身與連線 Nano4
+
+### 步驟 1-1-4（本機）：用自然語言安裝 Git 與 uv
+```text
+請判斷我的作業系統，檢查 Git 與 uv 是否已安裝；缺少的請用 WinGet（Windows）或 Homebrew（macOS）安裝，完成後回報版本。
+```
+
+### 步驟 1-1-4（本機）：4 個樣本的小型分析
+```text
+請從 https://github.com/gemini960114/nano4-ngs-slurm-skill/tree/main/data/fastq_4samples 下載 4 個 FASTQ 檔到 data/，
+用 uv 建立 Python 環境並安裝需要的套件，對每個樣本計算 read 數、平均長度與 GC 含量，
+整理成一張 CSV 表格，再畫一張 4 個樣本的比較圖存成 PNG。
+```
+
+### 步驟 1-2-6（Nano4）：安裝 uv、確認計畫代號並檢查 AGENTS.md
+```text
+請檢查 Nano4 上是否有 uv；沒有的話請安裝到我的家目錄（不需 sudo），並把 uv 快取設在 /work/$USER，完成後回報版本。
+接著用 wallet 確認我有哪些計畫代號，是否包含課程計畫 GOV115088。
+最後用三句話告訴我，你從 AGENTS.md 讀到在 Nano4 上最重要的規則。
+```
+
+---
+
 ## 範例 2：Slurm 基礎練習與自訂 Skill —— 讀取官方文件、練習基礎 Slurm 作業，最後濃縮成 Skill
 
 ### 步驟 2-0：請 AI 讀取國網 GP1 官方說明網頁
@@ -47,7 +70,7 @@ https://man.twcc.ai/xOYzPATVS_aDlbuqMrwhyg
 ### 練習 1 (`tutorial/case01`)：單一 FASTQ 檔案統計（單一批次作業）
 ```text
 寫一支 Python 程式，讀取 data/fastq_4samples/FMT.0093C_5_L001_R1_001.fastq.gz，算出裡面有幾條 reads、平均讀長和 GC 含量 %。
-幫我寫 Slurm 腳本送到計算節點去跑（用課程計畫 GOV115088）。
+幫我寫 Slurm 腳本送到計算節點去跑（用課程計畫 GOV115088，分區 ngs62g 固定 8 核心與 62G 記憶體）。
 腳本放在目前目錄 tutorial/case01
 送出前先跟我說你的設定，跑完後把結果整理給我。
 ```
@@ -164,24 +187,3 @@ data/fastq_4samples/ 資料夾裡面有 4 個定序樣本（.fastq.gz），請�
 
 ---
 
-### 附錄：建立或更新通用型報告技能 (`nano4-ngs-report`) 的指令
-```text
-請解鎖並更新 Skill，在 .agents/skills/nano4-ngs-report/ 建立一個通用的「專業技術與科研分析報告撰寫技能（nano4-ngs-report）」，完成後請立即將 AGENTS.md 重新上鎖（chmod a-w）。
-請將此 Skill 設計為「通用型報告產生器（General-Purpose Report Skill）」，不綁定特定專案或特定軟體，適用於任何資料科學、生醫資訊、HPC 運算或軟體工程實作。其 SKILL.md 規範與內建工具須包含以下四大通用模組：
-1. 【自動化上下文與證據盤點（Evidence Discovery）】：
-   - 撰寫報告前，自動掃描目標目錄下的程式碼/腳本、設定檔、執行日誌（Logs）、統計數據表與輸出產物清單。
-   - 嚴格遵守「有幾分證據說幾分話（Zero-Hallucination）」原則：所有軟硬體規格、執行時間、參數設定與數據結論，必須100%源自實際日誌與產出檔案，不自行捏造數據。
-2. 【雙軌結構化寫作框架（Dual-Mode Structure）】：
-   支援依任務性質自由組合或切換以下兩種國際標準框架：
-   - 模式 A：技術實作與操作手冊（Runbook & Technical Guide）
-     包含：執行摘要（Executive Summary）、系統架構與 Mermaid 流程圖、環境與資源配置表、分步執行邏輯解析、關鍵指令與參數說明、驗證結果與常見排錯（Troubleshooting）。
-   - 模式 B：科研實驗與數據分析報告（Scientific & Analytical Report）
-     包含：研究背景與目標（Objective）、資料來源與方法論（Materials & Methods，含可重現之軟體版本與參數選擇依據）、實驗結果與統計解讀（Results & Findings，轉化為結構化比較表）、核心圖表與產物導讀（Artifacts Guide）、結論與後續建議（Discussion & Next Steps）。
-3. 【視覺化排版規範（Visual & Formatting Standards）】：
-   - 善用 GitHub Alert 區塊（NOTE / TIP / IMPORTANT / WARNING）突顯關鍵結論與防呆注意事項。
-   - 凡涉及多步驟流程、相依性或系統架構，自動繪製 Mermaid 圖表（flowchart / sequenceDiagram）。
-   - 所有提及之腳本、數據檔與圖表產物，必須提供清楚的檔案路徑對照表與格式說明。
-4. 【零外部依賴之獨立 HTML/PDF 報告編譯器（Standalone HTML Exporter）】：
-   - 於技能目錄內建純 Python 轉換腳本（scripts/md_to_html.py），僅使用系統標準 Python，不依賴 Node.js、Pandoc 或 LibreOffice。
-   - 能將產出的 Markdown 報告一鍵封裝為單一自包含（Self-contained）的精美 .html 報告檔（內嵌現代學術/技術 CSS 樣式、RWD 表格、程式碼區塊美化、前端 Mermaid.js 自動渲染，以及針對瀏覽器 Ctrl+P 列印成 PDF 最佳化的 @media print 分頁樣式）。
-```

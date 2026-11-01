@@ -44,29 +44,5 @@
 | **2. 針對新工具擴充 Skill** | 查詢國網 Nano4 上該分析工具的模組（`module spider <軟體名>`）或準備好 Apptainer `.sif` 容器，或貼給 AI 該軟體的官方手冊網址 | 對 AI 說：<br>「*請讀取這份分析流程文件，結合我們專案的 `nano4-ngs-slurm` 規則，幫我設計一套針對 `/work/$USER/my_data/` 的分析管線，送出前先跟我說明每一步的參數，確認後再送出並每 5 分鐘檢查狀態。*」 |
 | **3. 判讀結果與產出報告** | 由您（研究人員）運用領域專業檢查關鍵品管指標與統計圖表是否合理 | 對 AI 說：<br>「*請用 `nano4-ngs-report` 技能讀取這次的分析日誌與結果表，幫我整理成一份包含 Methods 與 Results 解讀的 HTML 圖文報告。*」 |
 
----
-
-## 附錄：這套通用型報告 Skill (`nano4-ngs-report`) 是怎麼寫出來的？
-
-若您想了解或在其他專案中請 AI 從零建立這套「零外部依賴」的通用型報告技能，可參考以下指令：
-
-```text
-請解鎖並更新 Skill，在 .agents/skills/nano4-ngs-report/ 建立一個通用的「專業技術與科研分析報告撰寫技能（nano4-ngs-report）」，完成後請立即將 AGENTS.md 重新上鎖（chmod a-w）。
-請將此 Skill 設計為「通用型報告產生器（General-Purpose Report Skill）」，不綁定特定專案或特定軟體，適用於任何資料科學、生醫資訊、HPC 運算或軟體工程實作。其 SKILL.md 規範與內建工具須包含以下四大通用模組：
-1. 【自動化上下文與證據盤點（Evidence Discovery）】：
-   - 撰寫報告前，自動掃描目標目錄下的程式碼/腳本、設定檔、執行日誌（Logs）、統計數據表與輸出產物清單。
-   - 嚴格遵守「有幾分證據說幾分話（Zero-Hallucination）」原則：所有軟硬體規格、執行時間、參數設定與數據結論，必須100%源自實際日誌與產出檔案，不自行捏造數據。
-2. 【雙軌結構化寫作框架（Dual-Mode Structure）】：
-   支援依任務性質自由組合或切換以下兩種國際標準框架：
-   - 模式 A：技術實作與操作手冊（Runbook & Technical Guide）
-     包含：執行摘要（Executive Summary）、系統架構與 Mermaid 流程圖、環境與資源配置表、分步執行邏輯解析、關鍵指令與參數說明、驗證結果與常見排錯（Troubleshooting）。
-   - 模式 B：科研實驗與數據分析報告（Scientific & Analytical Report）
-     包含：研究背景與目標（Objective）、資料來源與方法論（Materials & Methods，含可重現之軟體版本與參數選擇依據）、實驗結果與統計解讀（Results & Findings，轉化為結構化比較表）、核心圖表與產物導讀（Artifacts Guide）、結論與後續建議（Discussion & Next Steps）。
-3. 【視覺化排版規範（Visual & Formatting Standards）】：
-   - 善用 GitHub Alert 區塊（NOTE / TIP / IMPORTANT / WARNING）突顯關鍵結論與防呆注意事項。
-   - 凡涉及多步驟流程、相依性或系統架構，自動繪製 Mermaid 圖表（flowchart / sequenceDiagram）。
-   - 所有提及之腳本、數據檔與圖表產物，必須提供清楚的檔案路徑對照表與格式說明。
-4. 【零外部依賴之獨立 HTML/PDF 報告編譯器（Standalone HTML Exporter）】：
-   - 於技能目錄內建純 Python 轉換腳本（scripts/md_to_html.py），僅使用系統標準 Python，不依賴 Node.js、Pandoc 或 LibreOffice。
-   - 能將產出的 Markdown 報告一鍵封裝為單一自包含（Self-contained）的精美 .html 報告檔（內嵌現代學術/技術 CSS 樣式、RWD 表格、程式碼區塊美化、前端 Mermaid.js 自動渲染，以及針對瀏覽器 Ctrl+P 列印成 PDF 最佳化的 @media print 分頁樣式）。
-```
+> [!NOTE]
+> 內建的 `nano4-ngs-report` 也是用範例 2 的方法請 AI 產生，再由講師人工修訂而成；您可以用同樣方式，為自己的分析工具建立專屬 Skill。
