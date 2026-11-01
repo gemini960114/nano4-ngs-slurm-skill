@@ -28,7 +28,7 @@ export default withMermaid(defineConfig({
         items: [
           { text: '1-1. 安裝 Antigravity 與模型設定', link: '/guide/01_install_antigravity' },
           { text: '1-2. 連線 Nano4 與下載教材', link: '/guide/02_nano4_login_and_setup' },
-          { text: '2. 自訂 Skill 與基礎批次腳本', link: '/guide/03_basic_slurm_and_qc' },
+          { text: '2. Slurm 基礎練習與自訂 Skill', link: '/guide/03_basic_slurm_and_qc' },
           { text: '3. 管線派送與監控 (QIIME 2)', link: '/guide/04_qiime2_microbiome_pipeline' },
           { text: '4. 結果解讀與圖文報告', link: '/guide/05_automated_report_skill' }
         ]
@@ -52,7 +52,7 @@ export default withMermaid(defineConfig({
         ]
       },
       {
-        text: '範例 2：自訂 Skill 與批次排程',
+        text: '範例 2：Slurm 練習與自訂 Skill',
         items: [
           { text: '2. 把 Slurm 規則寫成 Skill (Case 01~05)', link: '/guide/03_basic_slurm_and_qc' }
         ]

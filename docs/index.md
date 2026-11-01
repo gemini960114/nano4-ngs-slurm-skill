@@ -22,10 +22,10 @@ features:
     link: /guide/01_install_antigravity
     linkText: 進入環境建置
   - icon: 🛠️
-    title: 2. 自訂 Skill：把 Slurm 規則寫成技能
-    details: 把 Nano4 的 Slurm 使用規範寫成 AGENTS.md 與 Skill，直接產生單一作業、Array 平行作業、FastQC/MultiQC 與容器批次腳本。
+    title: 2. Slurm 練習與自訂 Skill
+    details: 把 Nano4 的 Slurm 使用規範寫成 Skill，直接產生單一作業、Array 平行作業、FastQC/MultiQC 與容器批次腳本。
     link: /guide/03_basic_slurm_and_qc
-    linkText: 進入自訂 Skill 與排程
+    linkText: 進入 Slurm 練習與自訂 Skill
   - icon: 🦠
     title: 3. 管線派送與監控：QIIME 2 腸道菌相分析
     details: 以 QIIME 2 為例，AI 先說明腳本內容，研究人員確認後才送出，之後每 5 分鐘自動檢查作業狀態並回報進度。

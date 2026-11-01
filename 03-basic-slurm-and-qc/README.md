@@ -1,4 +1,4 @@
-# 範例 2：自訂 Skill —— 讀取官方文件、練習派送 Slurm，最後濃縮成專屬技能
+# 範例 2：Slurm 基礎練習與自訂 Skill —— 讀取官方文件、練習派送 Slurm，最後濃縮成專屬技能
 
 在一般情況下，剛連上一台新的 HPC 超級電腦時，AI 並不曉得這台機器的佇列名稱（例如 `ngs62g`）、計畫代號規定或軟體模組載入方式。本單元示範如何從讀取國網官方網頁開始，經過實作練習，最後請 AI 將重點濃縮成專屬 Skill。
 
@@ -6,12 +6,12 @@
 | :--- | :--- | :---: |
 | **第 1 步** | [請 AI 讀取國網 GP1 官方線上說明文件](#第-1-步請-ai-讀取國網-gp1-官方線上說明文件) | 3 分鐘 |
 | **第 2 步** | [請 AI 編寫並派送基礎 Slurm 作業 (`Case 01` ~ `Case 05`)](#第-2-步請-ai-編寫並派送基礎-slurm-作業) | 15 分鐘 |
-| **第 3 步** | [請 AI 擷取文件重點與實作經驗，自動編寫 `AGENTS.md` 與 Skill](#第-3-步請-ai-擷取文件重點與實作經驗自動編寫-skill) | 5 分鐘 |
+| **第 3 步** | [請 AI 擷取文件重點與實作經驗，自動編寫 Skill](#第-3-步請-ai-擷取文件重點與實作經驗自動編寫-skill) | 5 分鐘 |
 
 ```mermaid
 flowchart LR
     S1["第 1 步：讀取國網 GP1 官方網頁"] --> S2["第 2 步：實作練習 Slurm 作業 (Case 01~05)"]
-    S2 --> S3["第 3 步：擷取重點自動編寫 AGENTS.md 與 Skill"]
+    S2 --> S3["第 3 步：擷取重點自動編寫 Skill"]
 ```
 
 > [!NOTE]
@@ -103,10 +103,8 @@ data/fastq_4samples/ 資料夾裡面有 4 個定序樣本（.fastq.gz），請�
 ### 練習 5 (`tutorial/case05`)：改用 Apptainer 容器執行，並將快取設在 `/work/$USER/`
 
 ```text
-以下的內容會用到 apptainer 下載 image，但 home 目錄空間有限，請補充將 cache 設在 /work/$USER/。
-
 這次不要用 module load，請改寫一個用 Apptainer 容器執行的 Slurm 工作：
-1. 在計算節點直接從 Docker Hub 下載 multiqc/multiqc:v1.35 映像檔，.sif 檔請存在我的 /work/$USER/containers/。
+1. 在計算節點直接從 Docker Hub 下載 multiqc/multiqc:v1.35 映像檔，.sif 檔存在 /work/$USER/containers/，Apptainer 快取也設在 /work/$USER/（home 空間有限）。
 2. 用這個容器去掃描剛剛 qc/fastqc_out/ 的結果，產生 MultiQC 報告到 tutorial/case05/multiqc_out/。
 3. 腳本報告放在目前目錄 tutorial/case05
 ```
@@ -117,7 +115,7 @@ data/fastq_4samples/ 資料夾裡面有 4 個定序樣本（.fastq.gz），請�
 
 在完成上面一連串練習後，我們已經清楚哪些地方最容易踩坑（例如：不能在登入節點跑運算、漏寫 `--mem` 會預設申請 1024G 卡死、提交子目錄日誌前要先 `mkdir -p`、Apptainer 快取要指到 `/work/$USER`、不能用迴圈狂刷 `squeue`）。
 
-現在，您可以直接下達以下指令，**請 AI 把剛剛讀過的國網官方文件與實作經驗，自動編寫成您自己的 `.agents/skills/my-nano4-slurm/SKILL.md` 技能，並立即呼叫使用它**：
+現在，您可以直接下達以下指令，**請 AI 把剛剛讀過的國網官方文件與實作經驗，自動編寫成您自己的 `.agents/skills/my-nano4-slurm/SKILL.md` 技能，並立即呼叫使用它**（教材內建的 `AGENTS.md`，就是把這類規則中最核心的幾條，濃縮成每次對話都會載入的版本）：
 
 ### 📋 1. 請複製以下指令貼給 AI Agent（建立您自己的 `my-nano4-slurm` Skill）：
 

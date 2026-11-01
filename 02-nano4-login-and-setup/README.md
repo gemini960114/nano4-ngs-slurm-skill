@@ -162,7 +162,7 @@ Nano4（140.110.109.162:22）
 | :--- | :--- | :--- |
 | **1. 內建範例資料** | `data/fastq_4samples/`<br>`data/qiime2/` | • **範例 2 使用**：`data/fastq_4samples/`（4 個輕量 FASTQ 樣本）<br>• **範例 3 使用**：`data/qiime2/`（82 個雙端 FASTQ、Metadata 與分類器） |
 | **2. 對話指令總表** | `Example.md` | 整理好的各階段提示詞（Prompt），可直接複製貼給 AI Agent |
-| **3. AI 核心規則** | `AGENTS.md` | 定義 Nano4 GP1 排程安全規範（下個單元將示範這份規則是如何讓 AI 自動產生的） |
+| **3. AI 核心規則** | `AGENTS.md` | 定義 Nano4 GP1 排程安全規範（下個單元將示範這類規則是怎麼產生的） |
 | **4. 自訂 Skills** | `.agents/skills/` | 內含 `nano4-ngs-slurm`（Slurm 排程技能）與 `nano4-ngs-report`（圖文報告技能） |
 
 ---
@@ -176,8 +176,8 @@ Nano4（140.110.109.162:22）
 最後用三句話告訴我，你從 AGENTS.md 讀到在 Nano4 上最重要的規則。
 ```
 
-AI 能說出這些規則，代表它已讀取教材內建的 `AGENTS.md`。這份規則是怎麼產生的，下一單元會帶您實際做一次。
+AI 能說出這些規則，代表它已讀取教材內建的 `AGENTS.md`。這些規則是怎麼產生的，下一單元會帶您做一次。
 
 ---
 
-👉 連線與工作區準備完成後，請進入 **[範例 2：自訂 Skill —— 讀取官方文件、練習派送 Slurm，最後濃縮成專屬技能](../03-basic-slurm-and-qc/README.md)**。
+👉 連線與工作區準備完成後，請進入 **[範例 2：Slurm 基礎練習與自訂 Skill —— 讀取官方文件、練習派送 Slurm，最後濃縮成專屬技能](../03-basic-slurm-and-qc/README.md)**。

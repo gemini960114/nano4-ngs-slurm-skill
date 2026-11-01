@@ -28,7 +28,7 @@ data/
 
 ---
 
-## 範例 2：自訂 Skill —— 讀取官方文件、練習基礎 Slurm 作業，最後濃縮成 Skill
+## 範例 2：Slurm 基礎練習與自訂 Skill —— 讀取官方文件、練習基礎 Slurm 作業，最後濃縮成 Skill
 
 ### 步驟 2-0：請 AI 讀取國網 GP1 官方說明網頁
 ```text
@@ -83,10 +83,8 @@ data/fastq_4samples/ 資料夾裡面有 4 個定序樣本（.fastq.gz），請�
 
 ### 練習 5 (`tutorial/case05`)：使用 Apptainer 容器執行並將快取設在 `/work/$USER/`
 ```text
-以下的內容會用到 apptainer 下載 image，但 home 目錄空間有限，請補充將 cache 設在 /work/$USER/。
-
 這次不要用 module load，請改寫一個用 Apptainer 容器執行的 Slurm 工作：
-1. 在計算節點直接從 Docker Hub 下載 multiqc/multiqc:v1.35 映像檔，.sif 檔請存在我的 /work/$USER/containers/。
+1. 在計算節點直接從 Docker Hub 下載 multiqc/multiqc:v1.35 映像檔，.sif 檔存在 /work/$USER/containers/，Apptainer 快取也設在 /work/$USER/（home 空間有限）。
 2. 用這個容器去掃描剛剛 qc/fastqc_out/ 的結果，產生 MultiQC 報告到 tutorial/case05/multiqc_out/。
 3. 腳本報告放在目前目錄 tutorial/case05
 ```
