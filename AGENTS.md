@@ -6,7 +6,7 @@
 - 登入節點只用來編輯與派送；任何運算（QC、比對、訓練）一律用 `sbatch` 或 `salloc` 送到計算節點。安裝軟體（如 uv），以及讀取小型摘要表、繪圖、轉檔等輕量整理可在登入節點進行。
 - 不可用 `watch` 或迴圈頻繁查詢 `squeue`；改查單次 `squeue -u $USER`，自動監控至少間隔 5 分鐘。
 - 送出 `sbatch` 前，先說明計畫代號、分區與資源配置，**等使用者確認後才送出**。
-- Antigravity 沙盒預設封鎖網路，執行 Slurm 指令需開啟 `BypassSandbox: true`。
+- Antigravity 沙盒預設封鎖網路；Slurm 指令、下載、安裝套件等需要網路的操作需開啟 `BypassSandbox: true`。
 
 ## 計畫與分區
 - `GOV115088`（課程）：只能用 `ngs62g`，固定 `-c 8 --mem=62G`，不得調降；請用多執行緒（如 `-t ${SLURM_CPUS_PER_TASK}`）把 8 核心用滿。
@@ -14,6 +14,7 @@
 
 ## 腳本必填
 - 一定要寫 `--cpus-per-task` 與 `--mem`（`ngs248c`、`ngs496c` 除外）；漏寫 `--mem` 會預設申請 1024G，作業永遠排不上。
+- `sbatch` 一律在專案根目錄執行（腳本內資料路徑以根目錄為準）；日誌與產出寫到該練習的輸出目錄（如 `--output=tutorial/case01/%x-%j.out`），送出前先 `mkdir -p`。
 - 先 `module purge` 再 `module load biology/<軟體>/<版本>`；容器用 apptainer，不用 docker。
 - 資料、暫存、`.sif`、各種快取與 uv 下載的 Python 放 `/work/$USER`；`/home`（100G）只放腳本與設定。
 - Python 一律用 uv 與專案根目錄的 `.venv`（不存在時以 `uv venv --python 3.12` 建立）：用 `uv pip install` 安裝套件、`uv run python` 執行（Slurm 腳本內亦同），不可用全域 `pip install`。

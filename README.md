@@ -14,7 +14,7 @@
 
 | 單元 | 主題 | 對應章節連結 | 核心內容 |
 | :--- | :--- | :--- | :--- |
-| **範例 1** | **環境建置** | • [1-1. 安裝 Antigravity 與模型設定](./01-install-antigravity/README.md)<br>• [1-2. 連線 Nano4 與下載教材](./02-nano4-login-and-setup/README.md) | 先在本機用自然語言安裝 Git、uv 並完成 4 樣本小分析，再用 Antigravity 連線 Nano4。預設使用內建模型，也可自備 Claude/GPT，或用 OpenCode 串接國網地端模型（遠端 HPC 需再安裝一次） |
+| **範例 1** | **環境建置** | • [1-1. 安裝 Antigravity 與模型設定](./01-install-antigravity/README.md)<br>• [1-2. 連線 Nano4 與下載教材](./02-nano4-login-and-setup/README.md) | 先在本機用自然語言安裝 Git、uv 並完成 4 個 FASTQ 檔的小分析，再用 Antigravity 連線 Nano4。預設使用內建模型，也可自備 Claude/GPT，或用 OpenCode 串接國網地端模型（遠端 HPC 需再安裝一次） |
 | **範例 2** | **Slurm 練習與自訂 Skill** | • [2. 把 Slurm 規則寫成 Skill 與基礎排程](./03-basic-slurm-and-qc/README.md) | 把 Nano4 的 Slurm 使用規則寫成 Skill，讓 AI 產生單一作業、Array Job、FastQC/MultiQC 與容器批次腳本 |
 | **範例 3** | **管線派送與監控** | • [3. QIIME 2 腸道菌相分析與定時監控](./04-qiime2-microbiome-pipeline/README.md) | 以 QIIME 2 腸道菌相分析為例，AI 先讀懂分析腳本，確認後才送出，以 afterok 串接相依階段，之後每 5 分鐘自動檢查作業狀態 |
 | **範例 4** | **結果解讀與報告** | • [4. 結果解讀、圖文報告與換上自有資料](./05-automated-report-skill/README.md) | 讓 AI 讀取分析結果與日誌，整理成含數據圖表的 Markdown 與 HTML/PDF 圖文報告，並說明如何替換為自己的研究資料 |
@@ -29,7 +29,7 @@
 | :--- | :--- | :--- |
 | **1. AI 核心規則** | `AGENTS.md` | 定義 Nano4 生醫分區核心鐵律（嚴禁登入節點運算、提交前先請研究人員確認、禁止每秒高頻輪詢 `squeue`） |
 | **2. 自訂 Skills** | `.agents/skills/` | • `nano4-ngs-slurm/`：Nano4 Slurm 批次腳本與佇列規格技能<br>• `nano4-ngs-report/`：自動盤點日誌並產出圖文報告技能 |
-| **3. 內建範例資料** | `data/` | • `data/fastq_4samples/`：4 個輕量 FASTQ 樣本（供範例 2 練習）<br>• `data/qiime2/`：82 個雙端 FASTQ、Metadata 與分類器（供範例 3 練習） |
+| **3. 內建範例資料** | `data/` | • `data/fastq_4samples/`：2 個檢體 R1/R2 共 4 個輕量 FASTQ 檔（供範例 2 練習）<br>• `data/qiime2/`：41 個檢體的 82 個雙端 FASTQ、Metadata 與分類器（供範例 3 練習） |
 | **4. 對話指令總表** | `Example.md` | 整理好的各階段提示詞（Prompt），可直接複製貼給 AI Agent |
 
 ---

@@ -5,7 +5,7 @@
 | 步驟 | 內容 | 預估時間 |
 | :--- | :--- | :---: |
 | **第 1 步** | [請 AI 讀取國網 GP1 官方線上說明文件](#第-1-步請-ai-讀取國網-gp1-官方線上說明文件) | 3 分鐘 |
-| **第 2 步** | [請 AI 編寫並派送基礎 Slurm 作業 (`Case 01` ~ `Case 05`)](#第-2-步請-ai-編寫並派送基礎-slurm-作業) | 15 分鐘 |
+| **第 2 步** | [請 AI 編寫並派送基礎 Slurm 作業 (`Case 01` ~ `Case 05`)](#第-2-步請-ai-編寫並派送基礎-slurm-作業) | 25 分鐘 |
 | **第 3 步** | [請 AI 擷取文件重點與實作經驗，自動編寫 Skill](#第-3-步請-ai-擷取文件重點與實作經驗自動編寫-skill) | 5 分鐘 |
 
 ```mermaid
@@ -42,13 +42,15 @@ https://man.twcc.ai/xOYzPATVS_aDlbuqMrwhyg
 
 ## 第 2 步：請 AI 編寫並派送基礎 Slurm 作業
 
-讀完官方手冊後，我們用 `data/fastq_4samples/` 裡面的 **4 個輕量定序樣本**，依序請 AI 幫我們編寫並派送 5 種常見的批次作業。
+讀完官方手冊後，我們用 `data/fastq_4samples/` 裡面的 **4 個輕量 FASTQ 檔**（2 個檢體的 R1/R2 正反向讀序），依序請 AI 幫我們編寫並派送 5 種常見的批次作業。
 
 > [!IMPORTANT]
 > **💬 人機協同操作方式（兩階段確認）**：
 > 當您把下方任一練習的指令貼給 AI 後：
 > 1. **第一階段（AI 擬定計畫）**：AI 會先寫好腳本，並在對話框向您報告預計使用的**計畫代號（`GOV115088`）、分區（`ngs62g`）與資源設定（8 核心 / 62G）**，然後停下來等您確認。
 > 2. **第二階段（您確認派送）**：請在對話框輸入 **`好，請送出`**（或 **`同意`**），AI 才會真正執行 `sbatch` 將工作送到計算節點！（若跳出終端機執行權限詢問，請點擊 **Allow / Approve**。）
+>
+> 所有作業都在教材根目錄送出，腳本、日誌（`*.out` / `*.err`）與結果會放在各練習的 `tutorial/caseXX/`（練習 3 的品管報告在 `qc/`）。
 
 ---
 
@@ -66,7 +68,7 @@ https://man.twcc.ai/xOYzPATVS_aDlbuqMrwhyg
 ### 練習 2 (`tutorial/case02`)：多樣本平行計算（Slurm 陣列作業 Array Job）
 
 ```text
-data/fastq_4samples/ 資料夾裡面有 4 個定序樣本（.fastq.gz），請幫我用 Slurm 陣列作業（Array Job）同時算出每個樣本各有幾條 reads，送出前先給我看計畫。
+data/fastq_4samples/ 資料夾裡面有 4 個 FASTQ 檔（.fastq.gz），請幫我用 Slurm 陣列作業（Array Job）同時算出每個檔案各有幾條 reads，送出前先給我看計畫。
 腳本放在目前目錄 tutorial/case02
 ```
 
@@ -75,8 +77,8 @@ data/fastq_4samples/ 資料夾裡面有 4 個定序樣本（.fastq.gz），請�
 ### 練習 3 (`tutorial/case03`)：FastQC 與 MultiQC 品質檢查流水線（前後相依作業 Dependency）
 
 ```text
-請幫我對 data/fastq_4samples/ 裡面的 4 個樣本做品質檢查流水線：
-- 第一步：用 FastQC 檢查這 4 個樣本的品質，結果放在 qc/fastqc_out/。
+請幫我對 data/fastq_4samples/ 裡面的 4 個 FASTQ 檔做品質檢查流水線：
+- 第一步：用 FastQC 檢查這 4 個檔案的品質，結果放在 qc/fastqc_out/。
 - 第二步：等第一步確定成功跑完後，自動啟動 MultiQC 把結果彙整成一份 HTML 報告，放在 qc/multiqc_out/。
 先告訴我你打算怎麼送，我同意後再送出。
 腳本放在目前目錄 tutorial/case03
@@ -90,7 +92,7 @@ data/fastq_4samples/ 資料夾裡面有 4 個定序樣本（.fastq.gz），請�
 ### 練習 4 (`tutorial/case04`)：檢查作業狀態與資源使用率（`sacct` / `seff`）
 
 ```text
-剛剛送出去的工作跑完了嗎？如果跑完了，請幫我用 seff（或 sacct）檢查資源使用率，並用白話文跟我說跑得順不順、這 4 個樣本的品質結果如何。
+剛剛送出去的工作跑完了嗎？如果跑完了，請幫我用 seff（或 sacct）檢查資源使用率，並用白話文跟我說跑得順不順、這 4 個檔案的品質結果如何。
 結果報告放置於 tutorial/case04
 ```
 

@@ -10,7 +10,7 @@
 
 ```text
 data/
-├── fastq_4samples/                     # [範例 2 使用] 4 個輕量 FASTQ 樣本 (每檔 1,000 reads, 供 Case 01~05 練習)
+├── fastq_4samples/                     # [範例 2 使用] 2 個檢體 R1/R2 共 4 個輕量 FASTQ 檔 (每檔 1,000 reads, 供 Case 01~05 練習)
 │   ├── FMT.0093C_5_L001_R1_001.fastq.gz
 │   ├── FMT.0093C_46_L001_R2_001.fastq.gz
 │   ├── FMT.0093D_2_L001_R1_001.fastq.gz
@@ -19,7 +19,7 @@ data/
     ├── Qiime2_Pipeline.sh              # 原始教學參考腳本
     ├── Upstream/                       # 已預先跑完 DADA2 去噪的特徵表 (feature-table-0.qza)
     └── Input_Data/                     # 上下游輸入資料
-        ├── data_to_import/             # 82 個雙端 .fastq.gz 原始定序檔
+        ├── data_to_import/             # 41 個檢體的 82 個雙端 .fastq.gz 原始定序檔
         ├── sample-metadata.tsv         # 臨床分組與時間軸 Metadata 表格
         ├── feature-table.qza           # 下游特徵計數矩陣
         ├── rep-seqs.qza                # 下游 ASV 代表序列
@@ -38,17 +38,17 @@ data/
 安裝後若找不到指令，請開新的終端機再確認，最後回報版本。
 ```
 
-### 步驟 1-1-4（本機）：4 個樣本的小型分析
+### 步驟 1-1-4（本機）：4 個 FASTQ 檔的小型分析
 ```text
 請從 https://github.com/gemini960114/nano4-ngs-slurm-skill/tree/main/data/fastq_4samples 下載 4 個 FASTQ 檔到 data/，
-用 uv 在這個資料夾建立 .venv 並安裝需要的套件，對每個樣本計算 read 數、平均長度與 GC 含量，
-整理成一張 CSV 表格，再畫一張 4 個樣本的比較圖存成 PNG。
+用 uv 在這個資料夾建立 .venv 並安裝需要的套件，對每個檔案計算 read 數、平均長度與 GC 含量，
+整理成一張 CSV 表格，再畫一張 4 個檔案的比較圖存成 PNG。
 ```
 
 ### 步驟 1-2-6（Nano4）：安裝 uv、建立 .venv、確認計畫代號並檢查 AGENTS.md
 ```text
 請在 Nano4 上準備 Python 環境（不需 sudo）：
-1. 檢查是否有 uv，沒有的話安裝到我的家目錄；uv 快取與 uv 下載的 Python 都放在 /work/$USER。
+1. 檢查是否有 uv，沒有的話安裝到我的家目錄；uv 快取與 uv 下載的 Python 都放在 /work/$USER，並把這些設定與 PATH 寫進 ~/.bashrc，讓之後的終端機與 Slurm 作業都能沿用。
 2. 在教材目錄用 uv 建立 Python 3.12 的 .venv。
 3. 用 wallet 確認我有哪些計畫代號，是否包含課程計畫 GOV115088。
 最後用三句話告訴我，你從 AGENTS.md 讀到在 Nano4 上最重要的規則。
@@ -58,7 +58,7 @@ data/
 
 ## 範例 2：Slurm 基礎練習與自訂 Skill —— 讀取官方文件、練習基礎 Slurm 作業，最後濃縮成 Skill
 
-### 步驟 2-0：請 AI 讀取國網 GP1 官方說明網頁
+### 步驟 2-1：請 AI 讀取國網 GP1 官方說明網頁
 ```text
 請幫我讀取國網中心 GP1 生醫專用節點的官方說明網頁：
 https://man.twcc.ai/xOYzPATVS_aDlbuqMrwhyg
@@ -84,7 +84,7 @@ https://man.twcc.ai/xOYzPATVS_aDlbuqMrwhyg
 
 ### 練習 2 (`tutorial/case02`)：多樣本平行計算（Slurm 陣列作業 Array Job）
 ```text
-data/fastq_4samples/ 資料夾裡面有 4 個定序樣本（.fastq.gz），請幫我用 Slurm 陣列作業（Array Job）同時算出每個樣本各有幾條 reads，送出前先給我看計畫。
+data/fastq_4samples/ 資料夾裡面有 4 個 FASTQ 檔（.fastq.gz），請幫我用 Slurm 陣列作業（Array Job）同時算出每個檔案各有幾條 reads，送出前先給我看計畫。
 腳本放在目前目錄 tutorial/case02
 ```
 
@@ -92,8 +92,8 @@ data/fastq_4samples/ 資料夾裡面有 4 個定序樣本（.fastq.gz），請�
 
 ### 練習 3 (`tutorial/case03`)：FastQC 與 MultiQC 品質檢查流水線（相依作業 Dependency）
 ```text
-請幫我對 data/fastq_4samples/ 裡面的 4 個樣本做品質檢查流水線：
-- 第一步：用 FastQC 檢查這 4 個樣本的品質，結果放在 qc/fastqc_out/。
+請幫我對 data/fastq_4samples/ 裡面的 4 個 FASTQ 檔做品質檢查流水線：
+- 第一步：用 FastQC 檢查這 4 個檔案的品質，結果放在 qc/fastqc_out/。
 - 第二步：等第一步確定成功跑完後，自動啟動 MultiQC 把結果彙整成一份 HTML 報告，放在 qc/multiqc_out/。
 先告訴我你打算怎麼送，我同意後再送出。
 腳本放在目前目錄 tutorial/case03
@@ -103,7 +103,7 @@ data/fastq_4samples/ 資料夾裡面有 4 個定序樣本（.fastq.gz），請�
 
 ### 練習 4 (`tutorial/case04`)：檢查作業狀態與資源使用率（`seff` / `sacct`）
 ```text
-剛剛送出去的工作跑完了嗎？如果跑完了，請幫我用 seff（或 sacct）檢查資源使用率，並用白話文跟我說跑得順不順、這 4 個樣本的品質結果如何。
+剛剛送出去的工作跑完了嗎？如果跑完了，請幫我用 seff（或 sacct）檢查資源使用率，並用白話文跟我說跑得順不順、這 4 個檔案的品質結果如何。
 結果報告放置於 tutorial/case04
 ```
 
@@ -119,7 +119,7 @@ data/fastq_4samples/ 資料夾裡面有 4 個定序樣本（.fastq.gz），請�
 
 ---
 
-### 步驟 2-6：把官方文件重點與實作經驗濃縮成自己的 `my-nano4-slurm` Skill 並實測
+### 步驟 2-3：把官方文件重點與實作經驗濃縮成自己的 `my-nano4-slurm` Skill 並實測
 ```text
 經過剛剛的練習，請幫我擷取國網 GP1 官方說明文件（https://man.twcc.ai/xOYzPATVS_aDlbuqMrwhyg）的重點，以及我們剛剛實作 Slurm 單一作業、Array Job、相依流水線與 Apptainer 容器的經驗，在 .agents/skills/my-nano4-slurm/SKILL.md 建立一份我自己的 Slurm 排程技能：
 
@@ -145,7 +145,7 @@ data/fastq_4samples/ 資料夾裡面有 4 個定序樣本（.fastq.gz），請�
 
 ## 範例 3：管線派送與監控 —— QIIME 2 腸道菌相分析 (`tutorial/case06` ~ `case07`)
 
-### 🔹 步驟 3-1：請 AI 讀懂分析腳本（研究背景與三段流程）
+### 🔹 步驟 3-1：請 AI 讀懂分析腳本（研究背景與分析流程）
 ```text
 請閱讀 data/qiime2/Qiime2_Pipeline.sh（先不要送出任何作業），用白話文告訴我：
 1. 這份資料的研究背景，以及想回答什麼問題。
@@ -153,11 +153,11 @@ data/fastq_4samples/ 資料夾裡面有 4 個定序樣本（.fastq.gz），請�
 3. 預計會產生哪些 .qzv 圖表，各自可以看出什麼。
 ```
 
-### 🔹 步驟 3-2 (`tutorial/case06`)：上游 82 個雙端 FASTQ 匯入與品質評估（Upstream）
+### 🔹 步驟 3-2 (`tutorial/case06`)：上游 41 個檢體的雙端 FASTQ 匯入與品質評估（Upstream）
 ```text
 請參考 data/qiime2/Qiime2_Pipeline.sh 的上游段落，寫一支 Slurm 作業送到計算節點，結果放在 tutorial/case06/qiime2_run/Upstream/：
 1. 載入 biology/qiime2/2026.7 模組（資料已在 data/qiime2/，不需 wget）。
-2. 把 data/qiime2/Input_Data/data_to_import/ 的 82 個雙端 FASTQ 匯入成 demultiplexed-sequences.qza，並產生品質摘要圖 demultiplexed-sequences-summ.qzv。
+2. 把 data/qiime2/Input_Data/data_to_import/ 的 41 個檢體（82 個 R1/R2 雙端 FASTQ）匯入成 demultiplexed-sequences.qza，並產生品質摘要圖 demultiplexed-sequences-summ.qzv。
 3. 讀取現成的 data/qiime2/Upstream/feature-table-0.qza，產出 feature-table-0-summ.qzv。
 送出後每 5 分鐘檢查一次狀態，跑完通知我。
 ```
@@ -171,9 +171,9 @@ data/fastq_4samples/ 資料夾裡面有 4 個定序樣本（.fastq.gz），請�
    - 菌種分類加上 --p-n-jobs 8，並產生物種組成堆疊圖 taxa-bar-plots-1.qzv。
 2. 多樣性與縱向分析，結果放在 tutorial/case06/qiime2_run/Diversity_Longitudinal/：
    - 用第 1 支篩選後的序列建立演化樹（MAFFT / FastTree，加上 --p-n-threads 8）。
-   - 以抽樣深度 10,000 計算 Alpha 與 Beta 多樣性、稀釋曲線與組間顯著性檢定。
+   - 以抽樣深度 10,000 計算 Alpha 與 Beta 多樣性與組間顯著性檢定。
    - 跑 UMAP、Emperor 排序圖、線性混合效應模型（LME）與菌屬波動圖（Volatility）。
-送出後每 5 分鐘檢查一次狀態（全部約 13 分鐘），跑完後確認所有 .qzv 都有產生，並用白話文說明產出了哪些圖表。
+其餘步驟與參數（如稀釋曲線深度）一律照腳本。送出後每 5 分鐘檢查一次狀態（全部約 13 分鐘），跑完後對照腳本原本會產生的 .qzv，列出哪些已產生，並用白話文說明各圖表。
 ```
 
 ### 🔹 選做 (`tutorial/case07`)：整合成單一完整版 Slurm 腳本
@@ -187,7 +187,7 @@ data/fastq_4samples/ 資料夾裡面有 4 個定序樣本（.fastq.gz），請�
 
 ### 讀取分析結果，自動整理成圖文報告（`.md` + 單一獨立 `.html`）
 ```text
-請啟用 nano4-ngs-report 技能，掃描 tutorial/case01 ~ case06 下的所有 Slurm 腳本、執行日誌（*.out / *.err）與分析產出檔案，為我撰寫一份結合「Runbook 操作手冊」與「生醫 Methods & Results 數據解讀」的完整分析報告，並使用技能內建的轉換腳本同步輸出 .md 與單一獨立 .html 報告至 tutorial/report01/。
+請啟用 nano4-ngs-report 技能，掃描 tutorial/ 與 qc/ 下的所有 Slurm 腳本、執行日誌（*.out / *.err）與分析產出檔案，為我撰寫一份結合「Runbook 操作手冊」與「生醫 Methods & Results 數據解讀」的完整分析報告，並使用技能內建的轉換腳本同步輸出 .md 與單一獨立 .html 報告至 tutorial/report01/。
 ```
 
 ---

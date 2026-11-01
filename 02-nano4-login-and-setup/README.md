@@ -160,7 +160,7 @@ Nano4（140.110.109.162:22）
 
 | 項目 | 路徑 | 用途說明 |
 | :--- | :--- | :--- |
-| **1. 內建範例資料** | `data/fastq_4samples/`<br>`data/qiime2/` | • **範例 2 使用**：`data/fastq_4samples/`（4 個輕量 FASTQ 樣本）<br>• **範例 3 使用**：`data/qiime2/`（82 個雙端 FASTQ、Metadata 與分類器） |
+| **1. 內建範例資料** | `data/fastq_4samples/`<br>`data/qiime2/` | • **範例 2 使用**：`data/fastq_4samples/`（2 個檢體 R1/R2 共 4 個輕量 FASTQ 檔）<br>• **範例 3 使用**：`data/qiime2/`（41 個檢體的 82 個雙端 FASTQ、Metadata 與分類器） |
 | **2. 對話指令總表** | `Example.md` | 整理好的各階段提示詞（Prompt），可直接複製貼給 AI Agent |
 | **3. AI 核心規則** | `AGENTS.md` | 定義 Nano4 GP1 排程安全規範（下個單元將示範這類規則是怎麼產生的） |
 | **4. 自訂 Skills** | `.agents/skills/` | 內含 `nano4-ngs-slurm`（Slurm 排程技能）與 `nano4-ngs-report`（圖文報告技能） |
@@ -173,13 +173,13 @@ Nano4（140.110.109.162:22）
 
 ```text
 請在 Nano4 上準備 Python 環境（不需 sudo）：
-1. 檢查是否有 uv，沒有的話安裝到我的家目錄；uv 快取與 uv 下載的 Python 都放在 /work/$USER。
+1. 檢查是否有 uv，沒有的話安裝到我的家目錄；uv 快取與 uv 下載的 Python 都放在 /work/$USER，並把這些設定與 PATH 寫進 ~/.bashrc，讓之後的終端機與 Slurm 作業都能沿用。
 2. 在教材目錄用 uv 建立 Python 3.12 的 .venv。
 3. 用 wallet 確認我有哪些計畫代號，是否包含課程計畫 GOV115088。
 最後用三句話告訴我，你從 AGENTS.md 讀到在 Nano4 上最重要的規則。
 ```
 
-`wallet` 是國網查詢計畫代號與剩餘額度的指令（只能在登入節點執行）。若清單中沒有 `GOV115088`，請先回到第 1 步確認已加入課程計畫。AI 能說出這些規則，代表它已讀取教材內建的 `AGENTS.md`。這些規則是怎麼產生的，下一單元會帶您做一次。
+`wallet` 是國網查詢計畫代號與剩餘額度的指令（只能在登入節點執行）。若清單中沒有 `GOV115088`，請先回到第 1 步確認已加入課程計畫。AI 能說出這些規則，代表它讀得懂教材內建的 `AGENTS.md`（支援的 Agent 會在每次對話自動載入它）。若 AI 說不出來或說得很籠統，請確認開啟的是教材根目錄，或直接告訴它「請先閱讀 AGENTS.md」。這些規則是怎麼產生的，下一單元會帶您做一次。
 
 ---
 

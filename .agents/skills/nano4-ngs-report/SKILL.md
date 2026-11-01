@@ -92,5 +92,5 @@ uv run python .agents/skills/nano4-ngs-report/scripts/md_to_html.py \
 
 ### 內建轉換器特點：
 - **零外部套件依賴**：僅使用 Python 3 標準函式庫（`re`, `html`, `sys`, `pathlib`, `datetime`），在任何 Linux 節點皆可 100% 穩定執行。
-- **完整語法支援**：支援 YAML Frontmatter、自動生成側邊/頂部章節導覽目錄 (TOC)、GitHub Alerts (`[!NOTE]` 等彩色提示框)、表格美化、程式碼區塊語法框、行內數學公式與前端 **Mermaid.js 向量流程圖自動渲染**。
+- **完整語法支援**：支援 YAML Frontmatter、自動生成側邊/頂部章節導覽目錄 (TOC)、GitHub Alerts (`[!NOTE]` 等彩色提示框)、表格美化、程式碼區塊語法框、行內數學公式與前端 **Mermaid.js 向量流程圖自動渲染**（Mermaid.js 由 CDN 載入，開啟報告的電腦需連網；離線時流程圖會顯示為原始程式碼，其餘內容與內嵌圖片不受影響）。
 - **一鍵列印轉 PDF 最佳化**：內建 `@media print` 專用樣式與頂部「🖨️ 列印 / 另存 PDF」按鈕，使用者將 `.html` 下載至個人電腦用瀏覽器開啟後，按 `Ctrl + P` 即可輸出排版完美的正式 PDF 報告。

@@ -4,15 +4,15 @@
 
 | 步驟 | 內容 | 預估時間 |
 | :--- | :--- | :---: |
-| **第 1 步** | [請 AI 讀懂分析腳本：研究背景與三段流程](#第-1-步請-ai-讀懂分析腳本研究背景與三段流程) | 3 分鐘 |
-| **第 2 步** | [上游：82 個雙端 FASTQ 匯入與品質評估 (`Upstream`)](#第-2-步上游82-個雙端-fastq-匯入與品質評估) | 3 分鐘 |
+| **第 1 步** | [請 AI 讀懂分析腳本：研究背景與分析流程](#第-1-步請-ai-讀懂分析腳本研究背景與分析流程) | 3 分鐘 |
+| **第 2 步** | [上游：41 個檢體的雙端 FASTQ 匯入與品質評估 (`Upstream`)](#第-2-步上游41-個檢體的雙端-fastq-匯入與品質評估) | 3 分鐘 |
 | **第 3 步** | [下游：篩選分類 ➔ 多樣性分析，用 `afterok` 串接一次送出](#第-3-步下游篩選分類--多樣性分析用-afterok-串接一次送出) | 13 分鐘 |
 | **第 4 步** | [等待時下載並檢視 `.qzv` 互動圖表](#第-4-步等待時下載並檢視-qzv-互動圖表) | 與第 3 步同時進行 |
 | **選做** | [整合成單一完整版 Slurm 腳本 (`Case 07`)](#選做整合成單一完整版-slurm-腳本) | 課後 |
 
 ```mermaid
 flowchart TD
-    A["第 1 步：AI 讀懂腳本，說明研究背景與三段流程"] --> B["第 2 步 (Upstream)：匯入 82 個雙端 FASTQ 與品質摘要"]
+    A["第 1 步：AI 讀懂腳本，說明研究背景與分析流程"] --> B["第 2 步 (Upstream)：匯入 41 個檢體的雙端 FASTQ 與品質摘要"]
     A --> C["第 3 步 (Downstream)：臨床條件篩選 + 8 核心 SILVA 分類"]
     C -->|afterok| D["第 3 步 (Diversity & Longitudinal)：演化樹 + 多樣性 + UMAP + LME"]
     B --> E["第 4 步：檢視 .qzv 互動圖表"]
@@ -28,14 +28,17 @@ flowchart TD
 > 本單元不需要記住 QIIME 2 指令，讓 AI 讀懂教材腳本、改寫成 Slurm 作業即可。
 
 > [!TIP]
-> **內建資料說明**：所需的 **82 個雙端 `.fastq.gz` 檔案、臨床 Metadata、預訓練 SILVA 138.2 分類器與上游特徵表** 均已放在 `data/qiime2/` 目錄中，不需執行 `wget` 下載。
+> **內建資料說明**：所需的 **41 個檢體的 82 個雙端 `.fastq.gz` 檔案（R1/R2）、臨床 Metadata、預訓練 SILVA 138.2 分類器與上游特徵表** 均已放在 `data/qiime2/` 目錄中，不需執行 `wget` 下載。
+
+> [!IMPORTANT]
+> 和範例 2 一樣，貼上 Prompt 後 AI 會先說明腳本與資源設定並**停下來等您確認**；請回覆「**好，請送出**」，作業才會真正送出。
 
 > [!TIP]
 > **想試試您在範例 2 建立的 Skill？** 在 Prompt 開頭加上「請使用 my-nano4-slurm」即可；不加則使用教材內建的 `nano4-ngs-slurm`。
 
 ---
 
-## 第 1 步：請 AI 讀懂分析腳本：研究背景與三段流程
+## 第 1 步：請 AI 讀懂分析腳本：研究背景與分析流程
 
 ### 📋 請複製以下指令貼給 AI Agent：
 
@@ -46,18 +49,18 @@ flowchart TD
 3. 預計會產生哪些 .qzv 圖表，各自可以看出什麼。
 ```
 
-AI 會發現腳本註明「**上游與下游兩段不承接**」：上游用 41 個檢體示範資料匯入，下游改用另一批已整理好的特徵表做分析。因此接下來上游單獨送出，下游的兩個階段才需要用 `afterok` 串接。
+AI 會發現腳本註明「**上游與下游兩段不承接**」：上游用 41 個檢體示範資料匯入；中間建立分類器的段落已預先完成（直接使用 `Input_Data/` 裡的分類器）；下游改用另一批已整理好的特徵表做分析。因此接下來上游單獨送出，下游的兩個階段才需要用 `afterok` 串接。
 
 ---
 
-## 第 2 步：上游：82 個雙端 FASTQ 匯入與品質評估
+## 第 2 步：上游：41 個檢體的雙端 FASTQ 匯入與品質評估
 
 ### 📋 請複製以下指令貼給 AI Agent：
 
 ```text
 請參考 data/qiime2/Qiime2_Pipeline.sh 的上游段落，寫一支 Slurm 作業送到計算節點，結果放在 tutorial/case06/qiime2_run/Upstream/：
 1. 載入 biology/qiime2/2026.7 模組（資料已在 data/qiime2/，不需 wget）。
-2. 把 data/qiime2/Input_Data/data_to_import/ 的 82 個雙端 FASTQ 匯入成 demultiplexed-sequences.qza，並產生品質摘要圖 demultiplexed-sequences-summ.qzv。
+2. 把 data/qiime2/Input_Data/data_to_import/ 的 41 個檢體（82 個 R1/R2 雙端 FASTQ）匯入成 demultiplexed-sequences.qza，並產生品質摘要圖 demultiplexed-sequences-summ.qzv。
 3. 讀取現成的 data/qiime2/Upstream/feature-table-0.qza，產出 feature-table-0-summ.qzv。
 送出後每 5 分鐘檢查一次狀態，跑完通知我。
 ```
@@ -80,9 +83,9 @@ AI 會發現腳本註明「**上游與下游兩段不承接**」：上游用 41 
    - 菌種分類加上 --p-n-jobs 8，並產生物種組成堆疊圖 taxa-bar-plots-1.qzv。
 2. 多樣性與縱向分析，結果放在 tutorial/case06/qiime2_run/Diversity_Longitudinal/：
    - 用第 1 支篩選後的序列建立演化樹（MAFFT / FastTree，加上 --p-n-threads 8）。
-   - 以抽樣深度 10,000 計算 Alpha 與 Beta 多樣性、稀釋曲線與組間顯著性檢定。
+   - 以抽樣深度 10,000 計算 Alpha 與 Beta 多樣性與組間顯著性檢定。
    - 跑 UMAP、Emperor 排序圖、線性混合效應模型（LME）與菌屬波動圖（Volatility）。
-送出後每 5 分鐘檢查一次狀態（全部約 13 分鐘），跑完後確認所有 .qzv 都有產生，並用白話文說明產出了哪些圖表。
+其餘步驟與參數（如稀釋曲線深度）一律照腳本。送出後每 5 分鐘檢查一次狀態（全部約 13 分鐘），跑完後對照腳本原本會產生的 .qzv，列出哪些已產生，並用白話文說明各圖表。
 ```
 
 > [!IMPORTANT]
@@ -101,7 +104,7 @@ AI 會發現腳本註明「**上游與下游兩段不承接**」：上游用 41 
 2. 對 `demultiplexed-sequences-summ.qzv` 按**右鍵 → Download...** 下載至電腦。
 3. 打開 **[https://view.qiime2.org](https://view.qiime2.org)**，將 `.qzv` 檔案拖曳進網頁即可互動檢視讀序品質。
 
-第 3 步跑完後，再用同樣方式檢視 `Downstream/taxa-bar-plots-1.qzv`（物種組成）與 `Diversity_Longitudinal/` 裡的 UMAP、波動圖等結果，並對照第 1 步 AI 說明的「各圖表可以看出什麼」。
+第 3 步跑完後，再用同樣方式檢視 `Downstream/taxa-bar-plots-1.qzv`（物種組成）與 `Diversity_Longitudinal/` 裡的 `uu-umap-emperor-w-time.qzv`（UMAP 排序圖）、波動圖等結果，並對照第 1 步 AI 說明的「各圖表可以看出什麼」。
 
 ---
 
