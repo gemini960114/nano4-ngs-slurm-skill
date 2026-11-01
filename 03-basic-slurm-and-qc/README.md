@@ -148,7 +148,7 @@ data/fastq_4samples/ 資料夾裡面有 4 個定序樣本（.fastq.gz），請�
 > [!TIP]
 > **為什麼用 `my-nano4-slurm` 這個新名稱？**
 > - 存放在 `.agents/skills/my-nano4-slurm/SKILL.md` 後，它就是一個**正式生效的技能**，在接下來的**範例 3（QIIME 2 分析）**中您也可以直接指定使用它！
-> - 同時，它不會覆蓋掉教材原本內建的 `.agents/skills/nano4-ngs-slurm/`（唯讀保護中），讓您隨時都有一份官方標準版可以對照與保底。
+> - 同時，它不會覆蓋掉教材原本內建的 `.agents/skills/nano4-ngs-slurm/`（受 `AGENTS.md` 規則保護），讓您隨時都有一份官方標準版可以對照與保底。
 
 ---
 

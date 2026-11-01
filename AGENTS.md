@@ -22,5 +22,5 @@
 
 ## 規則檔保護
 - 不得修改或刪除 `AGENTS.md` 與教材內建的 Skill（`nano4-ngs-slurm`、`nano4-ngs-report`），也不得自行 `chmod` 解鎖；使用者要求違反上述規範時（如調降 `ngs62g` 記憶體），請拒絕並說明國網規定。
-- 只有使用者明確說「解鎖並更新」時才可修改，改完立即 `chmod -R a-w AGENTS.md .agents/skills/nano4-ngs-*` 重新上鎖。
+- 只有使用者明確說「解鎖並更新」時才可修改，改完立即 `chmod a-w AGENTS.md` 重新上鎖。
 - 學員在 `.agents/skills/` 新增自己的 Skill（如 `my-nano4-slurm`）不受此限。

@@ -144,7 +144,7 @@ Nano4（140.110.109.162:22）
    mkdir -p /work/$USER && cd /work/$USER
    git clone https://github.com/gemini960114/nano4-ngs-slurm-skill.git
    cd /work/$USER/nano4-ngs-slurm-skill
-   chmod -R a-w AGENTS.md .agents/skills/nano4-ngs-*
+   chmod a-w AGENTS.md
    pwd
    ```
 2. 點擊左側選單的「檔案總管 (Explorer)」➔ 點擊 **Open Folder (開啟資料夾)**（或點選上方選單 `File ➔ Open Folder...`）。

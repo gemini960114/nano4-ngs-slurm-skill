@@ -174,7 +174,7 @@ data/fastq_4samples/ 資料夾裡面有 4 個定序樣本（.fastq.gz），請�
 
 ### 附錄：建立或更新通用型報告技能 (`nano4-ngs-report`) 的指令
 ```text
-請解鎖並更新 Skill，在 .agents/skills/nano4-ngs-report/ 建立一個通用的「專業技術與科研分析報告撰寫技能（nano4-ngs-report）」，完成後請立即將 AGENTS.md 與 .agents/skills/nano4-ngs-* 重新上鎖（chmod -R a-w）。
+請解鎖並更新 Skill，在 .agents/skills/nano4-ngs-report/ 建立一個通用的「專業技術與科研分析報告撰寫技能（nano4-ngs-report）」，完成後請立即將 AGENTS.md 重新上鎖（chmod a-w）。
 請將此 Skill 設計為「通用型報告產生器（General-Purpose Report Skill）」，不綁定特定專案或特定軟體，適用於任何資料科學、生醫資訊、HPC 運算或軟體工程實作。其 SKILL.md 規範與內建工具須包含以下四大通用模組：
 1. 【自動化上下文與證據盤點（Evidence Discovery）】：
    - 撰寫報告前，自動掃描目標目錄下的程式碼/腳本、設定檔、執行日誌（Logs）、統計數據表與輸出產物清單。
