@@ -2,6 +2,8 @@
 
 本附錄是課後延伸，主要給講師備課使用，不影響範例 1–4 的課程進度。前面五個單元（範例 1-1 到範例 4）都寫成 Markdown 教材，這裡示範用 Anthropic 的 **pptx Skill**，請 AI 把每個單元的 `README.md` 做成上課用的 **PPTX 簡報**：文字可在 PowerPoint 編輯、物件逐一淡入、換頁淡入，並附講者備註。
 
+> 📥 **本單元上課簡報**：[下載 附錄_用AI把教材做成PPTX簡報.pptx](https://github.com/gemini960114/nano4-ngs-slurm-skill/raw/main/PPTX/%E9%99%84%E9%8C%84_%E7%94%A8AI%E6%8A%8A%E6%95%99%E6%9D%90%E5%81%9A%E6%88%90PPTX%E7%B0%A1%E5%A0%B1.pptx)（13 頁，含講者備註）
+
 | 步驟 | 內容 | 預估時間 |
 | :--- | :--- | :---: |
 | **第 1 步** | [下載 Anthropic pptx Skill](#第-1-步下載-anthropic-pptx-skill) | 2 分鐘 |
@@ -139,11 +141,11 @@ pptx Skill 會用到 pptxgenjs（產生簡報）、markitdown（讀取簡報文�
 
 | 簡報 | 來源單元 | 頁數 |
 | :--- | :--- | :---: |
-| `1-1_安裝Antigravity與模型設定.pptx` | 範例 1-1（含 3 段操作影片） | 13 |
-| `1-2_連上Nano4與下載教材.pptx` | 範例 1-2 | 15 |
-| `2_Slurm基礎練習與自訂Skill.pptx` | 範例 2 | 19 |
-| `3_QIIME2管線派送與監控.pptx` | 範例 3 | 14 |
-| `4_結果解讀與圖文報告.pptx` | 範例 4 | 10 |
+| [1-1_安裝Antigravity與模型設定.pptx](https://github.com/gemini960114/nano4-ngs-slurm-skill/raw/main/PPTX/1-1_%E5%AE%89%E8%A3%9DAntigravity%E8%88%87%E6%A8%A1%E5%9E%8B%E8%A8%AD%E5%AE%9A.pptx) | 範例 1-1（含 3 段操作影片） | 13 |
+| [1-2_連上Nano4與下載教材.pptx](https://github.com/gemini960114/nano4-ngs-slurm-skill/raw/main/PPTX/1-2_%E9%80%A3%E4%B8%8ANano4%E8%88%87%E4%B8%8B%E8%BC%89%E6%95%99%E6%9D%90.pptx) | 範例 1-2 | 15 |
+| [2_Slurm基礎練習與自訂Skill.pptx](https://github.com/gemini960114/nano4-ngs-slurm-skill/raw/main/PPTX/2_Slurm%E5%9F%BA%E7%A4%8E%E7%B7%B4%E7%BF%92%E8%88%87%E8%87%AA%E8%A8%82Skill.pptx) | 範例 2 | 19 |
+| [3_QIIME2管線派送與監控.pptx](https://github.com/gemini960114/nano4-ngs-slurm-skill/raw/main/PPTX/3_QIIME2%E7%AE%A1%E7%B7%9A%E6%B4%BE%E9%80%81%E8%88%87%E7%9B%A3%E6%8E%A7.pptx) | 範例 3 | 14 |
+| [4_結果解讀與圖文報告.pptx](https://github.com/gemini960114/nano4-ngs-slurm-skill/raw/main/PPTX/4_%E7%B5%90%E6%9E%9C%E8%A7%A3%E8%AE%80%E8%88%87%E5%9C%96%E6%96%87%E5%A0%B1%E5%91%8A.pptx) | 範例 4 | 10 |
 
 ---
 

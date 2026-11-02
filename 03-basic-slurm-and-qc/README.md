@@ -4,6 +4,8 @@
 
 接著換 AI 上場：一般情況下，剛連上一台新的 HPC 超級電腦時，AI 並不曉得這台機器的佇列名稱（例如 `ngs62g`）、計畫代號規定或軟體模組載入方式。後半段示範如何從讀取國網官方網頁開始，經過實作練習，最後請 AI 將重點濃縮成專屬 Skill。
 
+> 📥 **本單元上課簡報**：[下載 2_Slurm基礎練習與自訂Skill.pptx](https://github.com/gemini960114/nano4-ngs-slurm-skill/raw/main/PPTX/2_Slurm%E5%9F%BA%E7%A4%8E%E7%B7%B4%E7%BF%92%E8%88%87%E8%87%AA%E8%A8%82Skill.pptx)（19 頁，含講者備註）
+
 | 步驟 | 內容 | 預估時間 |
 | :--- | :--- | :---: |
 | **第 1 步** | [終端機暖身：Linux 與 Nano4 基本指令](#第-1-步終端機暖身linux-與-nano4-基本指令) | 5 分鐘 |

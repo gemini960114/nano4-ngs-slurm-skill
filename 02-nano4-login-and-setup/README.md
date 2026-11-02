@@ -2,6 +2,8 @@
 
 完成前一單元的 Antigravity IDE 安裝後，本單元說明如何設定本機 SSH Config、透過 **IDExpert 雙因子認證**（或搭配 **`ssh-proxy` 免重複認證**）連上國網中心 **晶創26 (`nano4.nchc.org.tw`)**，將課程教材下載至高速工作區 `/work/$USER/` 並開啟，最後用自然語言在 Nano4 安裝 uv 並建立 Python 環境。
 
+> 📥 **本單元上課簡報**：[下載 1-2_連上Nano4與下載教材.pptx](https://github.com/gemini960114/nano4-ngs-slurm-skill/raw/main/PPTX/1-2_%E9%80%A3%E4%B8%8ANano4%E8%88%87%E4%B8%8B%E8%BC%89%E6%95%99%E6%9D%90.pptx)（15 頁，含講者備註）
+
 | 步驟 | 內容 | 預估時間 |
 | :--- | :--- | :---: |
 | **第 1 步** | [前置確認：iService 主機帳號與手機 IDExpert 2FA App](#第-1-步前置確認-iservice-主機帳號與手機-idexpert-2fa-app) | 1 分鐘 |
