@@ -1,17 +1,23 @@
 # 範例 2：Slurm 基礎練習與自訂 Skill —— 讀取官方文件、練習派送 Slurm，最後濃縮成專屬技能
 
-在一般情況下，剛連上一台新的 HPC 超級電腦時，AI 並不曉得這台機器的佇列名稱（例如 `ngs62g`）、計畫代號規定或軟體模組載入方式。本單元示範如何從讀取國網官方網頁開始，經過實作練習，最後請 AI 將重點濃縮成專屬 Skill。
+本單元先在終端機熟悉幾個 Linux 與 Nano4 基本指令，並親手派送第一個 Slurm 作業，了解「登入節點派送、計算節點執行」的流程。
+
+接著換 AI 上場：一般情況下，剛連上一台新的 HPC 超級電腦時，AI 並不曉得這台機器的佇列名稱（例如 `ngs62g`）、計畫代號規定或軟體模組載入方式。後半段示範如何從讀取國網官方網頁開始，經過實作練習，最後請 AI 將重點濃縮成專屬 Skill。
 
 | 步驟 | 內容 | 預估時間 |
 | :--- | :--- | :---: |
-| **第 1 步** | [請 AI 讀取國網 GP1 官方線上說明文件](#第-1-步請-ai-讀取國網-gp1-官方線上說明文件) | 3 分鐘 |
-| **第 2 步** | [請 AI 編寫並派送基礎 Slurm 作業 (`Case 01` ~ `Case 05`)](#第-2-步請-ai-編寫並派送基礎-slurm-作業) | 25 分鐘 |
-| **第 3 步** | [請 AI 擷取文件重點與實作經驗，自動編寫 Skill](#第-3-步請-ai-擷取文件重點與實作經驗自動編寫-skill) | 5 分鐘 |
+| **第 1 步** | [終端機暖身：Linux 與 Nano4 基本指令](#第-1-步終端機暖身linux-與-nano4-基本指令) | 5 分鐘 |
+| **第 2 步** | [親手派送第一個 Slurm 作業 (`Case 00`)](#第-2-步親手派送第一個-slurm-作業) | 5 分鐘 |
+| **第 3 步** | [請 AI 讀取國網 GP1 官方線上說明文件](#第-3-步請-ai-讀取國網-gp1-官方線上說明文件) | 3 分鐘 |
+| **第 4 步** | [請 AI 編寫並派送基礎 Slurm 作業 (`Case 01` ~ `Case 05`)](#第-4-步請-ai-編寫並派送基礎-slurm-作業) | 25 分鐘 |
+| **第 5 步** | [請 AI 擷取文件重點與實作經驗，自動編寫 Skill](#第-5-步請-ai-擷取文件重點與實作經驗自動編寫-skill) | 5 分鐘 |
 
 ```mermaid
 flowchart LR
-    S1["第 1 步：讀取國網 GP1 官方網頁"] --> S2["第 2 步：實作練習 Slurm 作業 (Case 01~05)"]
-    S2 --> S3["第 3 步：擷取重點自動編寫 Skill"]
+    T1["第 1 步：終端機暖身"] --> T2["第 2 步：親手派送第一個作業 (Case 00)"]
+    T2 --> S1["第 3 步：讀取國網 GP1 官方網頁"]
+    S1 --> S2["第 4 步：實作練習 Slurm 作業 (Case 01~05)"]
+    S2 --> S3["第 5 步：擷取重點自動編寫 Skill"]
 ```
 
 > [!NOTE]
@@ -21,7 +27,101 @@ flowchart LR
 
 ---
 
-## 第 1 步：請 AI 讀取國網 GP1 官方線上說明文件
+## 第 1 步：終端機暖身：Linux 與 Nano4 基本指令
+
+請點選上方選單「**終端機 → 新增終端機**」（`Terminal → New Terminal`）。連上 Nano4 後開啟的終端機就是 Nano4 的 Linux 環境，請逐行輸入下列指令並觀察輸出。
+
+### 1. Linux 基本指令
+
+```bash
+hostname                               # 目前所在的主機名稱（登入節點為 25a-lgn*）
+pwd                                    # 目前所在的目錄
+ls                                     # 列出目錄內的檔案
+ls -al                                 # 列出全部檔案（含 . 開頭的隱藏檔）與權限、大小、日期
+cd /work/$USER/nano4-ngs-slurm-skill   # 切換到教材根目錄
+pwd
+ls -al data/fastq_4samples             # 範例 1-1 用過的 4 個 FASTQ 檔
+```
+
+### 2. Nano4 與 Slurm 查詢指令
+
+```bash
+wallet            # 我有哪些計畫代號與剩餘額度（只能在登入節點執行）
+sinfo -p ngs62g   # ngs62g 分區的節點與狀態（idle 閒置、mix 部分使用、alloc 已滿）
+squeue            # 所有使用者正在排隊 (PD) 或執行中 (R) 的作業
+squeue -u $USER   # 只看自己的作業（目前應該是空的）
+```
+
+> [!TIP]
+> `sinfo` 不加 `-p` 會列出所有分區，輸出很長；`squeue` 同理，只想看自己的作業請加 `-u $USER`。查詢作業時**單次執行即可**，不要用 `watch` 或迴圈反覆刷新（見 `AGENTS.md`）。
+
+---
+
+## 第 2 步：親手派送第一個 Slurm 作業
+
+用範例 1-1 同樣的 4 個 FASTQ 檔，計算 read 數、平均長度與 GC 含量，這次改送到計算節點執行。這個計算幾秒就完成，因此腳本開頭刻意先 `sleep 30`，讓您有時間用 `squeue` 看到作業。
+
+腳本已放在教材中（[`first_gc_job.slurm`](./first_gc_job.slurm)），內容如下：
+
+```bash
+#!/bin/bash
+#SBATCH --account=GOV115088                  # 計畫代號（課程計畫）
+#SBATCH --job-name=first-gc                  # 作業名稱（日誌檔名的 %x）
+#SBATCH --partition=ngs62g                   # 分區
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=8                    # ngs62g 固定 8 核心
+#SBATCH --mem=62G                            # ngs62g 固定 62G，漏寫會排不上
+#SBATCH --time=00:10:00                      # 最長執行時間
+#SBATCH --output=tutorial/case00/%x-%j.out   # 標準輸出（%j 為 Job ID）
+#SBATCH --error=tutorial/case00/%x-%j.err    # 錯誤訊息
+
+set -euo pipefail
+
+echo "計算節點：$(hostname)"
+echo "開始時間：$(date)"
+
+# 刻意等 30 秒，讓您有時間用 squeue -u $USER 看到這個作業
+sleep 30
+
+# 對 4 個 FASTQ 檔計算 read 數、平均長度與 GC 含量（每 4 行的第 2 行是序列）
+printf "file\treads\tmean_len\tgc_pct\n"
+for f in data/fastq_4samples/*.fastq.gz; do
+    zcat "$f" | awk -v name="$(basename "$f")" '
+        NR % 4 == 2 { n++; len += length($0); gc += gsub(/[GCgc]/, "") }
+        END { printf "%s\t%d\t%.2f\t%.2f\n", name, n, len / n, 100 * gc / len }'
+done
+
+echo "結束時間：$(date)"
+```
+
+在終端機依序執行（一律在教材根目錄送出）：
+
+```bash
+cd /work/$USER/nano4-ngs-slurm-skill
+mkdir -p tutorial/case00                           # 日誌目錄要先建立，否則作業會直接失敗
+sbatch 03-basic-slurm-and-qc/first_gc_job.slurm    # 送出後會顯示 Submitted batch job <Job ID>
+squeue -u $USER                                    # 30 秒內可看到作業狀態 PD（排隊）或 R（執行中）
+```
+
+約 1 分鐘後作業結束，`squeue -u $USER` 就看不到它了。查看結果：
+
+```bash
+ls tutorial/case00
+cat tutorial/case00/first-gc-*.out
+```
+
+觀察兩件事：
+
+1. **`計算節點` 的主機名稱**（`25a-cpn*`）和第 1 步 `hostname` 看到的登入節點不同：作業是在計算節點上執行的。
+2. **4 個檔案的數值**：可以和範例 1-1 在本機算出的 CSV 對照，結果應該一致。
+
+> [!NOTE]
+> 若 `.out` 是空的或沒有產生，請用 `cat tutorial/case00/first-gc-*.err` 查看錯誤訊息。
+
+---
+
+## 第 3 步：請 AI 讀取國網 GP1 官方線上說明文件
 
 不用自己從頭背手冊！請直接複製下方指令貼給右側的 AI Agent，讓它先讀懂國網 Nano4 生醫節點的使用規範：
 
@@ -40,7 +140,7 @@ https://man.twcc.ai/xOYzPATVS_aDlbuqMrwhyg
 
 ---
 
-## 第 2 步：請 AI 編寫並派送基礎 Slurm 作業
+## 第 4 步：請 AI 編寫並派送基礎 Slurm 作業
 
 讀完官方手冊後，我們用 `data/fastq_4samples/` 裡面的 **4 個輕量 FASTQ 檔**（2 個檢體的 R1/R2 正反向讀序），依序請 AI 幫我們編寫並派送 5 種常見的批次作業。
 
@@ -113,7 +213,7 @@ data/fastq_4samples/ 資料夾裡面有 4 個 FASTQ 檔（.fastq.gz），請幫�
 
 ---
 
-## 第 3 步：請 AI 擷取文件重點與實作經驗自動編寫 Skill
+## 第 5 步：請 AI 擷取文件重點與實作經驗自動編寫 Skill
 
 剛剛的練習之所以順利，是因為 HPC 上常見的坑，AI 都替您避開了（例如：不能在登入節點跑運算、漏寫 `--mem` 會預設申請 1024G 卡死、提交子目錄日誌前要先 `mkdir -p`、Apptainer 快取要指到 `/work/$USER`、不能用迴圈狂刷 `squeue`）。這是因為教材內建的 `AGENTS.md` 與 Skill 裡寫了這些規則；現在換您把它們寫成自己的 Skill。
 

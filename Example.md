@@ -65,7 +65,7 @@ data/
 
 ## 範例 2：Slurm 基礎練習與自訂 Skill —— 讀取官方文件、練習基礎 Slurm 作業，最後濃縮成 Skill
 
-### 步驟 2-1：請 AI 讀取國網 GP1 官方說明網頁
+### 步驟 2-3：請 AI 讀取國網 GP1 官方說明網頁
 ```text
 請幫我讀取國網中心 GP1 生醫專用節點的官方說明網頁：
 https://man.twcc.ai/xOYzPATVS_aDlbuqMrwhyg
@@ -126,7 +126,7 @@ data/fastq_4samples/ 資料夾裡面有 4 個 FASTQ 檔（.fastq.gz），請幫�
 
 ---
 
-### 步驟 2-3：把官方文件重點與實作經驗濃縮成自己的 `my-nano4-slurm` Skill 並實測
+### 步驟 2-5：把官方文件重點與實作經驗濃縮成自己的 `my-nano4-slurm` Skill 並實測
 ```text
 經過剛剛的練習，請幫我擷取國網 GP1 官方說明文件（https://man.twcc.ai/xOYzPATVS_aDlbuqMrwhyg）的重點，以及我們剛剛實作 Slurm 單一作業、Array Job、相依流水線與 Apptainer 容器的經驗，在 .agents/skills/my-nano4-slurm/SKILL.md 建立一份我自己的 Slurm 排程技能：
 
