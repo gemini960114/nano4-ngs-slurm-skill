@@ -42,8 +42,8 @@
   }
 }
 
-/* 防呆：隱藏 Mermaid v11 掛載於 body 底部的暫存錯誤節點 */
-body > div[id^="dmermaid"],
-body > svg[id^="dmermaid"] {
-  display: none !important;
+/* Mermaid 以 body 的行高量測文字，避免 .vp-doc p 的 28px 行高與段落間距讓方塊內最後一行被切掉 */
+.vp-doc .mermaid p {
+  line-height: 1.5;
+  margin: 0;
 }
