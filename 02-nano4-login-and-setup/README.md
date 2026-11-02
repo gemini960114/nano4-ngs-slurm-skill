@@ -26,9 +26,10 @@
 
 我們先在您個人電腦本機的 `~/.ssh/config` 一次加入 `nano4`（直連用）與 `nano4-proxy`（免重複輸入 2FA 代理用）兩組設定，之後就不必再回頭改設定檔：
 
-1. 在 Antigravity IDE 按下快捷鍵 **`F1`**（或 `Ctrl + Shift + P` / Mac 按 `Cmd + Shift + P`）。
-2. 輸入並點選：**`Remote-SSH: Open SSH Configuration File...`**，接著點選清單中的第一個路徑（即您個人電腦的 `C:\Users\<使用者>\.ssh\config` 或 `~/.ssh/config`）。
-3. 在開啟的設定檔中貼上以下內容並存檔（`Ctrl + S` / `Cmd + S`，**請將兩處 `your_account` 皆替換為您的國網主機帳號**）：
+1. 點擊 Antigravity 左側活動列的「**遠端總管 (Remote Explorer)**」圖示，在面板上方的下拉選單選擇 **`SSH (Antigravity)`**。
+2. 點擊 **SSH (Antigravity)** 標題列右側的**齒輪圖示**（Open SSH Config File），接著點選清單中的第一個路徑（即您個人電腦的 `C:\Users\<使用者>\.ssh\config` 或 `~/.ssh/config`）。
+   *(也可以按 **`F1`**（或 `Ctrl + Shift + P` / Mac 按 `Cmd + Shift + P`），輸入並點選 **`Remote-SSH: Open SSH Configuration File...`** 開啟同一個檔案。)*
+3. 在開啟的設定檔中複製貼上以下內容並存檔（`Ctrl + S` / `Cmd + S`，**請將兩處 `your_account` 皆替換為您的國網主機帳號**）：
 
 ```ssh-config
 Host nano4
@@ -80,13 +81,13 @@ Antigravity / VS Code / 終端機
 Nano4（140.110.109.162:22）
 ```
 
-1. **下載執行檔**（前往 [Releases 頁面](https://github.com/gemini960114/ssh-proxy/releases/latest) 下載，免安裝 Python）：
+1. **下載 v0.4.0 執行檔**（[v0.4.0 Releases 頁面](https://github.com/gemini960114/ssh-proxy/releases/tag/v0.4.0)，免安裝 Python）。請依您的作業系統點選對應檔案下載（不確定電腦規格可參考[範例 1-1 第 1 步](../01-install-antigravity/README.md#第-1-步下載並安裝-antigravity-ide)的「如何確認系統規格」）：
 
    | 您的電腦 | 下載檔案 |
    | :--- | :--- |
-   | Windows 10 / 11 | `ssh-proxy-windows-x64.exe` |
-   | macOS Apple Silicon (M1–M4) | `ssh-proxy-macos-arm64` |
-   | Linux x64 | `ssh-proxy-linux-x64` |
+   | Windows 10 / 11 (x64) | [`ssh-proxy-windows-x64.exe`](https://github.com/gemini960114/ssh-proxy/releases/download/v0.4.0/ssh-proxy-windows-x64.exe) |
+   | macOS Apple Silicon (M1–M4) | [`ssh-proxy-macos-arm64`](https://github.com/gemini960114/ssh-proxy/releases/download/v0.4.0/ssh-proxy-macos-arm64) |
+   | Linux x64 | [`ssh-proxy-linux-x64`](https://github.com/gemini960114/ssh-proxy/releases/download/v0.4.0/ssh-proxy-linux-x64) |
 
    *(註：Intel Mac 無預編譯檔，請依 ssh-proxy README 的「Run from Source with uv」方式執行；若不想使用 `ssh-proxy`，也可略過本步驟，直接在下一步選 `nano4` 連線。)*
 
@@ -100,6 +101,10 @@ Nano4（140.110.109.162:22）
    chmod +x ssh-proxy-macos-arm64
    xattr -d com.apple.quarantine ssh-proxy-macos-arm64
    ./ssh-proxy-macos-arm64 nano4
+
+   # Linux x64（第一次需加執行權限）
+   chmod +x ssh-proxy-linux-x64
+   ./ssh-proxy-linux-x64 nano4
    ```
    - 第一次連線會顯示 Nano4 的主機金鑰指紋，確認後輸入完整的 `yes`。
    - 當出現 `Login method (1: Mobile APP OTP, 2: Mobile APP PUSH, 3: Email OTP):` 時，輸入 **`2`** 按 Enter，解鎖手機在 **IDExpert App** 點擊「同意」（或輸入 `1` 並填入 6 位數 OTP），再輸入您的主機密碼。
@@ -121,11 +126,12 @@ Nano4（140.110.109.162:22）
 
 ## 第 4 步：在 Antigravity 連入 Nano4
 
-1. 點擊 Antigravity 視窗左下角的遠端按鈕（圖示 `><`），在上方彈出的選單中選擇：  
-   👉 **`Connect to Host... (連線至主機...)`**
-2. 選擇連線目標（第一次連線時，上方會詢問遠端平台，請選 `Linux`）：
-   - **有啟動第 3 步的 `ssh-proxy`（推薦）**：點擊選取 **`nano4-proxy`**（直接進入，**不需再輸入密碼與 2FA**！）。
-   - **未啟動 `ssh-proxy`（直連）**：點擊選取 **`nano4`** ➔ 輸入 `2` 在手機 **IDExpert App** 點擊「同意」➔ 輸入主機密碼。
+1. 回到左側「**遠端總管 (Remote Explorer)**」的 **`SSH (Antigravity)`** 清單，會看到第 2 步加入的 `nano4` 與 `nano4-proxy`（沒看到請點標題列的重新整理圖示）。
+2. 將滑鼠移到要連線的主機名稱上，點擊右側的**箭頭圖示**（Connect in Current Window）。第一次連線時，上方會詢問遠端平台，請選 `Linux`：
+   - **有啟動第 3 步的 `ssh-proxy`（推薦）**：連線 **`nano4-proxy`**（直接進入，**不需再輸入密碼與 2FA**！）。
+   - **未啟動 `ssh-proxy`（直連）**：連線 **`nano4`** ➔ 輸入 `2` 在手機 **IDExpert App** 點擊「同意」➔ 輸入主機密碼。
+
+   *(也可以點擊視窗左下角的遠端按鈕（圖示 `><`），選擇 **`Connect to Host... (連線至主機...)`** 再點選主機。)*
 3. 連線成功後，視窗左下角會顯示綠色的 **`SSH: nano4-proxy`**（或 **`SSH: nano4`**）！
 
 > [!IMPORTANT]
