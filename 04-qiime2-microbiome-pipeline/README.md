@@ -14,7 +14,7 @@
 flowchart TD
     A["第 1 步：AI 讀懂腳本，說明研究背景與分析流程"] --> B["第 2 步 (Upstream)：匯入 41 個檢體的雙端 FASTQ 與品質摘要"]
     A --> C["第 3 步 (Downstream)：臨床條件篩選 + 8 核心 SILVA 分類"]
-    C -->|afterok| D["第 3 步 (Diversity & Longitudinal)：演化樹 + 多樣性 + UMAP + LME"]
+    C --> D["第 3 步 (Diversity & Longitudinal)：演化樹 + 多樣性 + UMAP + LME<br>（afterok：上一支成功後自動開始）"]
     B --> E["第 4 步：檢視 .qzv 互動圖表"]
     D --> E
 ```
@@ -38,7 +38,7 @@ flowchart TD
         IMP --> DN["DADA2 去噪（含雙端合併）<br>Denoise<br>（預先算好 feature-table-0.qza）"]
     end
 
-    subgraph DOWN["下游：教材提供的 12,546 個檢體資料"]
+    subgraph DOWN["下游：教材提供的 12,546 個檢體資料（不承接上游）"]
         FT["特徵表<br>Feature Table"]
         RS["代表序列<br>Representative Sequences"]
         CLF["SILVA 分類器<br>（預先建好）"]
@@ -53,7 +53,7 @@ flowchart TD
         FIL -.-> DA["差異豐度分析<br>Differential Abundance<br>（本範例未涵蓋）"]
     end
 
-    DN -. "兩段不承接，下游改用教材提供的資料" .-> FT
+    DN -.-> FT
 
     classDef run fill:#d1fae5,stroke:#059669,color:#064e3b
     classDef pre fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
