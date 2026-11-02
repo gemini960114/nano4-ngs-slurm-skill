@@ -36,4 +36,9 @@ features:
     details: 讓 AI 讀取日誌與分析結果，自動彙整成包含流程圖、數據圖表與方法結果解讀的 Markdown 與 HTML/PDF 報告。
     link: /guide/05_automated_report_skill
     linkText: 進入結果解讀與報告
+  - icon: 🎞️
+    title: 5. 用 AI 製作簡報：把教材做成 PPTX
+    details: 安裝 Anthropic pptx Skill 與所需工具，一句話把各單元教材做成文字可編輯、逐一淡入並附講者備註的 PPTX 簡報，也能嵌入操作影片。
+    link: /guide/06_ai_pptx_slides
+    linkText: 進入用 AI 製作簡報
 ---

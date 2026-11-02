@@ -201,3 +201,72 @@ data/fastq_4samples/ 有 4 個 FASTQ 檔（.fastq.gz），請用 Slurm 陣列作
 
 ---
 
+---
+
+## 範例 5：用 AI 把教材做成 PPTX 簡報（pptx Skill）
+
+> 步驟 5-1（下載 pptx Skill）是在終端機輸入指令，請見[範例 5 教材](./06-ai-pptx-slides/README.md)。
+
+### 步驟 5-2：安裝 pptx Skill 需要的工具
+```text
+請在 Nano4 上安裝 Anthropic pptx skill 需要的工具（不需 sudo，全部放在 /work/$USER/tools，不要裝在 /home，也不要動到教材專案的 package.json）：
+1. pptxgenjs：npm 安裝到 /work/$USER/tools/node（不是專案目錄），用 NODE_PATH 指過去。
+2. markitdown：用 uv 安裝到專案根目錄的 .venv。
+3. ffmpeg：下載官方靜態編譯版，只把 ffmpeg、ffprobe 兩個執行檔連結到 /work/$USER/tools/bin。
+4. LibreOffice：用 AppImage 解開或 apptainer 容器，只在 /work/$USER/tools/bin 放一個 soffice 包裝腳本；不要把它的目錄或函式庫加進全域 PATH 或 LD_LIBRARY_PATH。
+5. pdftoppm : 用在 pptx skill 的 thumbnail.py，把每一頁投影片排成預覽縮圖。
+
+環境設定：
+- 修改前先備份 ~/.bashrc。
+- PATH 用「附加在後面」（PATH=$PATH:/work/$USER/tools/bin），不要放在最前面，避免蓋過系統指令。
+- 設定寫成一個有標記的區塊（例如 # >>> pptx tools >>>），重複執行不會重複加入。
+安裝前先跟我說明每項要下載什麼、放在哪裡、大約多大，我確認後再開始；
+裝完逐一檢查版本，並確認 which python、which node、module 與 sbatch 都和安裝前一樣，最後用 soffice 把 PPTX/01_Antigravity入門.pptx 轉成 PDF 試跑一次。
+```
+
+### 步驟 5-3：參考現有簡報與影片，產生範例 1-1 簡報
+```text
+參考01_Antigravity入門.pptx,
+參考簡報裡的影片也要一起放進對應的頁面（不要只放截圖），播放方式照參考簡報。
+將 01-install-antigravity/README.md 做成 PPTX 簡報 存放在目錄PPTX/。
+文字都要能在 PowerPoint 裡編輯（不要做成圖片）
+每頁物件依序逐一出現（按一下出現一個），用淡入效果
+換頁用淡入效果，慢一點
+要講者備註
+```
+
+### 步驟 5-4：範例 1-2 簡報
+```text
+將 02-nano4-login-and-setup/README.md 做成 PPTX 簡報 存放在目錄PPTX/。
+文字都要能在 PowerPoint 裡編輯（不要做成圖片）
+每頁物件依序逐一出現（按一下出現一個），用淡入效果
+換頁用淡入效果，慢一點
+要講者備註
+```
+
+### 步驟 5-4：範例 2 簡報
+```text
+將 03-basic-slurm-and-qc/README.md 做成 PPTX 簡報 存放在目錄PPTX/。
+文字都要能在 PowerPoint 裡編輯（不要做成圖片）
+每頁物件依序逐一出現（按一下出現一個），用淡入效果
+換頁用淡入效果，慢一點
+要講者備註
+```
+
+### 步驟 5-4：範例 3 簡報
+```text
+將 04-qiime2-microbiome-pipeline/README.md 做成 PPTX 簡報 存放在目錄PPTX/。
+文字都要能在 PowerPoint 裡編輯（不要做成圖片）
+每頁物件依序逐一出現（按一下出現一個），用淡入效果
+換頁用淡入效果，慢一點
+要講者備註
+```
+
+### 步驟 5-4：範例 4 簡報
+```text
+將 05-automated-report-skill/README.md 做成 PPTX 簡報 存放在目錄PPTX/。
+文字都要能在 PowerPoint 裡編輯（不要做成圖片）
+每頁物件依序逐一出現（按一下出現一個），用淡入效果
+換頁用淡入效果，慢一點
+要講者備註
+```

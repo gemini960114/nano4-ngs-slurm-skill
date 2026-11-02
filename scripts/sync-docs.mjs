@@ -13,6 +13,7 @@ const CHAPTERS = {
   '03-basic-slurm-and-qc': '03_basic_slurm_and_qc',
   '04-qiime2-microbiome-pipeline': '04_qiime2_microbiome_pipeline',
   '05-automated-report-skill': '05_automated_report_skill',
+  '06-ai-pptx-slides': '06_ai_pptx_slides',
 }
 
 mkdirSync(join(ROOT, 'docs', 'guide'), { recursive: true })

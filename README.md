@@ -10,7 +10,7 @@
 
 ---
 
-## 🗺️ 課程內容（四個範例）
+## 🗺️ 課程內容（五個範例）
 
 | 單元 | 主題 | 對應章節連結 | 核心內容 |
 | :--- | :--- | :--- | :--- |
@@ -18,6 +18,7 @@
 | **範例 2** | **Slurm 練習與自訂 Skill** | • [2. 把 Slurm 規則寫成 Skill 與基礎排程](./03-basic-slurm-and-qc/README.md) | 先練習 Linux 與 Slurm 基本指令並親手派送第一個作業，再把 Nano4 的 Slurm 使用規則寫成 Skill，讓 AI 產生單一作業、Array Job、FastQC/MultiQC 與容器批次腳本 |
 | **範例 3** | **管線派送與監控** | • [3. QIIME 2 腸道菌相分析與定時監控](./04-qiime2-microbiome-pipeline/README.md) | 以 QIIME 2 腸道菌相分析為例，AI 先讀懂分析腳本，確認後才送出，以 afterok 串接相依階段，之後每 5 分鐘自動檢查作業狀態 |
 | **範例 4** | **結果解讀與報告** | • [4. 結果解讀、圖文報告與換上自有資料](./05-automated-report-skill/README.md) | 讓 AI 讀取分析結果與日誌，整理成含數據圖表的 Markdown 與 HTML/PDF 圖文報告，並說明如何替換為自己的研究資料 |
+| **範例 5** | **用 AI 製作簡報** | • [5. 把教材做成 PPTX 簡報](./06-ai-pptx-slides/README.md) | 安裝 Anthropic pptx Skill 與所需工具，請 AI 把各單元教材做成文字可編輯、物件逐一淡入並附講者備註的 PPTX 簡報，也能嵌入操作影片 |
 
 ---
 

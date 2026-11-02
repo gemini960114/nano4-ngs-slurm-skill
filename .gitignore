@@ -2,6 +2,12 @@
 qc/
 tutorial/
 .agents/skills/my-nano4-slurm/
+# Anthropic 文件類 Skill（授權不允許散布，只放本機使用）
+.agents/skills/pptx/
+
+# 用 AI 產生的上課簡報與參考簡報（含影片，檔案大，不納入版本控制）
+PPTX/
+*.pptx
 
 # Slurm 標準輸出與錯誤日誌
 *.out
