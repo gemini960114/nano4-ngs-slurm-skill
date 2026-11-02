@@ -79,20 +79,21 @@ https://man.twcc.ai/xOYzPATVS_aDlbuqMrwhyg
 
 ---
 
-### 練習 1 (`tutorial/case01`)：單一 FASTQ 檔案統計（單一批次作業）
+### 練習 1 (`tutorial/case01`)：請 AI 把 Case 00 改寫成 Python 版（單一批次作業）
 ```text
-寫一支 Python 程式，讀取 data/fastq_4samples/FMT.0093C_5_L001_R1_001.fastq.gz，算出裡面有幾條 reads、平均讀長和 GC 含量 %。
-幫我寫 Slurm 腳本送到計算節點去跑（用課程計畫 GOV115088，分區 ngs62g 固定 8 核心與 62G 記憶體）。
-腳本放在目前目錄 tutorial/case01
-送出前先跟我說你的設定，跑完後把結果整理給我。
+請參考 03-basic-slurm-and-qc/first_gc_job.slurm（我在第 2 步親手送過的 Case 00），改寫成 Python 版：
+用 Python 程式對 data/fastq_4samples/ 的 4 個 FASTQ 檔計算 read 數、平均長度與 GC 含量，
+並寫成 Slurm 腳本送到計算節點執行（課程計畫 GOV115088，分區 ngs62g 固定 8 核心與 62G 記憶體）。
+腳本、日誌與結果都放在 tutorial/case01/。送出前先跟我說你的設定，跑完後把結果和 tutorial/case00/ 的輸出對照給我看。
 ```
 
 ---
 
-### 練習 2 (`tutorial/case02`)：多樣本平行計算（Slurm 陣列作業 Array Job）
+### 練習 2 (`tutorial/case02`)：4 個檔案同時計算（Slurm 陣列作業 Array Job）
 ```text
-data/fastq_4samples/ 資料夾裡面有 4 個 FASTQ 檔（.fastq.gz），請幫我用 Slurm 陣列作業（Array Job）同時算出每個檔案各有幾條 reads，送出前先給我看計畫。
-腳本放在目前目錄 tutorial/case02
+data/fastq_4samples/ 有 4 個 FASTQ 檔（.fastq.gz），請用 Slurm 陣列作業（Array Job）讓 4 個檔案同時計算 read 數、平均長度與 GC 含量，
+全部完成後彙整成一張表，並和 tutorial/case00/ 逐一處理的結果對照。
+腳本、日誌與結果都放在 tutorial/case02/。送出前先給我看計畫。
 ```
 
 ---
@@ -102,16 +103,15 @@ data/fastq_4samples/ 資料夾裡面有 4 個 FASTQ 檔（.fastq.gz），請幫�
 請幫我對 data/fastq_4samples/ 裡面的 4 個 FASTQ 檔做品質檢查流水線：
 - 第一步：用 FastQC 檢查這 4 個檔案的品質，結果放在 tutorial/case03/qc/fastqc_out/。
 - 第二步：等第一步確定成功跑完後，自動啟動 MultiQC 把結果彙整成一份 HTML 報告，放在 tutorial/case03/qc/multiqc_out/。
-先告訴我你打算怎麼送，我同意後再送出。
-腳本放在目前目錄 tutorial/case03
+腳本與日誌放在 tutorial/case03/。先告訴我你打算怎麼送，我同意後再送出。
 ```
 
 ---
 
 ### 練習 4 (`tutorial/case04`)：檢查作業狀態與資源使用率（`seff` / `sacct`）
 ```text
-剛剛送出去的工作跑完了嗎？如果跑完了，請幫我用 seff（或 sacct）檢查資源使用率，並用白話文跟我說跑得順不順、這 4 個檔案的品質結果如何。
-結果報告放置於 tutorial/case04
+練習 3 的 FastQC 與 MultiQC 作業跑完了嗎？如果跑完了，請用 seff（或 sacct）檢查這兩個作業的資源使用率，並用白話文跟我說跑得順不順、這 4 個檔案的品質結果如何。
+報告放在 tutorial/case04/。
 ```
 
 ---
@@ -121,7 +121,7 @@ data/fastq_4samples/ 資料夾裡面有 4 個 FASTQ 檔（.fastq.gz），請幫�
 這次不要用 module load，請改寫一個用 Apptainer 容器執行的 Slurm 工作：
 1. 在計算節點直接從 Docker Hub 下載 multiqc/multiqc:v1.35 映像檔，.sif 檔存在 /work/$USER/containers/，Apptainer 快取也設在 /work/$USER/（home 空間有限）。
 2. 用這個容器去掃描剛剛 tutorial/case03/qc/fastqc_out/ 的結果，產生 MultiQC 報告到 tutorial/case05/multiqc_out/。
-3. 腳本報告放在目前目錄 tutorial/case05
+3. 腳本、日誌與報告都放在 tutorial/case05/。
 ```
 
 ---
