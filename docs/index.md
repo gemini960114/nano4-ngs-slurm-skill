@@ -23,7 +23,7 @@ features:
     linkText: 進入環境建置
   - icon: 🛠️
     title: 2. Slurm 練習與自訂 Skill
-    details: 把 Nano4 的 Slurm 使用規範寫成 Skill，直接產生單一作業、Array 平行作業、FastQC/MultiQC 與容器批次腳本。
+    details: 先練習 Linux 與 Slurm 基本指令並親手派送第一個作業，再把 Nano4 的 Slurm 使用規範寫成 Skill，讓 AI 產生單一作業、Array 平行作業、FastQC/MultiQC 與容器批次腳本。
     link: /guide/03_basic_slurm_and_qc
     linkText: 進入 Slurm 練習與自訂 Skill
   - icon: 🦠

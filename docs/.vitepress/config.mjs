@@ -54,7 +54,7 @@ export default withMermaid(defineConfig({
       {
         text: '範例 2：Slurm 練習與自訂 Skill',
         items: [
-          { text: '2. 把 Slurm 規則寫成 Skill (Case 01~05)', link: '/guide/03_basic_slurm_and_qc' }
+          { text: '2. 把 Slurm 規則寫成 Skill (Case 00~05)', link: '/guide/03_basic_slurm_and_qc' }
         ]
       },
       {
