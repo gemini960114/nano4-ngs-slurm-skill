@@ -5,9 +5,15 @@ tutorial/
 # Anthropic 文件類 Skill（授權不允許散布，只放本機使用）
 .agents/skills/pptx/
 
-# 用 AI 產生的上課簡報與參考簡報（含影片，檔案大，不納入版本控制）
-PPTX/
+# 簡報：只納入本教材各單元的簡報（1-1、1-2、2_、3_、4_、附錄_），其他 .pptx（如講師的參考簡報）不納入
 *.pptx
+PPTX/*
+!PPTX/1-1_*.pptx
+!PPTX/1-2_*.pptx
+!PPTX/2_*.pptx
+!PPTX/3_*.pptx
+!PPTX/4_*.pptx
+!PPTX/附錄_*.pptx
 
 # Slurm 標準輸出與錯誤日誌
 *.out
