@@ -203,11 +203,11 @@ data/fastq_4samples/ 有 4 個 FASTQ 檔（.fastq.gz），請用 Slurm 陣列作
 
 ---
 
-## 範例 5：用 AI 把教材做成 PPTX 簡報（pptx Skill）
+## 附錄：用 AI 把教材做成 PPTX 簡報（pptx Skill）
 
-> 步驟 5-1（下載 pptx Skill）是在終端機輸入指令，請見[範例 5 教材](./06-ai-pptx-slides/README.md)。
+> 步驟 A-1（下載 pptx Skill）是在終端機輸入指令，請見[附錄教材](./06-ai-pptx-slides/README.md)。
 
-### 步驟 5-2：安裝 pptx Skill 需要的工具
+### 步驟 A-2：安裝 pptx Skill 需要的工具
 ```text
 請在 Nano4 上安裝 Anthropic pptx skill 需要的工具（不需 sudo，全部放在 /work/$USER/tools，不要裝在 /home，也不要動到教材專案的 package.json）：
 1. pptxgenjs：npm 安裝到 /work/$USER/tools/node（不是專案目錄），用 NODE_PATH 指過去。
@@ -224,7 +224,7 @@ data/fastq_4samples/ 有 4 個 FASTQ 檔（.fastq.gz），請用 Slurm 陣列作
 裝完逐一檢查版本，並確認 which python、which node、module 與 sbatch 都和安裝前一樣，最後用 soffice 把 PPTX/01_Antigravity入門.pptx 轉成 PDF 試跑一次。
 ```
 
-### 步驟 5-3：參考現有簡報與影片，產生範例 1-1 簡報
+### 步驟 A-3：參考現有簡報與影片，產生範例 1-1 簡報
 ```text
 參考01_Antigravity入門.pptx,
 參考簡報裡的影片也要一起放進對應的頁面（不要只放截圖），播放方式照參考簡報。
@@ -235,7 +235,7 @@ data/fastq_4samples/ 有 4 個 FASTQ 檔（.fastq.gz），請用 Slurm 陣列作
 要講者備註
 ```
 
-### 步驟 5-4：範例 1-2 簡報
+### 步驟 A-4：範例 1-2 簡報
 ```text
 將 02-nano4-login-and-setup/README.md 做成 PPTX 簡報 存放在目錄PPTX/。
 文字都要能在 PowerPoint 裡編輯（不要做成圖片）
@@ -244,7 +244,7 @@ data/fastq_4samples/ 有 4 個 FASTQ 檔（.fastq.gz），請用 Slurm 陣列作
 要講者備註
 ```
 
-### 步驟 5-4：範例 2 簡報
+### 步驟 A-4：範例 2 簡報
 ```text
 將 03-basic-slurm-and-qc/README.md 做成 PPTX 簡報 存放在目錄PPTX/。
 文字都要能在 PowerPoint 裡編輯（不要做成圖片）
@@ -253,7 +253,7 @@ data/fastq_4samples/ 有 4 個 FASTQ 檔（.fastq.gz），請用 Slurm 陣列作
 要講者備註
 ```
 
-### 步驟 5-4：範例 3 簡報
+### 步驟 A-4：範例 3 簡報
 ```text
 將 04-qiime2-microbiome-pipeline/README.md 做成 PPTX 簡報 存放在目錄PPTX/。
 文字都要能在 PowerPoint 裡編輯（不要做成圖片）
@@ -262,7 +262,7 @@ data/fastq_4samples/ 有 4 個 FASTQ 檔（.fastq.gz），請用 Slurm 陣列作
 要講者備註
 ```
 
-### 步驟 5-4：範例 4 簡報
+### 步驟 A-4：範例 4 簡報
 ```text
 將 05-automated-report-skill/README.md 做成 PPTX 簡報 存放在目錄PPTX/。
 文字都要能在 PowerPoint 裡編輯（不要做成圖片）

@@ -1,6 +1,6 @@
-# 範例 5：用 AI 把教材做成 PPTX 簡報 —— 安裝 pptx Skill 與工具，一句話產生上課簡報
+# 附錄：用 AI 把教材做成 PPTX 簡報 —— 安裝 pptx Skill 與工具，一句話產生上課簡報
 
-前面五個單元（範例 1-1 到範例 4）都寫成 Markdown 教材。本單元示範用 Anthropic 的 **pptx Skill**，請 AI 把每個單元的 `README.md` 做成上課用的 **PPTX 簡報**：文字可在 PowerPoint 編輯、物件逐一淡入、換頁淡入，並附講者備註。
+本附錄是課後延伸，主要給講師備課使用，不影響範例 1–4 的課程進度。前面五個單元（範例 1-1 到範例 4）都寫成 Markdown 教材，這裡示範用 Anthropic 的 **pptx Skill**，請 AI 把每個單元的 `README.md` 做成上課用的 **PPTX 簡報**：文字可在 PowerPoint 編輯、物件逐一淡入、換頁淡入，並附講者備註。
 
 | 步驟 | 內容 | 預估時間 |
 | :--- | :--- | :---: |
@@ -37,6 +37,9 @@ ls .agents/skills
 
 看到 `nano4-ngs-report`、`nano4-ngs-slurm` 與 `pptx` 三個資料夾即完成。
 
+> [!TIP]
+> 部分 Agent 不會自動載入 `.agents/skills/` 下的新 Skill。若之後 AI 沒有照 pptx Skill 的方式產生簡報，在 Prompt 開頭加一句「請先閱讀 .agents/skills/pptx/SKILL.md」即可。
+
 ---
 
 ## 第 2 步：用自然語言安裝 pptx Skill 需要的工具
@@ -62,6 +65,7 @@ pptx Skill 會用到 pptxgenjs（產生簡報）、markitdown（讀取簡報文�
 - **AI 會先列出下載清單等您確認**：LibreOffice 解開後約 700 MB，全部工具合計約 1 GB，都在 `/work/$USER/tools`。
 - **LibreOffice 的下載來源**：若 AppImage 下載站從 Nano4 連不上，可請 AI 改用官方 documentfoundation.org 的 RPM 壓縮檔，以 `rpm2cpio` 解開（不安裝到系統）。
 - **pdftoppm**：Nano4 沒有內建，可請 AI 用 micromamba 從 conda-forge 安裝 poppler，只把 `pdftoppm` 連結到 `/work/$USER/tools/bin`。
+- **最後的試跑轉檔**：Prompt 用講師的 `PPTX/01_Antigravity入門.pptx`；若您沒有這個檔案，請換成手邊任一份 `.pptx`。
 - **安裝與轉檔屬於輕量工作**，可在登入節點進行（見 `AGENTS.md`）。日後要移除，刪掉 `/work/$USER/tools` 與 `~/.bashrc` 中標記的區塊即可。
 
 ---
@@ -80,6 +84,8 @@ pptx Skill 會用到 pptxgenjs（產生簡報）、markitdown（讀取簡報文�
 要講者備註
 ```
 
+沒有參考簡報時，刪掉前兩行即可，AI 會自行設計版面。
+
 > [!TIP]
 > **「參考簡報裡的影片也要一起放進對應的頁面」這句不能省**：只寫「參考」時，AI 常只取影片的封面圖當截圖。加上這句，影片會嵌入對應頁面，並照參考簡報的方式播放（說明逐一出現後再按一下播放，點影片可暫停）。
 
@@ -87,7 +93,7 @@ pptx Skill 會用到 pptxgenjs（產生簡報）、markitdown（讀取簡報文�
 
 ## 第 4 步：依序產生其餘四份簡報
 
-其餘單元不指定參考簡報，AI 會沿用第 3 步的風格，讓整套簡報一致。請一次貼一段，完成一份再貼下一份：
+其餘單元不指定參考簡報。在**同一個對話**中依序貼上，AI 會沿用第 3 步的風格，讓整套簡報一致；若開了新對話，可在 Prompt 開頭加一句「風格與 PPTX 目錄裡範例 1-1 的簡報一致」。請一次貼一段，完成一份再貼下一份：
 
 **範例 1-2：連上 Nano4 與下載教材**
 

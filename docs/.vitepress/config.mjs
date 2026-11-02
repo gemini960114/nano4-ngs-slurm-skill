@@ -24,14 +24,13 @@ export default withMermaid(defineConfig({
       { text: '首頁', link: '/' },
       { text: '課程總覽', link: '/guide/00_overview' },
       {
-        text: '五大實作單元',
+        text: '四大實作單元',
         items: [
           { text: '1-1. 安裝 Antigravity 與模型設定', link: '/guide/01_install_antigravity' },
           { text: '1-2. 連線 Nano4 與下載教材', link: '/guide/02_nano4_login_and_setup' },
           { text: '2. Slurm 基礎練習與自訂 Skill', link: '/guide/03_basic_slurm_and_qc' },
           { text: '3. 管線派送與監控 (QIIME 2)', link: '/guide/04_qiime2_microbiome_pipeline' },
-          { text: '4. 結果解讀與圖文報告', link: '/guide/05_automated_report_skill' },
-          { text: '5. 用 AI 製作 PPTX 簡報', link: '/guide/06_ai_pptx_slides' }
+          { text: '4. 結果解讀與圖文報告', link: '/guide/05_automated_report_skill' }
         ]
       },
       { text: '指令速查表', link: '/guide/examples_all' },
@@ -71,16 +70,11 @@ export default withMermaid(defineConfig({
         ]
       },
       {
-        text: '範例 5：用 AI 製作簡報',
-        items: [
-          { text: '5. 把教材做成 PPTX 簡報 (pptx Skill)', link: '/guide/06_ai_pptx_slides' }
-        ]
-      },
-      {
         text: '附錄參考',
         items: [
           { text: '全部指令範例總表 (Example.md)', link: '/guide/examples_all' },
-          { text: 'Nano4 GP1 規範 (AGENTS.md)', link: '/guide/agents_governance' }
+          { text: 'Nano4 GP1 規範 (AGENTS.md)', link: '/guide/agents_governance' },
+          { text: '用 AI 把教材做成 PPTX 簡報', link: '/guide/06_ai_pptx_slides' }
         ]
       }
     ],

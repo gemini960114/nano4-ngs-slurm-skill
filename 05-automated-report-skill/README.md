@@ -52,4 +52,4 @@
 
 ---
 
-👉 想把這些教材做成上課簡報？請進入 **[範例 5：用 AI 把教材做成 PPTX 簡報](../06-ai-pptx-slides/README.md)**。
+👉 延伸：想把這些教材做成上課簡報？請見 **[附錄：用 AI 把教材做成 PPTX 簡報](../06-ai-pptx-slides/README.md)**。
