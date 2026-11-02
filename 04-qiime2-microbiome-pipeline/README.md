@@ -27,6 +27,46 @@ flowchart TD
 >
 > 本單元不需要記住 QIIME 2 指令，讓 AI 讀懂教材腳本、改寫成 Slurm 作業即可。
 
+### QIIME 2 分析流程與本範例的對應
+
+一般 QIIME 2 擴增子分析的流程如下。為了在課堂時間內跑完，本範例把耗時的步驟預先算好，並且**上游與下游使用不同的資料、兩段不承接**：
+
+```mermaid
+flowchart TD
+    subgraph UP["上游：41 個檢體的原始定序資料"]
+        RAW["原始定序讀序<br>Raw Sequences"] --> IMP["匯入與品質摘要<br>Import / Demultiplex<br>（第 2 步）"]
+        IMP --> DN["DADA2 去噪（含雙端合併）<br>Denoise<br>（預先算好 feature-table-0.qza）"]
+    end
+
+    subgraph DOWN["下游：教材提供的 12,546 個檢體資料"]
+        FT["特徵表<br>Feature Table"]
+        RS["代表序列<br>Representative Sequences"]
+        CLF["SILVA 分類器<br>（預先建好）"]
+        FT --> FIL["臨床條件篩選<br>（第 3 步 第 1 支）"]
+        RS --> FIL
+        FIL --> TAX["物種分類 → 物種組成堆疊圖<br>Taxonomy → Barplots<br>（第 3 步 第 1 支）"]
+        CLF --> TAX
+        FIL --> PHY["序列比對 → 演化樹<br>Alignment → Phylogeny<br>（第 3 步 第 2 支）"]
+        FIL --> DIV["Alpha / Beta 多樣性、UMAP<br>Diversity Analyses<br>（第 3 步 第 2 支）"]
+        PHY --> DIV
+        DIV --> STA["縱向統計 LME / Volatility<br>Statistics<br>（第 3 步 第 2 支）"]
+        FIL -.-> DA["差異豐度分析<br>Differential Abundance<br>（本範例未涵蓋）"]
+    end
+
+    DN -. "兩段不承接，下游改用教材提供的資料" .-> FT
+
+    classDef run fill:#d1fae5,stroke:#059669,color:#064e3b
+    classDef pre fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
+    classDef none fill:#f3f4f6,stroke:#9ca3af,color:#374151,stroke-dasharray:5 5
+    class IMP,FIL,TAX,PHY,DIV,STA run
+    class RAW,DN,FT,RS,CLF pre
+    class DA none
+```
+
+- **綠色**：課堂上實際送出 Slurm 作業執行的步驟。
+- **藍色**：教材已提供或預先算好的資料（例如 DADA2 去噪對 41 個檢體需 30～60 分鐘以上）。
+- **灰色虛線**：一般流程會有、但本範例未涵蓋的分析。
+
 > [!TIP]
 > **內建資料說明**：所需的 **41 個檢體的 82 個雙端 `.fastq.gz` 檔案（R1/R2）、臨床 Metadata、預訓練 SILVA 138.2 分類器與上游特徵表** 均已放在 `data/qiime2/` 目錄中，不需執行 `wget` 下載。
 
