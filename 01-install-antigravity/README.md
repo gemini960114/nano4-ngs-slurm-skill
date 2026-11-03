@@ -77,9 +77,11 @@
 | :--- | :--- |
 | **Base URL** | `https://portal.genai.nchc.org.tw/api/v1` |
 | **API Key** | 課堂上講師提供的金鑰（`sk-` 開頭） |
-| **Model** | `Inkling-Small` 或 `Muse-Spark-Open-816B-A42B` |
+| **Model** | `Inkling-Small`（Agent 能力評分 13）或 `Muse-Spark-Open-816B-A42B`（Agent 能力評分 25）<sup>*</sup> |
 | **Max Output Tokens** | `-1` |
 | **Todo List Enabled** | ✅ 打勾 |
+
+<sup>*</sup> 評分取自 LLM 排行榜（LLM Leaderboard）的 Agent 能力評分，分數越高，越能勝任派送 Slurm 作業、整理報告這類多步驟任務。
 
 > [!IMPORTANT]
 > - **Max Output Tokens 請設為 `-1`**：數值太小時，AI 寫到一半的腳本或報告會被截斷。

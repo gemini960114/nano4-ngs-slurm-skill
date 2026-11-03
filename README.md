@@ -23,7 +23,7 @@
 
 **📥 上課簡報（PPTX，含講者備註）**：[範例 1-1](https://github.com/gemini960114/nano4-ngs-slurm-skill/raw/main/PPTX/1-1_%E5%AE%89%E8%A3%9DAntigravity%E8%88%87%E6%A8%A1%E5%9E%8B%E8%A8%AD%E5%AE%9A.pptx)　｜　[範例 1-2](https://github.com/gemini960114/nano4-ngs-slurm-skill/raw/main/PPTX/1-2_%E9%80%A3%E4%B8%8ANano4%E8%88%87%E4%B8%8B%E8%BC%89%E6%95%99%E6%9D%90.pptx)　｜　[範例 2](https://github.com/gemini960114/nano4-ngs-slurm-skill/raw/main/PPTX/2_Slurm%E5%9F%BA%E7%A4%8E%E7%B7%B4%E7%BF%92%E8%88%87%E8%87%AA%E8%A8%82Skill.pptx)　｜　[範例 3](https://github.com/gemini960114/nano4-ngs-slurm-skill/raw/main/PPTX/3_QIIME2%E7%AE%A1%E7%B7%9A%E6%B4%BE%E9%80%81%E8%88%87%E7%9B%A3%E6%8E%A7.pptx)　｜　[範例 4](https://github.com/gemini960114/nano4-ngs-slurm-skill/raw/main/PPTX/4_%E7%B5%90%E6%9E%9C%E8%A7%A3%E8%AE%80%E8%88%87%E5%9C%96%E6%96%87%E5%A0%B1%E5%91%8A.pptx)　｜　[附錄](https://github.com/gemini960114/nano4-ngs-slurm-skill/raw/main/PPTX/%E9%99%84%E9%8C%84_%E7%94%A8AI%E6%8A%8A%E6%95%99%E6%9D%90%E5%81%9A%E6%88%90PPTX%E7%B0%A1%E5%A0%B1.pptx)
 
-**🎬 教學影片（YouTube）**：[範例 1-1｜安裝 Antigravity 與 AI Agent 設定](https://youtu.be/ExOsYOF27uw)　｜　[範例 1-2｜連上 Nano4 與下載教材](https://youtu.be/VSkc-0lxrDw)　｜　[範例 3｜QIIME 2 管線派送與監控](https://youtu.be/wmNvs-LdaXI)　｜　[範例 4｜結果解讀與圖文報告](https://youtu.be/UgkCXryBhQ4)
+**🎬 教學影片（YouTube）**：[範例 1-1｜安裝 Antigravity 與 AI Agent 設定](https://youtu.be/ExOsYOF27uw)　｜　[範例 1-2｜連上 Nano4 與下載教材](https://youtu.be/VSkc-0lxrDw)　｜　[範例 2｜Slurm 基礎練習與自訂 Skill](https://youtu.be/F_0RCsNkaKg)　｜　[範例 3｜QIIME 2 管線派送與監控](https://youtu.be/wmNvs-LdaXI)　｜　[範例 4｜結果解讀與圖文報告](https://youtu.be/UgkCXryBhQ4)
 
 ---
 

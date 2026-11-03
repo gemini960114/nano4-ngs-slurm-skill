@@ -6,6 +6,8 @@
 
 > 📥 **本單元上課簡報**：[下載 2_Slurm基礎練習與自訂Skill.pptx](https://github.com/gemini960114/nano4-ngs-slurm-skill/raw/main/PPTX/2_Slurm%E5%9F%BA%E7%A4%8E%E7%B7%B4%E7%BF%92%E8%88%87%E8%87%AA%E8%A8%82Skill.pptx)（19 頁，含講者備註）
 
+> 🎬 **本單元教學影片**：[範例 2｜Slurm 基礎練習與自訂 Skill](https://youtu.be/F_0RCsNkaKg)（YouTube）
+
 | 步驟 | 內容 | 預估時間 |
 | :--- | :--- | :---: |
 | **第 1 步** | [終端機暖身：Linux 與 Nano4 基本指令](#第-1-步終端機暖身linux-與-nano4-基本指令) | 5 分鐘 |
