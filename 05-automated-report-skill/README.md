@@ -2,7 +2,9 @@
 
 跑完生醫分析後，最花時間的往往是翻找各個日誌檔（`*.out`）、統計數據與圖表產物來撰寫實驗紀錄或結案報告。本單元示範如何利用 **`nano4-ngs-report`** 技能，讓 AI 自動整理出結構化的 **Markdown (`.md`)** 與 **可列印 PDF 的獨立 HTML 圖文報告 (`.html`)**，並說明如何將整套做法換上您自己的研究資料。
 
-> 📥 **本單元上課簡報**：[下載 4_結果解讀與圖文報告.pptx](https://github.com/gemini960114/nano4-ngs-slurm-skill/raw/main/PPTX/4_%E7%B5%90%E6%9E%9C%E8%A7%A3%E8%AE%80%E8%88%87%E5%9C%96%E6%96%87%E5%A0%B1%E5%91%8A.pptx)（10 頁，含講者備註）
+> 📥 **本單元上課簡報**：[下載 4_結果解讀與圖文報告.pptx](https://github.com/gemini960114/nano4-ngs-slurm-skill/raw/main/PPTX/4_%E7%B5%90%E6%9E%9C%E8%A7%A3%E8%AE%80%E8%88%87%E5%9C%96%E6%96%87%E5%A0%B1%E5%91%8A.pptx)（16 頁，含 3 段操作影片、講者備註）
+
+> 🎬 **本單元教學影片**：[範例 4｜結果解讀與圖文報告](https://youtu.be/UgkCXryBhQ4)（YouTube）
 
 | 步驟 | 內容 | 預估時間 |
 | :--- | :--- | :---: |

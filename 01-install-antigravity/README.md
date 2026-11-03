@@ -69,6 +69,23 @@
 > [!TIP]
 > 不確定要選哪一個？建議先用**選項 A**，免額外設定，最快上手。
 
+#### 選項 C：本次課程的國網模型設定（Zoo Code）
+
+本次課程由國網提供地端模型，安裝 Zoo Code 後，在設定的 API Provider 選擇「**OpenAI 相容**」（OpenAI Compatible），依下表填寫：
+
+| 欄位 | 填入內容 |
+| :--- | :--- |
+| **Base URL** | `https://portal.genai.nchc.org.tw/api/v1` |
+| **API Key** | 課堂上講師提供的金鑰（`sk-` 開頭） |
+| **Model** | `Inkling-Small` 或 `Muse-Spark-Open-816B-A42B` |
+| **Max Output Tokens** | `-1` |
+| **Todo List Enabled** | ✅ 打勾 |
+
+> [!IMPORTANT]
+> - **Max Output Tokens 請設為 `-1`**：數值太小時，AI 寫到一半的腳本或報告會被截斷。
+> - **Todo List Enabled 請打勾**：AI 會先列出待辦清單再逐項執行，派送 Slurm 作業、整理報告這類多步驟任務比較不會漏步驟。
+> - API Key 是個人金鑰，請勿貼到教材、對話截圖或 commit 到 Git。
+
 ---
 
 ## 第 4 步：本機暖身：用自然語言安裝工具並跑一個小分析
