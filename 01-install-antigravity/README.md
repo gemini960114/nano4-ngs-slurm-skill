@@ -2,7 +2,9 @@
 
 本單元先在個人電腦安裝 **Antigravity IDE**、調整三欄操作介面，並安裝 Markdown 預覽與 AI Agent 擴充功能（**預設使用 Antigravity 內建模型，也可自備 Claude / GPT，或使用 Zoo Code 串接國網地端模型**）。
 
-> 📥 **本單元上課簡報**：[下載 1-1_安裝Antigravity與模型設定.pptx](https://github.com/gemini960114/nano4-ngs-slurm-skill/raw/main/PPTX/1-1_%E5%AE%89%E8%A3%9DAntigravity%E8%88%87%E6%A8%A1%E5%9E%8B%E8%A8%AD%E5%AE%9A.pptx)（13 頁，含 3 段操作影片、講者備註）
+> 📥 **本單元上課簡報**：[下載 1-1_安裝Antigravity與模型設定.pptx](https://github.com/gemini960114/nano4-ngs-slurm-skill/raw/main/PPTX/1-1_%E5%AE%89%E8%A3%9DAntigravity%E8%88%87%E6%A8%A1%E5%9E%8B%E8%A8%AD%E5%AE%9A.pptx)（15 頁，含 5 段操作影片、講者備註）
+
+> 🎬 **本單元教學影片**：[範例 1-1｜安裝 Antigravity 與 AI Agent 設定](https://youtu.be/ExOsYOF27uw)（YouTube）
 
 | 步驟 | 內容 | 預估時間 |
 | :--- | :--- | :---: |
