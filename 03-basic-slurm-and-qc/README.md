@@ -43,6 +43,8 @@ ls -al                                 # 列出全部檔案（含 . 開頭的隱
 cd /work/$USER/nano4-ngs-slurm-skill   # 切換到教材根目錄
 pwd
 ls -al data/fastq_4samples             # 範例 1-1 用過的 4 個 FASTQ 檔
+df -h /home/$USER                      # 確認 /home 目前可用空間（上限 100G，只放腳本與設定）
+df -h /work/$USER                      # 確認 /work 目前可用空間（資料、暫存、.sif 放這裡）
 ```
 
 ### 2. Nano4 與 Slurm 查詢指令
