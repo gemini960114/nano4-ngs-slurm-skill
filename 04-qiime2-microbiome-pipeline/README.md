@@ -2,7 +2,9 @@
 
 在上一單元建立好 Nano4 Slurm Skill 後，本單元以真實臨床試驗（**NCT02269150：異體造血幹細胞移植病患接受自體糞菌移植 auto-FMT 之腸道菌相追蹤**）的 **QIIME 2 腸道菌相分析**為例，示範大型生醫管線的「**讀懂流程 ➔ 確認派送 ➔ 每 5 分鐘定時監控**」協同流程。
 
-> 📥 **本單元上課簡報**：[下載 3_QIIME2管線派送與監控.pptx](https://github.com/gemini960114/nano4-ngs-slurm-skill/raw/main/PPTX/3_QIIME2%E7%AE%A1%E7%B7%9A%E6%B4%BE%E9%80%81%E8%88%87%E7%9B%A3%E6%8E%A7.pptx)（14 頁，含講者備註）
+> 📥 **本單元上課簡報**：[下載 3_QIIME2管線派送與監控.pptx](https://github.com/gemini960114/nano4-ngs-slurm-skill/raw/main/PPTX/3_QIIME2%E7%AE%A1%E7%B7%9A%E6%B4%BE%E9%80%81%E8%88%87%E7%9B%A3%E6%8E%A7.pptx)（20 頁，含 6 段操作影片、講者備註）
+
+> 🎬 **本單元教學影片**：[範例 3｜QIIME 2 管線派送與監控](https://youtu.be/wmNvs-LdaXI)（YouTube）
 
 | 步驟 | 內容 | 預估時間 |
 | :--- | :--- | :---: |
