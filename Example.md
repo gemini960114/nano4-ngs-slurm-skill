@@ -194,9 +194,9 @@ data/fastq_4samples/ 有 4 個 FASTQ 檔（.fastq.gz），請用 Slurm 陣列作
 
 ## 範例 4：結果解讀與報告 (`nano4-ngs-report` Skill)
 
-### 讀取分析結果，自動整理成圖文報告（`.md` + 單一獨立 `.html`）
+### 讀取範例 3 的 QIIME 2 結果（`tutorial/case06`），自動整理成圖文報告（`.md` + 單一獨立 `.html`）
 ```text
-請啟用 nano4-ngs-report 技能，掃描 tutorial/ 下的所有 Slurm 腳本、執行日誌（*.out / *.err）與分析產出檔案，為我撰寫一份結合「Runbook 操作手冊」與「生醫 Methods & Results 數據解讀」的完整分析報告，並使用技能內建的轉換腳本同步輸出 .md 與單一獨立 .html 報告至 tutorial/report01/。
+請啟用 nano4-ngs-report 技能，只掃描 tutorial/case06/ 這次 QIIME 2 上游與下游分析的 Slurm 腳本、執行日誌（*.out / *.err）與分析產出檔案，為我撰寫一份結合「Runbook 操作手冊」與「生醫 Methods & Results 數據解讀」的完整分析報告，並使用技能內建的轉換腳本同步輸出 .md 與單一獨立 .html 報告至 tutorial/report01/。
 ```
 
 ---

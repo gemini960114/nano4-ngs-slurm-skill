@@ -17,7 +17,7 @@
 | **範例 1** | **環境建置** | • [1-1. 安裝 Antigravity 與模型設定](./01-install-antigravity/README.md)<br>• [1-2. 連線 Nano4 與下載教材](./02-nano4-login-and-setup/README.md) | 先在本機用自然語言安裝 Git、uv 並完成 4 個 FASTQ 檔的小分析，再用 Antigravity 連線 Nano4。預設使用內建模型，也可自備 Claude/GPT，或用 Zoo Code 串接國網地端模型（遠端 HPC 需再安裝一次） |
 | **範例 2** | **Slurm 練習與自訂 Skill** | • [2. 把 Slurm 規則寫成 Skill 與基礎排程](./03-basic-slurm-and-qc/README.md) | 先練習 Linux 與 Slurm 基本指令並親手派送第一個作業，再把 Nano4 的 Slurm 使用規則寫成 Skill，讓 AI 產生單一作業、Array Job、FastQC/MultiQC 與容器批次腳本 |
 | **範例 3** | **管線派送與監控** | • [3. QIIME 2 腸道菌相分析與定時監控](./04-qiime2-microbiome-pipeline/README.md) | 以 QIIME 2 腸道菌相分析為例，AI 先讀懂分析腳本，確認後才送出，以 afterok 串接相依階段，之後每 5 分鐘自動檢查作業狀態 |
-| **範例 4** | **結果解讀與報告** | • [4. 結果解讀、圖文報告與換上自有資料](./05-automated-report-skill/README.md) | 讓 AI 讀取分析結果與日誌，整理成含數據圖表的 Markdown 與 HTML/PDF 圖文報告，並說明如何替換為自己的研究資料 |
+| **範例 4** | **結果解讀與報告** | • [4. 結果解讀、圖文報告與換上自有資料](./05-automated-report-skill/README.md) | 讓 AI 讀取範例 3 的 QIIME 2 分析結果與日誌，整理成含數據圖表的 Markdown 與 HTML/PDF 圖文報告，並說明如何替換為自己的研究資料 |
 
 **附錄（課後延伸）**：[用 AI 把教材做成 PPTX 簡報](./06-ai-pptx-slides/README.md)：安裝 Anthropic pptx Skill 與所需工具，請 AI 把各單元教材做成文字可編輯、物件逐一淡入並附講者備註的 PPTX 簡報，也能嵌入操作影片。
 

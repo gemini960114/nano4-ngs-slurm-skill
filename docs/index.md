@@ -33,7 +33,7 @@ features:
     linkText: 進入管線派送與監控
   - icon: 📊
     title: 4. 結果解讀與報告：自動整理圖文報告
-    details: 讓 AI 讀取日誌與分析結果，自動彙整成包含流程圖、數據圖表與方法結果解讀的 Markdown 與 HTML/PDF 報告。
+    details: 讓 AI 讀取範例 3 QIIME 2 分析的日誌與結果，自動彙整成包含流程圖、數據圖表與方法結果解讀的 Markdown 與 HTML/PDF 報告。
     link: /guide/05_automated_report_skill
     linkText: 進入結果解讀與報告
 ---
